@@ -1,0 +1,7 @@
+type LinkIdentifier {
+    bundle: String!,
+    type: String!,
+    content: String!,
+    set: Boolean!,
+    message: String,
+}

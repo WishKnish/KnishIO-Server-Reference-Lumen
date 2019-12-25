@@ -1,0 +1,8 @@
+type MetaInstance {
+    metaType: String @field(resolver: "WishKnish\\KnishIO\\GraphQL\\Resolves\\MetaInstance@resolveMetaType"),
+    metaId: String @field(resolver: "WishKnish\\KnishIO\\GraphQL\\Resolves\\MetaInstance@resolveMetaId"),
+    createdAt: String @field(resolver: "WishKnish\\KnishIO\\GraphQL\\Resolves\\MetaInstance@resolveCreatedAt"),
+    metas: [ Meta ],
+    atoms: [ Atom ],
+    molecules: [ Molecule ]
+}

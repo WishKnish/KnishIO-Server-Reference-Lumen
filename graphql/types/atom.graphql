@@ -1,0 +1,16 @@
+type Atom {
+    molecule: Molecule!,
+    molecularHash: String! @field(resolver: "WishKnish\\KnishIO\\GraphQL\\Resolves\\ResolveAtom@resolveMolecularHash"),
+    position: String!,
+    isotope: String!,
+    walletAddress: String! @field(resolver: "WishKnish\\KnishIO\\GraphQL\\Resolves\\ResolveAtom@resolveWalletAddress"),
+    tokenSlug: String @field(resolver: "WishKnish\\KnishIO\\GraphQL\\Resolves\\ResolveAtom@resolveTokenSlug"),
+    token: Token,
+    value: String,
+    index: Int,
+    metaType: String @field(resolver: "WishKnish\\KnishIO\\GraphQL\\Resolves\\ResolveAtom@resolveMetaType"),
+    metaId: String @field(resolver: "WishKnish\\KnishIO\\GraphQL\\Resolves\\ResolveAtom@resolveMetaId"),
+    metas: [ Meta ],
+    otsFragment: String! @field(resolver: "WishKnish\\KnishIO\\GraphQL\\Resolves\\ResolveAtom@resolveOtsFragment"),
+    createdAt: String! @field(resolver: "WishKnish\\KnishIO\\GraphQL\\Resolves\\ResolveAtom@resolveCreatedAt")
+}
