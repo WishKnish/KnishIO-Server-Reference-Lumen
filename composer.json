@@ -14,7 +14,8 @@
         "php": "^7.2",
         "laravel/lumen-framework": "^6.0",
         "laravelista/lumen-vendor-publish": "6.0",
-        "wishknish/knishio-server-php": "dev-master"
+        "wishknish/knishio-server-php": "dev-master",
+        "ybr-nx/laravel-mariadb": "^1.0"
     },
     "require-dev": {
         "roave/security-advisories": "dev-master",
