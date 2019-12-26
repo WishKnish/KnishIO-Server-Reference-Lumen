@@ -1,0 +1,8 @@
+type WalletBundle {
+    bundleHash: String @field(resolver: "WishKnish\\KnishIO\\GraphQL\\Resolves\\ResolveWalletBundle@resolveBundleHash"),
+    slug: String,
+    metas: [ Meta ],
+    molecules: [ Molecule ],
+    wallets: [ Wallet ],
+    createdAt: String @field(resolver: "WishKnish\\KnishIO\\GraphQL\\Resolves\\ResolveWalletBundle@resolveCreatedAt")
+}

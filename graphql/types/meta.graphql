@@ -1,0 +1,22 @@
+type Meta {
+    """Molecular Hash"""
+    molecularHash: String! @field(resolver: "WishKnish\\KnishIO\\GraphQL\\Resolves\\ResolveMeta@resolveMolecularHash"),
+    """Position"""
+    position: String!,
+    """Meta Type"""
+    metaType: String! @field( resolver: "WishKnish\\KnishIO\\GraphQL\\Resolves\\ResolveMeta@resolveMetaType" )
+    """Meta ID"""
+    metaId: String! @field( resolver: "WishKnish\\KnishIO\\GraphQL\\Resolves\\ResolveMeta@resolveMetaId" )
+    """Meta Key"""
+    key: String!,
+    """Meta Value"""
+    value: String,
+    """Timestamp"""
+    createdAt: String @field(resolver: "WishKnish\\KnishIO\\GraphQL\\Resolves\\ResolveMeta@resolveCreatedAt"),
+    """Molecule"""
+    molecule: Molecule @belongsTo,
+    """Atoms"""
+    atoms: [Atom],
+    """Atom"""
+    atom: Atom @belongsTo
+}

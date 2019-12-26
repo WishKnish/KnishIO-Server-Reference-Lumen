@@ -1,0 +1,34 @@
+type Molecule {
+    """Hash"""
+    molecularHash: String @field( resolver: "WishKnish\\KnishIO\\GraphQL\\Resolves\\ResolveMolecule@resolveMolecularHash" ),
+    """Cell Slug"""
+    cellSlug: String @field( resolver: "WishKnish\\KnishIO\\GraphQL\\Resolves\\ResolveMolecule@resolveCellSlug" ),
+    """Wallet Bundle"""
+    bundleHash: String @field( resolver: "WishKnish\\KnishIO\\GraphQL\\Resolves\\ResolveMolecule@resolveBundleHash" ),
+    """Status"""
+    status: String,
+    """Height"""
+    height: Int,
+    """Depth"""
+    depth: Int,
+    """Created At"""
+    createdAt: String @field( resolver: "WishKnish\\KnishIO\\GraphQL\\Resolves\\ResolveMolecule@resolveCreatedAt" ),
+    """Received At"""
+    receivedAt: String @field( resolver: "WishKnish\\KnishIO\\GraphQL\\Resolves\\ResolveMolecule@resolveReceivedAt" ),
+    """Processed At"""
+    processedAt: String @field( resolver: "WishKnish\\KnishIO\\GraphQL\\Resolves\\ResolveMolecule@resolveProcessedAt" ),
+    """Broadcasted At"""
+    broadcastedAt: String  @field( resolver: "WishKnish\\KnishIO\\GraphQL\\Resolves\\ResolveMolecule@resolveBroadcastedAt" ),
+    """Meta fields"""
+    metas: [ Meta ],
+    """Atoms"""
+    atoms: [ Atom ],
+    """bonds"""
+    bonds: [ Molecule ] @belongsToMany,
+    """cascades"""
+    cascades: [ Molecule ] @belongsToMany,
+    """KnishIO response reason"""
+    reason: String,
+    """KnishIO response payload"""
+    reasonPayload: String @field(resolver: "WishKnish\\KnishIO\\GraphQL\\Resolves\\ResolveMolecule@resolveReasonPayload")
+}

@@ -1,0 +1,4 @@
+input MetaInput {
+    key: String!,
+    value: String
+}

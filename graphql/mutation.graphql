@@ -1,0 +1,13 @@
+type Mutation {
+
+    ProposeMolecule(
+        molecule: MoleculeInput!
+    ): Molecule,
+
+    LinkIdentifier(
+        bundle: String!,
+        type: String!,
+        content: String!,
+    ): LinkIdentifier,
+
+}
