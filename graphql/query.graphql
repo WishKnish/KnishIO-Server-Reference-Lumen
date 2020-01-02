@@ -53,7 +53,8 @@ type Query {
     WalletBundle (
         bundleHash: String,
         bundleHashes: [ String! ],
-        unspent: Boolean
+        unspent: Boolean,
+        tokenSlug: String,
     ): [ WalletBundle ],
 
     Wallet (
@@ -88,6 +89,6 @@ type Query {
 
     HasIdentifiers(
         bundle: String!,
-    ) : HasIdentifier,
+    ) : HasIdentifier
 
 }

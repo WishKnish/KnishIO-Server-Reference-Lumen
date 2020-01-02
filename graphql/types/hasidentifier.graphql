@@ -1,4 +1,4 @@
 type HasIdentifier {
     email: Int,
-    phone: Int,
+    phone: Int
 }

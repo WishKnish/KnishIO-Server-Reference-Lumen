@@ -1,14 +1,15 @@
 input AtomsInput {
-    position: String!,
+    position: String,
     wallet_address: String,
     isotope: String!,
     token: String,
     value: String,
     metaType: String,
     metaId: String,
+    batchId: String,
     meta: [ MetaInput ],
     index: Int,
     otsFragment: String!,
-    walletAddress: String!,
+    walletAddress: String,
     createdAt: String!
 }

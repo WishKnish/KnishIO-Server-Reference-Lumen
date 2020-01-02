@@ -6,6 +6,7 @@ type Atom {
     walletAddress: String! @field(resolver: "WishKnish\\KnishIO\\GraphQL\\Resolves\\ResolveAtom@resolveWalletAddress"),
     tokenSlug: String @field(resolver: "WishKnish\\KnishIO\\GraphQL\\Resolves\\ResolveAtom@resolveTokenSlug"),
     token: Token,
+    batchId: String @field(resolver: "WishKnish\\KnishIO\\GraphQL\\Resolves\ResolveAtom@resolveBatchId"),
     value: String,
     index: Int,
     metaType: String @field(resolver: "WishKnish\\KnishIO\\GraphQL\\Resolves\\ResolveAtom@resolveMetaType"),

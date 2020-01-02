@@ -1,5 +1,5 @@
 type Wallet {
-    address: String!,
+    address: String,
     bundleHash: String @field(resolver: "WishKnish\\KnishIO\\GraphQL\\Resolves\\ResolveWallet@resolveBundleHash"),
     walletBundle: WalletBundle @belongsTo(relation: "wallet_bundle"),
     tokenSlug: String @field(resolver: "WishKnish\\KnishIO\\GraphQL\\Resolves\\ResolveWallet@resolveTokenSlug"),
