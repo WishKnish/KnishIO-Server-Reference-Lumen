@@ -1,5 +1,5 @@
 {
-    "authHost": "http://wishknish.com",
+    "authHost": "https://server.local",
     "authEndpoint": "/graphql/subscriptions/auth",
     "clients": [],
     "database": "redis",
@@ -19,11 +19,11 @@
     "devMode": "true",
     "host": "0.0.0.0",
     "port": "3000",
-    "protocol": "http",
+    "protocol": "https",
+    "sslCertPath": "C:/xampp/apache/conf/ssl.crt/server.crt",
+    "sslKeyPath": "C:/xampp/apache/conf/ssl.key/server.key",
     "socketio": [],
     "secureOptions": 67108864,
-    "sslCertPath": "",
-    "sslKeyPath": "",
     "sslCertChainPath": "",
     "sslPassphrase": "",
     "subscribers": {
@@ -32,7 +32,7 @@
     },
     "apiOriginAllow": {
         "allowCors": true,
-        "allowOrigin": "http://wishknish.com:80",
+        "allowOrigin": "*",
         "allowMethods": "POST",
         "allowHeaders": "Origin, Content-Type, X-Auth-Token, X-Requested-With, Accept, Authorization, X-CSRF-TOKEN, X-Socket-Id"
     }
