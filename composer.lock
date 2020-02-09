@@ -5100,22 +5100,22 @@
         },
         {
             "name": "wishknish/knishio-client-php",
-            "version": "0.1.61",
+            "version": "0.1.62",
             "source": {
                 "type": "git",
                 "url": "https://github.com/WishKnish/KnishIO-Client-PHP.git",
-                "reference": "4b6b92593ae129c2b69efae57cc6216429cbd0f3"
+                "reference": "ae051c2770aafd4e38c52271013cb462ee3b3d53"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/WishKnish/KnishIO-Client-PHP/zipball/4b6b92593ae129c2b69efae57cc6216429cbd0f3",
-                "reference": "4b6b92593ae129c2b69efae57cc6216429cbd0f3",
+                "url": "https://api.github.com/repos/WishKnish/KnishIO-Client-PHP/zipball/ae051c2770aafd4e38c52271013cb462ee3b3d53",
+                "reference": "ae051c2770aafd4e38c52271013cb462ee3b3d53",
                 "shasum": ""
             },
             "require": {
                 "desktopd/php-sha3-streamable": "@dev",
                 "ext-json": "*",
-                "guzzlehttp/guzzle": "^6.3",
+                "guzzlehttp/guzzle": "^6.5",
                 "php": "^5.6|>=7.2",
                 "simplito/bigint-wrapper-php": "^1.0",
                 "symfony/polyfill-mbstring": "^1.11",
@@ -5125,12 +5125,14 @@
                 "tuupola/base58": "1.0"
             },
             "require-dev": {
-                "symfony/var-dumper": "^3.4|^4.0"
+                "symfony/console": "^3.4|^4.0|^5.0",
+                "symfony/var-dumper": "^3.4|^4.0|^5.0"
             },
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "WishKnish\\KnishIO\\Client\\": "src/"
+                    "WishKnish\\KnishIO\\Client\\": "src/",
+                    "Console\\": "bin/Console"
                 },
                 "files": [
                     "./src/Helpers/helpers.php"
@@ -5148,6 +5150,11 @@
                     "role": "developer"
                 },
                 {
+                    "name": "Vladimir Makarov",
+                    "email": "vladimir.php@gmail.com",
+                    "role": "developer"
+                },
+                {
                     "name": "Yuri Kizilov",
                     "email": "y.kizilov.sev@yandex.ru",
                     "role": "developer"
@@ -5162,7 +5169,7 @@
                 "ledger",
                 "wishknish"
             ],
-            "time": "2020-01-22T14:26:29+00:00"
+            "time": "2020-02-09T23:16:29+00:00"
         },
         {
             "name": "wishknish/knishio-server-php",
