@@ -25,22 +25,30 @@ return [
         'name'       => \env( 'LIGHTHOUSE_ROUTE_NAME', 'graphql' ),
 
         /*
-         *
          * Beware that middleware defined here runs before the GraphQL execution phase,
-         * so you have to take extra care to return spec-compliant error responses.
-         * To apply middleware on a field level, use the @middleware directive.
+         * make sure to return spec-compliant responses in case an error is thrown.
          */
         'middleware' => [
-
             \Nuwave\Lighthouse\Support\Http\Middleware\AcceptJson::class,
 
+            \App\Http\Middleware\CorsMiddleware::class,
+
+            // Logs in a user if they are authenticated. In contrast to Laravel's 'auth'
+            // middleware, this delegates auth and permission checks to the field level.
+            // If you want to use another guard, change the suffix (remove for default).
+            \Nuwave\Lighthouse\Support\Http\Middleware\AttemptAuthentication::class . ':api',
         ],
 
+        /*
+         * The `prefix` and `domain` configuration options are optional.
+         */
+        //'prefix' => '',
+        //'domain' => '',
     ],
 
     /*
     |--------------------------------------------------------------------------
-    | Schema Declaration
+    | Schema Location
     |--------------------------------------------------------------------------
     |
     | This is a path that points to where your GraphQL schema is located
@@ -70,11 +78,9 @@ return [
     */
 
     'cache' => [
-
-        'enable' => \env( 'LIGHTHOUSE_CACHE_ENABLE', true ),
-        'key'    => \env( 'LIGHTHOUSE_CACHE_KEY', 'lighthouse-schema' ),
-        'ttl'    => \env( 'LIGHTHOUSE_CACHE_TTL', null ),
-
+        'enable' => env( 'LIGHTHOUSE_CACHE_ENABLE', env( 'APP_ENV' ) !== 'local' ),
+        'key'    => env( 'LIGHTHOUSE_CACHE_KEY', 'lighthouse-schema' ),
+        'ttl'    => env( 'LIGHTHOUSE_CACHE_TTL', null ),
     ],
 
     /*
@@ -82,8 +88,8 @@ return [
     | Namespaces
     |--------------------------------------------------------------------------
     |
-    | These are the default namespaces where Lighthouse looks for classes
-    | that extend functionality of the schema. You may pass either a string
+    | These are the default namespaces where Lighthouse looks for classes to
+    | extend functionality of the schema. You may pass in either a string
     | or an array, they are tried in order and the first match is used.
     |
     */
@@ -96,7 +102,7 @@ return [
         ],
         'queries'       => [ 'App\\GraphQL\\Queries', 'WishKnish\\KnishIO\\GraphQL\\Queries', ],
         'mutations'     => [ 'App\\GraphQL\\Mutations', 'WishKnish\\KnishIO\\GraphQL\\Mutations', ],
-        'subscriptions' => [ 'App\\GraphQL\\Subscriptions' ],
+        'subscriptions' => [ 'App\\GraphQL\\Subscriptions', 'WishKnish\\KnishIO\\GraphQL\\Subscriptions', ],
         'interfaces'    => [ 'App\\GraphQL\\Interfaces', 'WishKnish\\KnishIO\\GraphQL\\Interfaces', ],
         'unions'        => [ 'App\\GraphQL\\Unions', 'WishKnish\\KnishIO\\GraphQL\\Unions', ],
         'scalars'       => [ 'App\\GraphQL\\Scalars', 'WishKnish\\KnishIO\\GraphQL\\Scalars', ],
@@ -109,16 +115,14 @@ return [
     |--------------------------------------------------------------------------
     |
     | Control how Lighthouse handles security related query validation.
-    | This configures the options from http://webonyx.github.io/graphql-php/security/
+    | Read more at http://webonyx.github.io/graphql-php/security/
     |
     */
 
     'security' => [
-
         'max_query_complexity'  => \GraphQL\Validator\Rules\QueryComplexity::DISABLED,
         'max_query_depth'       => \GraphQL\Validator\Rules\QueryDepth::DISABLED,
         'disable_introspection' => \GraphQL\Validator\Rules\DisableIntrospection::DISABLED,
-
     ],
 
     /*
@@ -141,11 +145,26 @@ return [
     |
     | Set the name to use for the generated argument on paginated fields
     | that controls how many results are returned.
-    | This setting will be removed in v5.
+    |
+    | DEPRECATED This setting will be removed in v5.
     |
     */
 
     'pagination_amount_argument' => 'first',
+
+    /*
+    |--------------------------------------------------------------------------
+    | @orderBy input name
+    |--------------------------------------------------------------------------
+    |
+    | Set the name to use for the generated argument on the
+    | OrderByClause used for the @orderBy directive.
+    |
+    | DEPRECATED This setting will be removed in v5.
+    |
+    */
+
+    'orderBy' => 'field',
 
     /*
     |--------------------------------------------------------------------------
@@ -171,9 +190,7 @@ return [
     */
 
     'error_handlers' => [
-
         \Nuwave\Lighthouse\Execution\ExtensionErrorHandler::class,
-
     ],
 
     /*
@@ -205,12 +222,24 @@ return [
     | Transactional Mutations
     |--------------------------------------------------------------------------
     |
-    | Sets default setting for transactional mutations.
-    | You may set this flag to have @create|@update mutations transactional or not.
+    | If set to true, mutations such as @create or @update will be
+    | wrapped in a transaction to ensure atomicity.
     |
     */
 
     'transactional_mutations' => true,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Batchload Relations
+    |--------------------------------------------------------------------------
+    |
+    | If set to true, relations marked with directives like @hasMany or @belongsTo
+    | will be optimized by combining the queries through the BatchLoader.
+    |
+    */
+
+    'batchload_relations' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -226,29 +255,26 @@ return [
         /*
          * Determines if broadcasts should be queued by default.
          */
-        'queue_broadcasts' => \env( 'LIGHTHOUSE_QUEUE_BROADCASTS', true ),
+        'queue_broadcasts' => env( 'LIGHTHOUSE_QUEUE_BROADCASTS', true ),
 
         /*
          * Default subscription storage.
          *
          * Any Laravel supported cache driver options are available here.
          */
-        'storage'          => \env( 'LIGHTHOUSE_SUBSCRIPTION_STORAGE', 'redis' ),
+        'storage'          => env( 'LIGHTHOUSE_SUBSCRIPTION_STORAGE', 'redis' ),
 
         /*
          * Default subscription broadcaster.
          */
-        'broadcaster'      => \env( 'LIGHTHOUSE_BROADCASTER', 'pusher' ),
+        'broadcaster'      => env( 'LIGHTHOUSE_BROADCASTER', 'pusher' ),
 
         /*
          * Subscription broadcasting drivers with config options.
          */
         'broadcasters'     => [
-
             'log'    => [
-
                 'driver' => 'log',
-
             ],
             'pusher' => [
 
@@ -257,9 +283,7 @@ return [
                 'connection' => 'redis',
 
             ],
-
         ],
-
     ],
 
 ];
