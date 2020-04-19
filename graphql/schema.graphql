@@ -1,10 +1,10 @@
-#import ../vendor/wishknish/knishio-server-php/graphql/schema.graphql
 #import types/*.graphql
 #import inputs/*.graphql
 #import unions/*.graphql
 #import subscriptions/*.graphql
 #import queries/*.graphql
 #import mutations/*.graphql
+#import ../vendor/wishknish/knishio-server-php/graphql/schema.graphql
 
 directive @scalar(
     """
