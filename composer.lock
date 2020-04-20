@@ -5048,16 +5048,16 @@
         },
         {
             "name": "wishknish/knishio-client-php",
-            "version": "0.1.64",
+            "version": "0.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/WishKnish/KnishIO-Client-PHP.git",
-                "reference": "f72e3868717764cad0e64ee88375140bdd87049d"
+                "reference": "aede6338fd27ec2b721ea04e9c02d119bb22f401"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/WishKnish/KnishIO-Client-PHP/zipball/f72e3868717764cad0e64ee88375140bdd87049d",
-                "reference": "f72e3868717764cad0e64ee88375140bdd87049d",
+                "url": "https://api.github.com/repos/WishKnish/KnishIO-Client-PHP/zipball/aede6338fd27ec2b721ea04e9c02d119bb22f401",
+                "reference": "aede6338fd27ec2b721ea04e9c02d119bb22f401",
                 "shasum": ""
             },
             "require": {
@@ -5119,7 +5119,7 @@
                 "ledger",
                 "wishknish"
             ],
-            "time": "2020-03-08T01:57:33+00:00"
+            "time": "2020-04-10T11:50:41+00:00"
         },
         {
             "name": "wishknish/knishio-server-php",
