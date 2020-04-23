@@ -7,6 +7,52 @@
     "content-hash": "842ee94d7c36960859649927cf6ed4cb",
     "packages": [
         {
+            "name": "brick/math",
+            "version": "0.8.15",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/brick/math.git",
+                "reference": "9b08d412b9da9455b210459ff71414de7e6241cd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/brick/math/zipball/9b08d412b9da9455b210459ff71414de7e6241cd",
+                "reference": "9b08d412b9da9455b210459ff71414de7e6241cd",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "php": "^7.1|^8.0"
+            },
+            "require-dev": {
+                "php-coveralls/php-coveralls": "^2.2",
+                "phpunit/phpunit": "^7.5.15|^8.5",
+                "vimeo/psalm": "^3.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Brick\\Math\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Arbitrary-precision arithmetic library",
+            "keywords": [
+                "Arbitrary-precision",
+                "BigInteger",
+                "BigRational",
+                "arithmetic",
+                "bigdecimal",
+                "bignum",
+                "brick",
+                "math"
+            ],
+            "time": "2020-04-15T15:59:35+00:00"
+        },
+        {
             "name": "desktopd/php-sha3-streamable",
             "version": "dev-master",
             "source": {
@@ -600,7 +646,7 @@
         },
         {
             "name": "illuminate/auth",
-            "version": "v6.18.8",
+            "version": "v6.18.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/auth.git",
@@ -651,7 +697,7 @@
         },
         {
             "name": "illuminate/broadcasting",
-            "version": "v6.18.8",
+            "version": "v6.18.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/broadcasting.git",
@@ -702,7 +748,7 @@
         },
         {
             "name": "illuminate/bus",
-            "version": "v6.18.8",
+            "version": "v6.18.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/bus.git",
@@ -747,7 +793,7 @@
         },
         {
             "name": "illuminate/cache",
-            "version": "v6.18.8",
+            "version": "v6.18.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/cache.git",
@@ -798,7 +844,7 @@
         },
         {
             "name": "illuminate/config",
-            "version": "v6.18.8",
+            "version": "v6.18.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/config.git",
@@ -842,7 +888,7 @@
         },
         {
             "name": "illuminate/console",
-            "version": "v6.18.8",
+            "version": "v6.18.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/console.git",
@@ -896,7 +942,7 @@
         },
         {
             "name": "illuminate/container",
-            "version": "v6.18.8",
+            "version": "v6.18.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/container.git",
@@ -940,7 +986,7 @@
         },
         {
             "name": "illuminate/contracts",
-            "version": "v6.18.8",
+            "version": "v6.18.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/contracts.git",
@@ -984,16 +1030,16 @@
         },
         {
             "name": "illuminate/database",
-            "version": "v6.18.8",
+            "version": "v6.18.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/database.git",
-                "reference": "9063a958e72edf58d23007b39e482e8d28cb84db"
+                "reference": "9fadf31fb4028a780184b863f335d966f333c44f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/database/zipball/9063a958e72edf58d23007b39e482e8d28cb84db",
-                "reference": "9063a958e72edf58d23007b39e482e8d28cb84db",
+                "url": "https://api.github.com/repos/illuminate/database/zipball/9fadf31fb4028a780184b863f335d966f333c44f",
+                "reference": "9fadf31fb4028a780184b863f335d966f333c44f",
                 "shasum": ""
             },
             "require": {
@@ -1041,11 +1087,11 @@
                 "orm",
                 "sql"
             ],
-            "time": "2020-04-14T00:02:07+00:00"
+            "time": "2020-04-21T18:52:19+00:00"
         },
         {
             "name": "illuminate/encryption",
-            "version": "v6.18.8",
+            "version": "v6.18.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/encryption.git",
@@ -1092,7 +1138,7 @@
         },
         {
             "name": "illuminate/events",
-            "version": "v6.18.8",
+            "version": "v6.18.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/events.git",
@@ -1137,7 +1183,7 @@
         },
         {
             "name": "illuminate/filesystem",
-            "version": "v6.18.8",
+            "version": "v6.18.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/filesystem.git",
@@ -1189,7 +1235,7 @@
         },
         {
             "name": "illuminate/hashing",
-            "version": "v6.18.8",
+            "version": "v6.18.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/hashing.git",
@@ -1233,7 +1279,7 @@
         },
         {
             "name": "illuminate/http",
-            "version": "v6.18.8",
+            "version": "v6.18.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/http.git",
@@ -1283,7 +1329,7 @@
         },
         {
             "name": "illuminate/log",
-            "version": "v6.18.8",
+            "version": "v6.18.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/log.git",
@@ -1328,7 +1374,7 @@
         },
         {
             "name": "illuminate/mail",
-            "version": "v6.18.8",
+            "version": "v6.18.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/mail.git",
@@ -1383,7 +1429,7 @@
         },
         {
             "name": "illuminate/pagination",
-            "version": "v6.18.8",
+            "version": "v6.18.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/pagination.git",
@@ -1428,7 +1474,7 @@
         },
         {
             "name": "illuminate/pipeline",
-            "version": "v6.18.8",
+            "version": "v6.18.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/pipeline.git",
@@ -1473,7 +1519,7 @@
         },
         {
             "name": "illuminate/queue",
-            "version": "v6.18.8",
+            "version": "v6.18.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/queue.git",
@@ -1533,7 +1579,7 @@
         },
         {
             "name": "illuminate/redis",
-            "version": "v6.18.8",
+            "version": "v6.18.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/redis.git",
@@ -1581,7 +1627,7 @@
         },
         {
             "name": "illuminate/routing",
-            "version": "v6.18.8",
+            "version": "v6.18.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/routing.git",
@@ -1639,7 +1685,7 @@
         },
         {
             "name": "illuminate/session",
-            "version": "v6.18.8",
+            "version": "v6.18.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/session.git",
@@ -1690,16 +1736,16 @@
         },
         {
             "name": "illuminate/support",
-            "version": "v6.18.8",
+            "version": "v6.18.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/support.git",
-                "reference": "6955d0c254ae55ede96be71309b5fb09693441cd"
+                "reference": "38cb5e56f30e6ecff3e88a0f3031139a0f6740d8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/support/zipball/6955d0c254ae55ede96be71309b5fb09693441cd",
-                "reference": "6955d0c254ae55ede96be71309b5fb09693441cd",
+                "url": "https://api.github.com/repos/illuminate/support/zipball/38cb5e56f30e6ecff3e88a0f3031139a0f6740d8",
+                "reference": "38cb5e56f30e6ecff3e88a0f3031139a0f6740d8",
                 "shasum": ""
             },
             "require": {
@@ -1747,11 +1793,11 @@
             ],
             "description": "The Illuminate Support package.",
             "homepage": "https://laravel.com",
-            "time": "2020-03-24T20:01:29+00:00"
+            "time": "2020-04-21T13:29:27+00:00"
         },
         {
             "name": "illuminate/translation",
-            "version": "v6.18.8",
+            "version": "v6.18.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/translation.git",
@@ -1797,7 +1843,7 @@
         },
         {
             "name": "illuminate/validation",
-            "version": "v6.18.8",
+            "version": "v6.18.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/validation.git",
@@ -1849,7 +1895,7 @@
         },
         {
             "name": "illuminate/view",
-            "version": "v6.18.8",
+            "version": "v6.18.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/view.git",
@@ -2030,16 +2076,16 @@
         },
         {
             "name": "league/commonmark",
-            "version": "1.4.0",
+            "version": "1.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/commonmark.git",
-                "reference": "517cbe1c6faf90afeb38a0e917c73acc6d3051ce"
+                "reference": "c995966d35424bae20f76f8b31248099487a3f57"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/517cbe1c6faf90afeb38a0e917c73acc6d3051ce",
-                "reference": "517cbe1c6faf90afeb38a0e917c73acc6d3051ce",
+                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/c995966d35424bae20f76f8b31248099487a3f57",
+                "reference": "c995966d35424bae20f76f8b31248099487a3f57",
                 "shasum": ""
             },
             "require": {
@@ -2100,7 +2146,7 @@
                 "md",
                 "parser"
             ],
-            "time": "2020-04-18T20:46:13+00:00"
+            "time": "2020-04-20T13:36:51+00:00"
         },
         {
             "name": "league/flysystem",
@@ -2435,26 +2481,30 @@
         },
         {
             "name": "nuwave/lighthouse",
-            "version": "4.11.0",
+            "version": "v4.12.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nuwave/lighthouse.git",
-                "reference": "7d7941fff14e9ff21c2bca6cd6f4f0c951b67cd6"
+                "reference": "e28ab39c205161dd4b5c1087634f995e8dead4d3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nuwave/lighthouse/zipball/7d7941fff14e9ff21c2bca6cd6f4f0c951b67cd6",
-                "reference": "7d7941fff14e9ff21c2bca6cd6f4f0c951b67cd6",
+                "url": "https://api.github.com/repos/nuwave/lighthouse/zipball/e28ab39c205161dd4b5c1087634f995e8dead4d3",
+                "reference": "e28ab39c205161dd4b5c1087634f995e8dead4d3",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
+                "illuminate/auth": "5.5.* || 5.6.* || 5.7.* || 5.8.* || ^6.0 || ^7.0",
+                "illuminate/bus": "5.5.* || 5.6.* || 5.7.* || 5.8.* || ^6.0 || ^7.0",
                 "illuminate/contracts": "5.5.* || 5.6.* || 5.7.* || 5.8.* || ^6.0 || ^7.0",
                 "illuminate/http": "5.5.* || 5.6.* || 5.7.* || 5.8.* || ^6.0 || ^7.0",
                 "illuminate/pagination": "5.5.* || 5.6.* || 5.7.* || 5.8.* || ^6.0 || ^7.0",
+                "illuminate/queue": "5.5.* || 5.6.* || 5.7.* || 5.8.* || ^6.0 || ^7.0",
                 "illuminate/routing": "5.5.* || 5.6.* || 5.7.* || 5.8.* || ^6.0 || ^7.0",
                 "illuminate/support": "5.5.* || 5.6.* || 5.7.* || 5.8.* || ^6.0 || ^7.0",
                 "illuminate/validation": "5.5.* || 5.6.* || 5.7.* || 5.8.* || ^6.0 || ^7.0",
+                "nesbot/carbon": "^1.26.0 || ^2.0",
                 "php": ">= 7.1",
                 "webonyx/graphql-php": "^0.13.2"
             },
@@ -2486,8 +2536,8 @@
                 "laravel": {
                     "providers": [
                         "Nuwave\\Lighthouse\\LighthouseServiceProvider",
-                        "Nuwave\\Lighthouse\\SoftDeletes\\SoftDeletesServiceProvider",
-                        "Nuwave\\Lighthouse\\OrderBy\\OrderByServiceProvider"
+                        "Nuwave\\Lighthouse\\OrderBy\\OrderByServiceProvider",
+                        "Nuwave\\Lighthouse\\SoftDeletes\\SoftDeletesServiceProvider"
                     ],
                     "aliases": {
                         "graphql": "Nuwave\\Lighthouse\\GraphQL"
@@ -2523,7 +2573,7 @@
                 "laravel",
                 "laravel-graphql"
             ],
-            "time": "2020-03-25T10:54:59+00:00"
+            "time": "2020-04-23T06:55:49+00:00"
         },
         {
             "name": "opis/closure",
@@ -2921,54 +2971,124 @@
             "time": "2019-03-08T08:55:37+00:00"
         },
         {
-            "name": "ramsey/uuid",
-            "version": "3.9.3",
+            "name": "ramsey/collection",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/ramsey/uuid.git",
-                "reference": "7e1633a6964b48589b142d60542f9ed31bd37a92"
+                "url": "https://github.com/ramsey/collection.git",
+                "reference": "925ad8cf55ba7a3fc92e332c58fd0478ace3e1ca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ramsey/uuid/zipball/7e1633a6964b48589b142d60542f9ed31bd37a92",
-                "reference": "7e1633a6964b48589b142d60542f9ed31bd37a92",
+                "url": "https://api.github.com/repos/ramsey/collection/zipball/925ad8cf55ba7a3fc92e332c58fd0478ace3e1ca",
+                "reference": "925ad8cf55ba7a3fc92e332c58fd0478ace3e1ca",
                 "shasum": ""
             },
             "require": {
+                "php": "^7.2"
+            },
+            "require-dev": {
+                "dealerdirect/phpcodesniffer-composer-installer": "^0.5.0",
+                "fzaninotto/faker": "^1.5",
+                "jakub-onderka/php-parallel-lint": "^1",
+                "jangregor/phpstan-prophecy": "^0.6",
+                "mockery/mockery": "^1.3",
+                "phpstan/extension-installer": "^1",
+                "phpstan/phpdoc-parser": "0.4.1",
+                "phpstan/phpstan": "^0.12",
+                "phpstan/phpstan-mockery": "^0.12",
+                "phpstan/phpstan-phpunit": "^0.12",
+                "phpunit/phpunit": "^8.5",
+                "slevomat/coding-standard": "^6.0",
+                "squizlabs/php_codesniffer": "^3.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Ramsey\\Collection\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ben Ramsey",
+                    "email": "ben@benramsey.com",
+                    "homepage": "https://benramsey.com"
+                }
+            ],
+            "description": "A PHP 7.2+ library for representing and manipulating collections.",
+            "homepage": "https://github.com/ramsey/collection",
+            "keywords": [
+                "array",
+                "collection",
+                "hash",
+                "map",
+                "queue",
+                "set"
+            ],
+            "time": "2020-01-05T00:22:59+00:00"
+        },
+        {
+            "name": "ramsey/uuid",
+            "version": "4.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ramsey/uuid.git",
+                "reference": "ba8fff1d3abb8bb4d35a135ed22a31c6ef3ede3d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ramsey/uuid/zipball/ba8fff1d3abb8bb4d35a135ed22a31c6ef3ede3d",
+                "reference": "ba8fff1d3abb8bb4d35a135ed22a31c6ef3ede3d",
+                "shasum": ""
+            },
+            "require": {
+                "brick/math": "^0.8",
                 "ext-json": "*",
-                "paragonie/random_compat": "^1 | ^2 | 9.99.99",
-                "php": "^5.4 | ^7 | ^8",
+                "php": "^7.2 || ^8",
+                "ramsey/collection": "^1.0",
                 "symfony/polyfill-ctype": "^1.8"
             },
             "replace": {
                 "rhumsaa/uuid": "self.version"
             },
             "require-dev": {
-                "codeception/aspect-mock": "^1 | ^2",
-                "doctrine/annotations": "^1.2",
-                "goaop/framework": "1.0.0-alpha.2 | ^1 | ^2.1",
-                "jakub-onderka/php-parallel-lint": "^1",
-                "mockery/mockery": "^0.9.11 | ^1",
+                "codeception/aspect-mock": "^3",
+                "dealerdirect/phpcodesniffer-composer-installer": "^0.6.2",
+                "doctrine/annotations": "^1.8",
+                "goaop/framework": "^2",
+                "mockery/mockery": "^1.3",
                 "moontoast/math": "^1.1",
                 "paragonie/random-lib": "^2",
-                "php-mock/php-mock-phpunit": "^0.3 | ^1.1",
-                "phpunit/phpunit": "^4.8 | ^5.4 | ^6.5",
-                "squizlabs/php_codesniffer": "^3.5"
+                "php-mock/php-mock-mockery": "^1.3",
+                "php-mock/php-mock-phpunit": "^2.5",
+                "php-parallel-lint/php-parallel-lint": "^1.1",
+                "phpstan/extension-installer": "^1.0",
+                "phpstan/phpdoc-parser": "0.4.3",
+                "phpstan/phpstan": "^0.12",
+                "phpstan/phpstan-mockery": "^0.12",
+                "phpstan/phpstan-phpunit": "^0.12",
+                "phpunit/phpunit": "^8.5",
+                "psy/psysh": "^0.10.0",
+                "slevomat/coding-standard": "^6.0",
+                "squizlabs/php_codesniffer": "^3.5",
+                "vimeo/psalm": "3.9.4"
             },
             "suggest": {
-                "ext-ctype": "Provides support for PHP Ctype functions",
-                "ext-libsodium": "Provides the PECL libsodium extension for use with the SodiumRandomGenerator",
-                "ext-openssl": "Provides the OpenSSL extension for use with the OpenSslGenerator",
-                "ext-uuid": "Provides the PECL UUID extension for use with the PeclUuidTimeGenerator and PeclUuidRandomGenerator",
-                "moontoast/math": "Provides support for converting UUID to 128-bit integer (in string form).",
+                "ext-bcmath": "Enables faster math with arbitrary-precision integers using BCMath.",
+                "ext-ctype": "Enables faster processing of character classification using ctype functions.",
+                "ext-gmp": "Enables faster math with arbitrary-precision integers using GMP.",
+                "ext-uuid": "Enables the use of PeclUuidTimeGenerator and PeclUuidRandomGenerator.",
                 "paragonie/random-lib": "Provides RandomLib for use with the RandomLibAdapter",
-                "ramsey/uuid-console": "A console application for generating UUIDs with ramsey/uuid",
                 "ramsey/uuid-doctrine": "Allows the use of Ramsey\\Uuid\\Uuid as Doctrine field type."
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.x-dev"
+                    "dev-master": "4.x-dev"
                 }
             },
             "autoload": {
@@ -2983,29 +3103,14 @@
             "license": [
                 "MIT"
             ],
-            "authors": [
-                {
-                    "name": "Ben Ramsey",
-                    "email": "ben@benramsey.com",
-                    "homepage": "https://benramsey.com"
-                },
-                {
-                    "name": "Marijn Huizendveld",
-                    "email": "marijn.huizendveld@gmail.com"
-                },
-                {
-                    "name": "Thibaud Fabre",
-                    "email": "thibaud@aztech.io"
-                }
-            ],
-            "description": "Formerly rhumsaa/uuid. A PHP 5.4+ library for generating RFC 4122 version 1, 3, 4, and 5 universally unique identifiers (UUID).",
+            "description": "A PHP library for generating and working with universally unique identifiers (UUIDs).",
             "homepage": "https://github.com/ramsey/uuid",
             "keywords": [
                 "guid",
                 "identifier",
                 "uuid"
             ],
-            "time": "2020-02-21T04:36:14+00:00"
+            "time": "2020-03-29T20:13:32+00:00"
         },
         {
             "name": "simplito/bigint-wrapper-php",
@@ -5127,16 +5232,17 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:WishKnish/KnishIO-Server-PHP.git",
-                "reference": "e42b983bc5b19a7d42d7049b2190d4ed2f208b78"
+                "reference": "e2a8aa76e10ed73ac34c61a0402af4e928fe3c80"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/WishKnish/KnishIO-Server-PHP/zipball/e42b983bc5b19a7d42d7049b2190d4ed2f208b78",
-                "reference": "e42b983bc5b19a7d42d7049b2190d4ed2f208b78",
+                "url": "https://api.github.com/repos/WishKnish/KnishIO-Server-PHP/zipball/e2a8aa76e10ed73ac34c61a0402af4e928fe3c80",
+                "reference": "e2a8aa76e10ed73ac34c61a0402af4e928fe3c80",
                 "shasum": ""
             },
             "require": {
                 "desktopd/php-sha3-streamable": "@dev",
+                "ext-ctype": "*",
                 "ext-json": "*",
                 "ext-redis": "*",
                 "genealabs/laravel-model-caching": "*",
@@ -5157,7 +5263,7 @@
                 "mopo922/laravel-treats": "^2.0",
                 "nuwave/lighthouse": "^4.6",
                 "php": ">=7.4",
-                "ramsey/uuid": "^3.9.2",
+                "ramsey/uuid": "^3 || ^4",
                 "staudenmeir/eloquent-has-many-deep": "^1.11",
                 "twilio/sdk": "^5.39",
                 "wishknish/knishio-client-php": "@dev"
@@ -5171,10 +5277,6 @@
                 }
             },
             "autoload": {
-                "psr-0": {
-                    "WishKnish\\KnishIO": "src/",
-                    "WishKnish\\KnishIO\\Libraries": "libraries/"
-                },
                 "psr-4": {
                     "WishKnish\\KnishIO\\": "src/",
                     "WishKnish\\KnishIO\\Libraries\\": "libraries/"
@@ -5223,7 +5325,7 @@
                 "issues": "https://github.com/WishKnish/KnishIO-Server-PHP/issues",
                 "source": "https://github.com/WishKnish/KnishIO-Server-PHP"
             },
-            "time": "2020-04-20T03:05:04+00:00"
+            "time": "2020-04-23T11:57:27+00:00"
         },
         {
             "name": "ybr-nx/laravel-mariadb",
@@ -6113,16 +6215,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "8.5.3",
+            "version": "8.5.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "67750516bc02f300e2742fed2f50177f8f37bedf"
+                "reference": "8474e22d7d642f665084ba5ec780626cbd1efd23"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/67750516bc02f300e2742fed2f50177f8f37bedf",
-                "reference": "67750516bc02f300e2742fed2f50177f8f37bedf",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/8474e22d7d642f665084ba5ec780626cbd1efd23",
+                "reference": "8474e22d7d642f665084ba5ec780626cbd1efd23",
                 "shasum": ""
             },
             "require": {
@@ -6192,7 +6294,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2020-03-31T08:52:04+00:00"
+            "time": "2020-04-23T04:39:42+00:00"
         },
         {
             "name": "roave/security-advisories",
@@ -6200,12 +6302,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "09afa996c68c18f49e6487b06adcb2ef27da61fa"
+                "reference": "81541a731da2f245a08666de73169cb5da7ac573"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/09afa996c68c18f49e6487b06adcb2ef27da61fa",
-                "reference": "09afa996c68c18f49e6487b06adcb2ef27da61fa",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/81541a731da2f245a08666de73169cb5da7ac573",
+                "reference": "81541a731da2f245a08666de73169cb5da7ac573",
                 "shasum": ""
             },
             "conflict": {
@@ -6251,6 +6353,8 @@
                 "endroid/qr-code-bundle": "<3.4.2",
                 "enshrined/svg-sanitize": "<0.13.1",
                 "erusev/parsedown": "<1.7.2",
+                "ezsystems/demobundle": ">=5.4,<5.4.6.1",
+                "ezsystems/ezdemo-ls-extension": ">=5.4,<5.4.2.1",
                 "ezsystems/ezfind-ls": ">=5.3,<5.3.6.1|>=5.4,<5.4.11.1|>=2017.12,<2017.12.0.1",
                 "ezsystems/ezplatform": ">=1.7,<1.7.9.1|>=1.13,<1.13.5.1|>=2.5,<2.5.4",
                 "ezsystems/ezplatform-admin-ui": ">=1.3,<1.3.5|>=1.4,<1.4.6",
@@ -6339,7 +6443,7 @@
                 "silverstripe/userforms": "<3",
                 "simple-updates/phpwhois": "<=1",
                 "simplesamlphp/saml2": "<1.10.6|>=2,<2.3.8|>=3,<3.1.4",
-                "simplesamlphp/simplesamlphp": "<1.18.4",
+                "simplesamlphp/simplesamlphp": "<1.18.6",
                 "simplesamlphp/simplesamlphp-module-infocard": "<1.0.1",
                 "simplito/elliptic-php": "<1.0.6",
                 "slim/slim": "<2.6",
@@ -6456,7 +6560,7 @@
                 }
             ],
             "description": "Prevents installation of composer packages with known security vulnerabilities: no API, simply require it",
-            "time": "2020-04-15T04:56:51+00:00"
+            "time": "2020-04-23T00:01:30+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
