@@ -13,7 +13,9 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        \Laravelista\LumenVendorPublish\VendorPublishCommand::class
+        \Laravelista\LumenVendorPublish\VendorPublishCommand::class,
+        Commands\RebondMoleculesCommand::class,
+        Commands\CleanMoleculesCommand::class,
     ];
 
     /**
