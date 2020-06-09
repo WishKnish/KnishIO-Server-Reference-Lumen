@@ -1,8 +1,0 @@
-input MoleculeInput {
-    molecularHash: String!,
-    cellSlug: String,
-    bundle: String,
-    status: String,
-    createdAt: String
-    atoms: [ AtomsInput! ]!
-}

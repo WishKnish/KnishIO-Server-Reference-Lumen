@@ -1,6 +1,0 @@
-type MetaType {
-    metaType: String @field(resolver: "WishKnish\\KnishIO\\GraphQL\\Resolves\\MetaType@resolveMetaType"),
-    instances: [ MetaInstance ],
-    metas: [ Meta ],
-    createdAt: String @field(resolver: "WishKnish\\KnishIO\\GraphQL\\Resolves\\MetaType@resolveCreatedAt")
-}
