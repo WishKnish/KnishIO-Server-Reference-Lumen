@@ -2407,6 +2407,77 @@
             "time": "2020-06-21T20:50:13+00:00"
         },
         {
+            "name": "league/csv",
+            "version": "9.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/csv.git",
+                "reference": "7351a74625601914409b42b32cabb91a93773b7b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/csv/zipball/7351a74625601914409b42b32cabb91a93773b7b",
+                "reference": "7351a74625601914409b42b32cabb91a93773b7b",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "php": "^7.2.5"
+            },
+            "require-dev": {
+                "ext-curl": "*",
+                "friendsofphp/php-cs-fixer": "^2.16",
+                "phpstan/phpstan": "^0.12.0",
+                "phpstan/phpstan-phpunit": "^0.12.0",
+                "phpstan/phpstan-strict-rules": "^0.12.0",
+                "phpunit/phpunit": "^8.0"
+            },
+            "suggest": {
+                "ext-dom": "Required to use the XMLConverter and or the HTMLConverter classes",
+                "ext-iconv": "Needed to ease transcoding CSV using iconv stream filters"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "9.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "League\\Csv\\": "src"
+                },
+                "files": [
+                    "src/functions_include.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ignace Nyamagana Butera",
+                    "email": "nyamsprod@gmail.com",
+                    "homepage": "https://github.com/nyamsprod/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "CSV data manipulation made easy in PHP",
+            "homepage": "http://csv.thephpleague.com",
+            "keywords": [
+                "convert",
+                "csv",
+                "export",
+                "filter",
+                "import",
+                "read",
+                "transform",
+                "write"
+            ],
+            "time": "2020-03-17T15:15:35+00:00"
+        },
+        {
             "name": "league/flysystem",
             "version": "1.0.69",
             "source": {
@@ -5705,6 +5776,99 @@
             "time": "2020-06-02T14:08:54+00:00"
         },
         {
+            "name": "wapmorgan/unified-archive",
+            "version": "0.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/wapmorgan/UnifiedArchive.git",
+                "reference": "4d136dcfd2ee4d9b83edf0eb1cd116a8a78181ff"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/wapmorgan/UnifiedArchive/zipball/4d136dcfd2ee4d9b83edf0eb1cd116a8a78181ff",
+                "reference": "4d136dcfd2ee4d9b83edf0eb1cd116a8a78181ff",
+                "shasum": ""
+            },
+            "require": {
+                "ext-fileinfo": "*",
+                "php": ">=5.5.0"
+            },
+            "replace": {
+                "wapmorgan/cam": "1.0.2"
+            },
+            "require-dev": {
+                "docopt/docopt": "~1.0",
+                "phpunit/phpunit": "~4.8"
+            },
+            "suggest": {
+                "bin-ncompress": "TAR.Z support",
+                "docopt/docopt": "Requirement for cam (Console Archive Manager)",
+                "ext-bz2": "BZ2 and TAR.BZ2 support",
+                "ext-phar": "TAR support",
+                "ext-rar": "RAR support",
+                "ext-xz": "XZ and TAR.XZ support",
+                "ext-zip": "ZIP support",
+                "ext-zlib": "GZ and TAR.GZ support",
+                "gemorroj/archive7z": "7ZIP support",
+                "pear/archive_tar": "another TAR support",
+                "phpclasses/php-iso-file": "ISO support",
+                "wapmorgan/cab-archive": "CAB support"
+            },
+            "bin": [
+                "bin/cam"
+            ],
+            "type": "library",
+            "extra": {
+                "phar-builder": {
+                    "compression": "BZip2",
+                    "name": "cam.phar",
+                    "output-dir": "./",
+                    "entry-point": "bin/cam",
+                    "include": [
+                        "bin",
+                        "src",
+                        "vendor"
+                    ],
+                    "events": {
+                        "command.package.start": "git describe --tags > bin/version.txt",
+                        "command.package.end": "chmod +x cam.phar && rm bin/version.txt"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "wapmorgan\\UnifiedArchive\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "wapmorgan",
+                    "email": "wapmorgan@gmail.com",
+                    "role": "developer"
+                }
+            ],
+            "description": "UnifiedArchive - unified interface to all popular archive formats (zip, 7z, rar, gz, bz2, xz, cab, tar, tar.gz, tar.bz2, tar.xz, tar.Z, iso) for listing, reading, extracting and creation + built-in console archive manager + PclZip-like interface for zip archives.",
+            "keywords": [
+                "7z",
+                "archive",
+                "bzip2",
+                "cab",
+                "compression",
+                "gzip",
+                "iso",
+                "lzma2",
+                "ncompress",
+                "rar",
+                "tar",
+                "zip"
+            ],
+            "time": "2020-02-02T00:42:45+00:00"
+        },
+        {
             "name": "webonyx/graphql-php",
             "version": "v0.13.8",
             "source": {
@@ -5837,12 +6001,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:WishKnish/KnishIO-Server-PHP.git",
-                "reference": "3020edb568b401af18aace9ca7202462a3ad384c"
+                "reference": "a26804c3fda7999a03e2175ae190980c8e40db7d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/WishKnish/KnishIO-Server-PHP/zipball/3020edb568b401af18aace9ca7202462a3ad384c",
-                "reference": "3020edb568b401af18aace9ca7202462a3ad384c",
+                "url": "https://api.github.com/repos/WishKnish/KnishIO-Server-PHP/zipball/a26804c3fda7999a03e2175ae190980c8e40db7d",
+                "reference": "a26804c3fda7999a03e2175ae190980c8e40db7d",
                 "shasum": ""
             },
             "require": {
@@ -5865,12 +6029,14 @@
                 "illuminate/support": "^6.8",
                 "illuminate/validation": "^6.8",
                 "illuminate/view": "^6.8",
+                "league/csv": "^9.6",
                 "mopo922/laravel-treats": "^2.0",
                 "nuwave/lighthouse": "^4.6",
                 "php": ">=7.4",
                 "ramsey/uuid": "^3 || ^4",
                 "staudenmeir/eloquent-has-many-deep": "^1.11",
                 "twilio/sdk": "^5.39",
+                "wapmorgan/unified-archive": "^0.2.0",
                 "wishknish/knishio-client-php": "@dev"
             },
             "type": "library",
@@ -5930,7 +6096,7 @@
                 "issues": "https://github.com/WishKnish/KnishIO-Server-PHP/issues",
                 "source": "https://github.com/WishKnish/KnishIO-Server-PHP"
             },
-            "time": "2020-06-22T11:51:46+00:00"
+            "time": "2020-06-25T04:32:06+00:00"
         },
         {
             "name": "ybr-nx/laravel-mariadb",
