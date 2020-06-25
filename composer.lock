@@ -5922,16 +5922,16 @@
         },
         {
             "name": "wishknish/knishio-client-php",
-            "version": "0.2.0",
+            "version": "dev-staging",
             "source": {
                 "type": "git",
                 "url": "https://github.com/WishKnish/KnishIO-Client-PHP.git",
-                "reference": "aede6338fd27ec2b721ea04e9c02d119bb22f401"
+                "reference": "38e53a11f9bda5e1f2c1a482f0e46d9800130366"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/WishKnish/KnishIO-Client-PHP/zipball/aede6338fd27ec2b721ea04e9c02d119bb22f401",
-                "reference": "aede6338fd27ec2b721ea04e9c02d119bb22f401",
+                "url": "https://api.github.com/repos/WishKnish/KnishIO-Client-PHP/zipball/38e53a11f9bda5e1f2c1a482f0e46d9800130366",
+                "reference": "38e53a11f9bda5e1f2c1a482f0e46d9800130366",
                 "shasum": ""
             },
             "require": {
@@ -5948,15 +5948,15 @@
             },
             "require-dev": {
                 "fzaninotto/faker": "^1.9",
-                "illuminate/console": "5.7.* || 5.8.* || ^6.0",
-                "illuminate/events": "5.7.* || 5.8.* || ^6.0",
+                "illuminate/console": "5.4.* || 5.8.* || ^6.0",
+                "illuminate/events": "5.4.* || 5.8.* || ^6.0",
                 "symfony/var-dumper": "^3.4|^4.0|^5.0"
             },
             "type": "library",
             "autoload": {
                 "psr-4": {
                     "WishKnish\\KnishIO\\Client\\": "src/",
-                    "Console\\": "bin/"
+                    "Console\\": "bin/Console/"
                 },
                 "files": [
                     "./src/Helpers/helpers.php"
@@ -5993,7 +5993,7 @@
                 "ledger",
                 "wishknish"
             ],
-            "time": "2020-04-10T11:50:41+00:00"
+            "time": "2020-06-24T11:57:13+00:00"
         },
         {
             "name": "wishknish/knishio-server-php",
@@ -6001,12 +6001,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:WishKnish/KnishIO-Server-PHP.git",
-                "reference": "a26804c3fda7999a03e2175ae190980c8e40db7d"
+                "reference": "4b83c3caeedc587b45d1114caf3539b0efa614b9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/WishKnish/KnishIO-Server-PHP/zipball/a26804c3fda7999a03e2175ae190980c8e40db7d",
-                "reference": "a26804c3fda7999a03e2175ae190980c8e40db7d",
+                "url": "https://api.github.com/repos/WishKnish/KnishIO-Server-PHP/zipball/4b83c3caeedc587b45d1114caf3539b0efa614b9",
+                "reference": "4b83c3caeedc587b45d1114caf3539b0efa614b9",
                 "shasum": ""
             },
             "require": {
@@ -6037,7 +6037,7 @@
                 "staudenmeir/eloquent-has-many-deep": "^1.11",
                 "twilio/sdk": "^5.39",
                 "wapmorgan/unified-archive": "^0.2.0",
-                "wishknish/knishio-client-php": "@dev"
+                "wishknish/knishio-client-php": "dev-staging"
             },
             "type": "library",
             "extra": {
@@ -6096,7 +6096,7 @@
                 "issues": "https://github.com/WishKnish/KnishIO-Server-PHP/issues",
                 "source": "https://github.com/WishKnish/KnishIO-Server-PHP"
             },
-            "time": "2020-06-25T04:32:06+00:00"
+            "time": "2020-06-25T12:03:36+00:00"
         },
         {
             "name": "ybr-nx/laravel-mariadb",
