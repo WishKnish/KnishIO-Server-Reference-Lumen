@@ -36,7 +36,11 @@
     "autoload-dev": {
         "classmap": [
             "tests/"
-        ]
+        ],
+        "psr-4": {
+            "WishKnish\\KnishIO\\Tests\\": "vendor/wishknish/knishio-server-php/tests/",
+            "WishKnish\\KnishIO\\Client\\Tests\\": "vendor/wishknish/knishio-client-php/tests/"
+        }
     },
     "scripts": {
         "post-root-package-install": [
