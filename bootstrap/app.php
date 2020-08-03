@@ -23,6 +23,13 @@ $app = new Laravel\Lumen\Application(
 
 $app->withFacades();
 
+// --- MongoDB
+$app->register(\Jenssegers\Mongodb\MongodbServiceProvider::class);
+\Illuminate\Database\Connection::resolverFor('mongodb', static function( $connection, $database, $prefix, $config ) {
+    return new \Jenssegers\Mongodb\Connection( $config );
+});
+// ---
+
 $app->withEloquent();
 
 /*
