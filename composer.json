@@ -13,9 +13,10 @@
     "require": {
         "php": "^7.2",
         "doctrine/dbal": "^2.10",
+        "jenssegers/mongodb": "^3.6",
         "laravel/lumen-framework": "^6.0",
         "laravelista/lumen-vendor-publish": "6.0",
-        "wishknish/knishio-server-php": "dev-staging",
+        "wishknish/knishio-server-php": "dev-vladimir-makarov-dev",
         "ybr-nx/laravel-mariadb": "^1.0"
     },
     "require-dev": {
