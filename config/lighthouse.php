@@ -37,6 +37,9 @@ return [
             // middleware, this delegates auth and permission checks to the field level.
             // If you want to use another guard, change the suffix (remove for default).
             \Nuwave\Lighthouse\Support\Http\Middleware\AttemptAuthentication::class . ':api',
+
+            // @todo Uncomment to implement access token
+            // \WishKnish\KnishIO\GraphQL\Middleware\BundleAccessMiddleware::class,
         ],
 
         /*
