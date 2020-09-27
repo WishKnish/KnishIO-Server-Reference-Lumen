@@ -16,6 +16,7 @@ class Kernel extends ConsoleKernel
         \Laravelista\LumenVendorPublish\VendorPublishCommand::class,
         Commands\RebondMoleculesCommand::class,
         Commands\CleanMoleculesCommand::class,
+        Commands\BenchmarkCommand::class,
     ];
 
     /**
