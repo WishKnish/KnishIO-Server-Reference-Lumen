@@ -28,6 +28,9 @@ class BenchmarkMoleculeRequestFactory
         $remainder_wallet = Wallet::create( $client->secret(), 'USER' );
         $molecule = $client->createMolecule( $client->secret(), $source_wallet, $remainder_wallet );
 
+        // Defining signing parameters
+        // $molecule = $client->createMolecule();
+
         $metas = [];
         for ( $meta_num = 0; $meta_num < $metas_count; $meta_num++ ) {
             $metas[ 'meta_' . $meta_num ] = Crypto::generateSecret( null, 64 );

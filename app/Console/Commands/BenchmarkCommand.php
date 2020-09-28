@@ -154,7 +154,6 @@ class BenchmarkCommand extends Command
 
             // Defining client and authenticating the session
             $client = new KnishIOClient( url() . '/graphql' );
-            $client->setSecret( $secret );
             $client->authentication( $secret );
 
             // $instance->info( 'Creating '. $this->molecules_count.' molecules for bundle ' . $bundle . '...' );
