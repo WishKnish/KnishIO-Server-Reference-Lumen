@@ -63,7 +63,7 @@ class BenchmarkCommand extends Command
         set_time_limit( 9999 );
         try {
             // Options
-            $this->info( 'SHA3 Native Extension: ' . function_exists( 'shake256' ) ? 'Yes' : 'No' );
+            $this->info( 'SHA3 Native Extension: ' . ( function_exists( 'shake256' ) ? 'Yes' : 'No' ) );
             $this->thread_count = $this->option( 'threads' );
             $this->info( 'Threads: ' . $this->thread_count );
             $this->metas_count = $this->option( 'metas' );
