@@ -7,6 +7,7 @@ use Psr\Http\Message\RequestInterface;
 use ReflectionException;
 use WishKnish\KnishIO\Client\KnishIOClient;
 use WishKnish\KnishIO\Client\Libraries\Crypto;
+use WishKnish\KnishIO\Client\Molecule;
 use WishKnish\KnishIO\Client\Query\QueryMoleculePropose;
 use WishKnish\KnishIO\Client\Wallet;
 
@@ -15,31 +16,17 @@ use WishKnish\KnishIO\Client\Wallet;
  */
 class BenchmarkMoleculeRequestFactory
 {
+
+
+
     /**
      * @param KnishIOClient $client
-     * @param int $metas_count
+     * @param Molecule $molecule
      * @return RequestInterface
-     * @throws Exception|ReflectionException
+     * @throws Exception
      */
-    public static function create ( KnishIOClient $client, int $metas_count ): RequestInterface
+    public static function create ( KnishIOClient $client, Molecule $molecule ): RequestInterface
     {
-        // Defining signing parameters
-        $source_wallet = Wallet::create( $client->secret(), 'USER' );
-        $remainder_wallet = Wallet::create( $client->secret(), 'USER' );
-        $molecule = $client->createMolecule( $client->secret(), $source_wallet, $remainder_wallet );
-
-        // Defining signing parameters
-        // $molecule = $client->createMolecule();
-
-        $metas = [];
-        for ( $meta_num = 0; $meta_num < $metas_count; $meta_num++ ) {
-            $metas[ 'meta_' . $meta_num ] = Crypto::generateSecret( null, 64 );
-        }
-
-        // Initializing molecule content
-        $molecule->initMeta( $metas, 'benchmarkType', 'benchmarkId' . random_int( 0, 100 ) );
-        $molecule->sign();
-
         // Preparing Guzzle request
         $query = $client->createMoleculeQuery( QueryMoleculePropose::class, $molecule );
 

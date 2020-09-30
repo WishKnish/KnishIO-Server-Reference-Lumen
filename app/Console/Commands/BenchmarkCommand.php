@@ -10,6 +10,8 @@
 namespace App\Console\Commands;
 
 use App\Console\Commands\Benchmark\BenchmarkBundleFactory;
+use App\Console\Commands\Benchmark\BenchmarkMetaTypeRequestFactory;
+use App\Console\Commands\Benchmark\BenchmarkMoleculeFactory;
 use App\Console\Commands\Benchmark\BenchmarkMoleculeRequestFactory;
 use App\Console\Commands\Benchmark\BenchmarkCellFactory;
 use Exception;
@@ -45,6 +47,15 @@ class BenchmarkCommand extends Command
      */
     protected $description = 'Benchmark molecule performance';
 
+    // Benchmarks to execute separated tasks
+    protected $benchmarks = [
+        'benchmark_write' => 'BENCHMARK WRITE',
+        'benchmark_read' => 'BENCHMARK READ',
+    ];
+
+    // Requests for the Pool
+    protected $requests = [];
+
     protected $cell_count = 1;
     protected $thread_count;
     protected $metas_count;
@@ -52,6 +63,9 @@ class BenchmarkCommand extends Command
     protected $cells = [];
     protected $bundles = [];
     protected $molecules = [];
+
+
+
 
     /**
      * Execute the console command.
@@ -71,34 +85,34 @@ class BenchmarkCommand extends Command
             $this->info( 'Molecules per bundle: ' . $this->molecules_count );
 
             // Bootstrapping assets
-            $this->comment( '' );
-            $this->comment( '##########################' );
-            $this->comment( '## BOOTSTRAPPING ASSETS ##' );
-            $this->comment( '##########################' );
+            $this->commentTitle( 'BOOTSTRAPPING ASSETS' );
             $this->bootstrap();
 
-            // Starting benchmark
-            $this->comment( '' );
-            $this->comment( '########################' );
-            $this->comment( '## STARTING BENCHMARK ##' );
-            $this->comment( '########################' );
-            $results = $this->benchmark();
+
+            // Execute all benchmarks
+            $all_results = [];  // All results
+            $results = []; // Results from the previous call
+            foreach ( $this->benchmarks as $key => $title ) {
+                $this->commentTitle( 'STARTING ' . $title );
+
+                // Execute benchmark callback with the previous results
+                $results = $this->$key( array_get( $this->requests, $key ), $results );
+
+                // Save results to the common list
+                $all_results[$key] = $results;
+            }
 
             // Cleaning up
-            $this->comment( '' );
-            $this->comment( '#################' );
-            $this->comment( '## CLEANING UP ##' );
-            $this->comment( '#################' );
+            $this->commentTitle( 'CLEANING UP' );
             $this->cleanup();
 
             // Computing results
-            $this->comment( '' );
-            $this->comment( '#######################' );
-            $this->comment( '## BENCHMARK RESULTS ##' );
-            $this->comment( '#######################' );
-            $this->info( 'Total Molecules Sent: ' . ( $results[ 'success' ] + $results[ 'fail' ] ) );
-            $this->info( 'Success: ' . $results[ 'success' ] . ' Failure: ' . $results[ 'fail' ] );
-            $this->info( 'Time Spent: ' . round( $results[ 'time' ], 2 ) . ' TPS: ' . round( ( $results[ 'success' ] + $results[ 'fail' ] ) / $results[ 'time' ], 2 ) . ' Successful TPS: ' . round( $results[ 'success' ] / $results[ 'time' ], 2 ) );
+            foreach ( $all_results as $fn => $results ) {
+                $this->commentTitle($this->benchmarks[$fn] . ' RESULTS');
+                $this->info('Total queries: ' . ($results['success'] + $results['fail']));
+                $this->info('Success: ' . $results['success'] . ' Failure: ' . $results['fail']);
+                $this->info('Time Spent: ' . round($results['time'], 2) . ' TPS: ' . round(($results['success'] + $results['fail']) / $results['time'], 2) . ' Successful TPS: ' . round($results['success'] / $results['time'], 2));
+            }
 
             return true;
         }
@@ -107,6 +121,22 @@ class BenchmarkCommand extends Command
         }
         return false;
     }
+
+
+    /**
+     * @param string $title
+     */
+    protected function commentTitle ( string $title )
+    {
+        $title = '## '. $title .' ##';
+        $delimiter = str_repeat('#', strlen($title));
+
+        $this->comment( '' );
+        $this->comment( $delimiter );
+        $this->comment( $title );
+        $this->comment( $delimiter );
+    }
+
 
     /**
      * @throws Exception|ReflectionException
@@ -135,11 +165,6 @@ class BenchmarkCommand extends Command
             return $bundle;
         };
 
-        // Method to trigger Molecule Request creation
-        $molecule_request_producer = static function ( KnishIOClient $client, int $metas_count ) {
-            return BenchmarkMoleculeRequestFactory::create( $client, $metas_count );
-        };
-
         // Creating Cells
         for ( $cell_num = 0; $cell_num < $this->cell_count; $cell_num++ ) {
             // $cells[] = \parallel\run( $producer, [ 'TEST' . $i ] )->value();
@@ -160,32 +185,75 @@ class BenchmarkCommand extends Command
 
             // Creating Molecule Requests
             for ( $molecule_num = 0; $molecule_num < $this->molecules_count; $molecule_num++ ) {
-                $this->molecules[] = $molecule_request_producer( $client, $this->metas_count );
+
+                // Create a molecule
+                $molecule = BenchmarkMoleculeFactory::create( $client, $this->metas_count );
+
+                // Save molecule to the common list
+                $this->molecules[ $molecule->molecularHash ] = $molecule;
+
+                // Create a request
+                $this->requests[ 'benchmark_write' ][] = BenchmarkMoleculeRequestFactory::create( $client, $molecule );
+
                 $instance->info( 'Molecule ' . ( $molecule_num + 1 ) . ' has been created.' );
             }
         }
+
+
+        // !!! @todo here used only single $client
+        $this->requests[ 'benchmark_read' ] = static function ( $related_results ) {
+
+            // Defining client and authenticating the session
+            $secret = Crypto::generateSecret();
+            $client = new KnishIOClient( url() . '/graphql' );
+            $client->authentication( $secret );
+
+            // Accumulate all meta types & ids
+            $metaTypes = []; $metaIds = [];
+            foreach ( $related_results[ 'accepted_molecules' ] as $molecule ) {
+                $metaTypes[] = $molecule->atoms[0]->metaType;
+                $metaTypes = array_unique( $metaTypes );
+                $metaIds[] = $molecule->atoms[0]->metaId;
+            }
+
+            // @todo: add here custom random logic based on $metaTypes, $metaIds data
+            $requests = [];
+            foreach ( $metaIds as $metaId ) {
+                $requests[] = BenchmarkMetaTypeRequestFactory::create(
+                    $client, [ $metaTypes[0] ], [ $metaId ]
+                );
+            }
+
+            return $requests;
+        };
+
     }
 
     /**
-     * @return int[]
+     * @param $requests
+     * @param array $previous_results
+     * @return array
      */
-    protected function benchmark (): array
+    protected function benchmark_write ( $requests, array $related_results ): array
     {
         $this->info( 'Starting benchmark...' );
-        $benchmark_result = [ 'success' => 0, 'fail' => 0, 'time' => 0 ];
+        $benchmark_result = [ 'success' => 0, 'fail' => 0, 'time' => 0, 'accepted_molecules' => [] ];
         $start_time = microtime( true );
 
         // Generic client for sending the requests
         $client = new KnishIOClient( url() . '/graphql' );
 
         // Asynchronous broadcast of molecules
-        $pool = new Pool( $client->client(), $this->molecules, [ 'concurrency' => $this->thread_count, 'fulfilled' => function ( ResponseInterface $response, $index ) use ( &$benchmark_result ) {
+        $pool = new Pool( $client->client(), $requests, [ 'concurrency' => $this->thread_count, 'fulfilled' => function ( ResponseInterface $response, $index ) use ( &$benchmark_result ) {
             $data = json_decode( $response->getBody()->getContents(), true );
-            $molecule = $data[ 'data' ][ 'ProposeMolecule' ];
+            $molecule = array_get( $data, 'data.ProposeMolecule' );
 
+            $benchmark_result[ 'metas' ] = [];
             if ( $molecule[ 'status' ] === 'accepted' ) {
                 $this->info( 'Molecule ' . $index . ' has been accepted.' );
                 $benchmark_result[ 'success' ]++;
+                $benchmark_result[ 'metas' ] = '';
+                $benchmark_result[ 'accepted_molecules' ][] = array_get( $this->molecules, $molecule[ 'molecularHash' ] );
             }
             else {
                 $this->error( 'Molecule ' . $index . ' has been rejected due to: ' . $molecule[ 'reason' ] );
@@ -206,6 +274,52 @@ class BenchmarkCommand extends Command
 
         return $benchmark_result;
     }
+
+
+    /**
+     * @param $requests
+     * @param array $results
+     * @return array
+     */
+    protected function benchmark_read ( $requests, array $related_results ): array
+    {
+        $this->info( 'Starting benchmark...' );
+        $benchmark_result = [ 'success' => 0, 'fail' => 0, 'time' => 0 ];
+        $start_time = microtime( true );
+
+        // Generic client for sending the requests
+        $client = new KnishIOClient( url() . '/graphql' );
+
+        // Asynchronous broadcast of molecules
+        $pool = new Pool( $client->client(), $requests( $related_results ), [ 'concurrency' => $this->thread_count, 'fulfilled' => function ( ResponseInterface $response, $index ) use ( &$benchmark_result ) {
+            $data = json_decode( $response->getBody()->getContents(), true );
+            $metaTypes = array_get( $data, 'data.MetaType' );
+
+            if ( $metaTypes ) {
+                $benchmark_result[ 'success' ]++;
+                $this->info( 'MetaTypeQuery ' . $index . ' has been executed correctly. Got '. count( $metaTypes ) .' record(s).' );
+            }
+            else {
+                $benchmark_result[ 'fail' ]++;
+                $this->error( 'MetaTypeQuery ' . $index . ' has errors.' );
+            }
+
+        }, 'rejected' => function ( $reason, $index ) use ( &$benchmark_result ) {
+            $this->error( 'MetaType query ' . $index . ' has failed due to: ' . $reason );
+            $benchmark_result[ 'fail' ]++;
+        }, ] );
+
+        $promise = $pool->promise();  // Start transfers and create a promise
+        $promise->wait();   // Force the pool of requests to complete.
+
+        // $results = \GuzzleHttp\Promise\unwrap($promises);
+        $end_time = microtime( true );
+        $benchmark_result[ 'time' ] = $end_time - $start_time;
+        $this->info( 'Benchmark complete.' );
+
+        return $benchmark_result;
+    }
+
 
     protected function cleanup (): void
     {
