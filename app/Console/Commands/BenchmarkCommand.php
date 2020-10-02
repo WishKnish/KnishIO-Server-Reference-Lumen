@@ -249,14 +249,16 @@ class BenchmarkCommand extends Command
             $molecule = array_get( $data, 'data.ProposeMolecule' );
 
             $benchmark_result[ 'metas' ] = [];
-            if ( $molecule[ 'status' ] === 'accepted' ) {
+            if ( $molecule && $molecule[ 'status' ] === 'accepted' ) {
                 $this->info( 'Molecule ' . $index . ' has been accepted.' );
                 $benchmark_result[ 'success' ]++;
                 $benchmark_result[ 'metas' ] = '';
                 $benchmark_result[ 'accepted_molecules' ][] = array_get( $this->molecules, $molecule[ 'molecularHash' ] );
             }
             else {
-                $this->error( 'Molecule ' . $index . ' has been rejected due to: ' . $molecule[ 'reason' ] );
+                $error = array_has( $data, 'message' ) ?
+                    array_get( $data, 'message' ) : array_get( $molecule, 'reason' );
+                $this->error( 'Molecule ' . $index . ' has been rejected due to: "' . $error . '"' );
                 $benchmark_result[ 'fail' ]++;
             }
         }, 'rejected' => function ( $reason, $index ) use ( &$benchmark_result ) {

@@ -15,6 +15,7 @@
         "doctrine/dbal": "^2.10",
         "laravel/lumen-framework": "^6.0",
         "laravelista/lumen-vendor-publish": "6.0",
+        "mongodb/mongodb": "^1.7",
         "wishknish/knishio-server-php": "@dev",
         "ybr-nx/laravel-mariadb": "^1.0"
     },
@@ -57,7 +58,7 @@
     "repositories": [
         {
             "type": "path",
-            "url": "../KnishIOServer",
+            "url": "../KnishIO-Server-PHP",
             "options": {
                 "symlink": true
             }
