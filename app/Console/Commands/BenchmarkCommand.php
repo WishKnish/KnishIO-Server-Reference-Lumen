@@ -56,6 +56,7 @@ class BenchmarkCommand extends Command
     // Requests for the Pool
     protected $requests = [];
 
+    protected $graphql_url;
     protected $cell_count = 1;
     protected $thread_count;
     protected $metas_count;
@@ -64,6 +65,47 @@ class BenchmarkCommand extends Command
     protected $bundles = [];
     protected $molecules = [];
 
+
+    /**
+     * @param $all
+     * @param $count
+     */
+    public static function metaIdAllCombinations ( $all, $count, $start_combination_length = 2 ) : array
+    {
+        $result = [];
+        for ($length = $start_combination_length, $lengthMax = count( $all ); $length <= $lengthMax; $length++ ) {
+            static::metaIdCombinations( $result, $count, $all, [], $length );
+        }
+        return $result;
+    }
+
+
+    /**
+     * @param $result
+     * @param $all
+     * @param $custom
+     * @param $length
+     */
+    public static function metaIdCombinations ( &$result, $count, $all, $custom, $length )
+    {
+        // Check total count
+        if ( count($result) >= $count ) {
+            return;
+        }
+
+        // Check length
+        if ( count( $custom ) >= $length ) {
+            $result[] = $custom;
+            return;
+        }
+
+        // All combinations
+        foreach ( $all as $item ) {
+            if ( !in_array( $item, $custom ) ) {
+                static::metaIdCombinations($result, $count, $all, array_merge($custom, [$item]), $length);
+            }
+        }
+    }
 
 
 
@@ -77,6 +119,8 @@ class BenchmarkCommand extends Command
         set_time_limit( 9999 );
         try {
             // Options
+            $this->graphql_url = url() . '/graphql';
+            $this->info( 'GraphQL url: '. $this->graphql_url );
             $this->thread_count = $this->option( 'threads' );
             $this->info( 'Threads: ' . $this->thread_count );
             $this->metas_count = $this->option( 'metas' );
@@ -178,7 +222,7 @@ class BenchmarkCommand extends Command
             $this->bundles[ $bundle ] = [];
 
             // Defining client and authenticating the session
-            $client = new KnishIOClient( url() . '/graphql' );
+            $client = new KnishIOClient( $this->graphql_url );
             $client->authentication( $secret );
 
             // $instance->info( 'Creating '. $this->molecules_count.' molecules for bundle ' . $bundle . '...' );
@@ -201,11 +245,12 @@ class BenchmarkCommand extends Command
 
 
         // !!! @todo here used only single $client
-        $this->requests[ 'benchmark_read' ] = static function ( $related_results ) {
+        $self = $this;
+        $this->requests[ 'benchmark_read' ] = static function ( $related_results ) use ( $self ) {
 
             // Defining client and authenticating the session
             $secret = Crypto::generateSecret();
-            $client = new KnishIOClient( url() . '/graphql' );
+            $client = new KnishIOClient( $self->graphql_url );
             $client->authentication( $secret );
 
             // Accumulate all meta types & ids
@@ -216,11 +261,14 @@ class BenchmarkCommand extends Command
                 $metaIds[] = $molecule->atoms[0]->metaId;
             }
 
-            // @todo: add here custom random logic based on $metaTypes, $metaIds data
+            // Generate combinations: @todo add here custom random logic based on $metaTypes, $metaIds data
+            $metaIdBunches = static::metaIdAllCombinations ( $metaIds, count($metaIds) );
+
+            // Generate requests
             $requests = [];
-            foreach ( $metaIds as $metaId ) {
+            foreach ( $metaIdBunches as $metaIdBunch ) {
                 $requests[] = BenchmarkMetaTypeRequestFactory::create(
-                    $client, [ $metaTypes[0] ], [ $metaId ]
+                    $client, [ $metaTypes[0] ], $metaIdBunch
                 );
             }
 
@@ -241,7 +289,7 @@ class BenchmarkCommand extends Command
         $start_time = microtime( true );
 
         // Generic client for sending the requests
-        $client = new KnishIOClient( url() . '/graphql' );
+        $client = new KnishIOClient( $this->graphql_url );
 
         // Asynchronous broadcast of molecules
         $pool = new Pool( $client->client(), $requests, [ 'concurrency' => $this->thread_count, 'fulfilled' => function ( ResponseInterface $response, $index ) use ( &$benchmark_result ) {
@@ -290,7 +338,7 @@ class BenchmarkCommand extends Command
         $start_time = microtime( true );
 
         // Generic client for sending the requests
-        $client = new KnishIOClient( url() . '/graphql' );
+        $client = new KnishIOClient( $this->graphql_url );
 
         // Asynchronous broadcast of molecules
         $pool = new Pool( $client->client(), $requests( $related_results ), [ 'concurrency' => $this->thread_count, 'fulfilled' => function ( ResponseInterface $response, $index ) use ( &$benchmark_result ) {
@@ -298,8 +346,9 @@ class BenchmarkCommand extends Command
             $metaTypes = array_get( $data, 'data.MetaType' );
 
             if ( $metaTypes ) {
+                $metaInstances = array_get( $metaTypes, '0.instances' );
                 $benchmark_result[ 'success' ]++;
-                $this->info( 'MetaTypeQuery ' . $index . ' has been executed correctly. Got '. count( $metaTypes ) .' record(s).' );
+                $this->info( 'MetaTypeQuery ' . $index . ' has been executed correctly. Got '. count( $metaInstances ) .' record(s).' );
             }
             else {
                 $benchmark_result[ 'fail' ]++;
