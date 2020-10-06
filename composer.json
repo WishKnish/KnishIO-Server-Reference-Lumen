@@ -16,7 +16,7 @@
         "laravel/lumen-framework": "^6.0",
         "laravelista/lumen-vendor-publish": "6.0",
         "mongodb/mongodb": "^1.7",
-        "wishknish/knishio-server-php": "@dev",
+        "wishknish/knishio-server-php": "dev-staging",
         "ybr-nx/laravel-mariadb": "^1.0"
     },
     "require-dev": {
@@ -57,18 +57,8 @@
     "prefer-stable": true,
     "repositories": [
         {
-            "type": "path",
-            "url": "../KnishIO-Server-PHP",
-            "options": {
-                "symlink": true
-            }
-        },
-        {
-            "type": "path",
-            "url": "../KnishIO-Client-PHP",
-            "options": {
-                "symlink": true
-            }
+            "type": "vcs",
+            "url": "git@github.com:wishknish/knishio-server-php.git"
         },
         {
             "type": "github",
