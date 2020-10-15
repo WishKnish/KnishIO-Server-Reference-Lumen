@@ -17,6 +17,44 @@ use WishKnish\KnishIO\Models\Atom;
 use WishKnish\KnishIO\Models\Token;
 
 
+// Custom schema => json-ld
+$router->get( 'schema.jsonld', function() use ( $router ) {
+
+    $metaContext = new \WishKnish\KnishIO\Models\Meta\MetaContext( 'local' );
+
+    header( 'application/ld+json' );
+    echo $metaContext->getJsonldObject()
+        ->toJsonldSchema();
+} );
+
+// Custom schema overview
+$router->get( 'schema', function() use ( $router ) {
+
+    $metaContext = new \WishKnish\KnishIO\Models\Meta\MetaContext( 'local' );
+    $jsonldObject = $metaContext->getJsonldObject();
+
+    // Get only parent jsonld types @todo add cascade check to disable child with childs
+    $jsonldTypes = [];
+    foreach( $jsonldObject->graph() as $jsonldType ) {
+        if ( $jsonldType->fields() ) {
+            $jsonldTypes[] = $jsonldType;
+        }
+    }
+
+    return view( 'schema/index', [ 'jsonldTypes' => $jsonldTypes ] );
+} );
+
+// Fields
+$router->get( 'schema/{type}', function( $type ) use ( $router ) {
+
+    $metaContext = new \WishKnish\KnishIO\Models\Meta\MetaContext( 'local' );
+    $jsonldType = $metaContext->getJsonldObject()->graphType( $type );
+    return view( 'schema/type', [ 'jsonldType' => $jsonldType,] );
+
+} );
+
+
+// Meta instance json-ld data
 $router->get( 'scope/{metaType}/{metaId}.jsonld', function( $metaType, $metaId ) use ( $router ) {
 
     // Get a meta instance
@@ -34,11 +72,19 @@ $router->get( 'scope/{metaType}/{metaId}.jsonld', function( $metaType, $metaId )
         throw new \Exception( 'Instance does not have a context.' );
     }
 
-    // Get a model
+    // Get a model: @todo change this code to use resolver classes
     $model = null;
     switch( $atom->meta_type ) {
         case 'token':
             $model = Token::where( 'slug', $atom->meta_id )->first();
+            break;
+        case 'wallet':
+            $model = \WishKnish\KnishIO\Models\Wallet::where( 'address', $atom->meta_id )->first();
+            $model->token = $model->token_slug;
+            $model->bundle = $model->bundle_hash;
+            break;
+        default:
+            throw new \Exception( 'Unsupported meta type '. $atom->meta_type );
             break;
     }
     if ( !$model ) {
@@ -50,7 +96,7 @@ $router->get( 'scope/{metaType}/{metaId}.jsonld', function( $metaType, $metaId )
 
     // Get a meta context & filter aggregated metas
     header( 'application/ld+json' );
-    $metaContext = new \WishKnish\KnishIO\Models\Meta\MetaContext( array_get( $metas, 'context' ) );
+    $metaContext = \WishKnish\KnishIO\Models\Meta\MetaContext::find( array_get( $metas, 'context' ) );
     echo $metaContext->filter( $metas );
 
 });
