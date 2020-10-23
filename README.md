@@ -20,10 +20,12 @@ This project provides a reference implementation of the [Knish.IO](https://knish
   <img src="https://raw.githubusercontent.com/WishKnish/KnishIO-Server-Reference-Lumen/master/public/assets/images/screenshot-home.png" alt="Screenshot of successful Knish.IO deployment in the browser" />
 </div>
 
-## Querying the ledger
+## Querying and Mutating the ledger
 Knish.IO uses [GraphQL](https://graphql.org/) as a means of data exchange. GraphQL queries and subscriptions may be used to retrieve ledger state, and GraphQL mutations are used to issue a new transaction.
 
 Typically, all GraphQL messages are sent to a specific endpoint on the node, eg: `https://my.knishio-server.com/graphql`, using HTTP POST or GET. A number of GraphQL client applications exist to help you manually form and test GraphQL messages outside of an application.
+
+Language-specific Knish.IO SDKs also provide shortcut classes (typically called simply `KnishIO`)) that help you perform many common actions without having to touch GraphQL directly.
 
 ### Querying
 GraphQL queries are used to retrieve ledger state. Aside from custom meta assets created by users, Knish.IO has a number of built-in data types that can also be queried.
