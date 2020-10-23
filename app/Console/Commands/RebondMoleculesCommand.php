@@ -49,9 +49,11 @@ class RebondMoleculesCommand extends Command
         try {
             set_time_limit( 9999 );
 
+            // Getting all molecules on the node from oldest to newest
             $molecules = \WishKnish\KnishIO\Models\Molecule::orderBy( 'knishio_molecules.processed_at', 'asc' )->get();
-            $this->info( 'Detaching bonds...' );
 
+            // Removing existing bonds
+            $this->info( 'Detaching bonds...' );
             \DB::table( 'knishio_bonds' )->truncate();
 
             $cell_counts = [];

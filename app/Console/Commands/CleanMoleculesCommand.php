@@ -36,7 +36,7 @@ class CleanMoleculesCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Rebond all molecules';
+    protected $description = 'Clean orphaned or invalid artifacts from the ledger';
 
 
     /**
@@ -49,7 +49,10 @@ class CleanMoleculesCommand extends Command
         try {
             set_time_limit( 9999 );
 
+            // Getting all metadata on the node
             $metas = \WishKnish\KnishIO\Models\Meta::all();
+
+            // Eliminating orphaned metadata
             foreach ( $metas as $meta ) {
                 if ( !$meta->atom ) {
                     $this->info( 'No atom for meta position ' . $meta->position . ' (' . $meta->key . ': ' . $meta->value . ')' );
@@ -58,7 +61,10 @@ class CleanMoleculesCommand extends Command
                 }
             }
 
+            // Getting all atoms on the node
             $atoms = \WishKnish\KnishIO\Models\Atom::all();
+
+            // Eliminating orphaned atoms
             foreach ( $atoms as $atom ) {
                 if ( !$atom->molecule ) {
                     $this->info( 'No molecule for atom position ' . $atom->position . ' (' . $atom->meta_type . ': ' . $atom->meta_id . ')' );
@@ -67,7 +73,10 @@ class CleanMoleculesCommand extends Command
                 }
             }
 
+            // Getting all molecules on the node
             $molecules = \WishKnish\KnishIO\Models\Molecule::all();
+
+            // Eliminating empty molecules
             foreach ( $molecules as $molecule ) {
                 if ( $molecule->atoms->count() === 0 ) {
 
