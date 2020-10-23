@@ -160,6 +160,29 @@ query MetaTypeQuery( $metaType: String, $metaTypes: [String!], $metaId: String, 
 }
 ```
 
+## Mutating the ledger
+Knish.IO provides for a single type of GraphQL mutation: the issuance of a new proposed molecule. All mutation logic is based on the contents of the molecule, its atoms, and their respective metadata.
+
+To issue a molecule mutation, first prepare a valid Knish.IO molecule, then execute the following GraphQL code, providing the molecule as the sole parameter:
+
+```graphql
+mutation MoleculeMutation($molecule: MoleculeInput!) {
+  ProposeMolecule(
+    molecule: $molecule,
+  ) {
+    molecularHash,
+    height,
+    depth,
+    status,
+    reason,
+    reasonPayload,
+    createdAt,
+    receivedAt,
+    processedAt,
+    broadcastedAt
+  }
+}
+```
 ## Benchmarking
 The Lumen reference package provides a number of tools to help you benchmark the performance of your local node.
 
