@@ -3,7 +3,6 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Nuwave\Lighthouse\LighthouseServiceProvider;
 use WishKnish\KnishIO\Providers\Service;
 
 class AppServiceProvider extends ServiceProvider
@@ -16,7 +15,6 @@ class AppServiceProvider extends ServiceProvider
     public function register ()
     {
         $this->app->register( AuthServiceProvider::class );       // Auth Service
-        $this->app->register( LighthouseServiceProvider::class ); // Lighthouse GraphQL
         $this->app->register( Service::class );                   // KnishIO Service
     }
 }
