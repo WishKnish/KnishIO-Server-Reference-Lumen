@@ -17,6 +17,13 @@ use WishKnish\KnishIO\Models\Atom;
 use WishKnish\KnishIO\Models\Token;
 
 
+
+// Custom schema => graphql
+$router->get( 'schema.graphql', function() use ( $router ) {
+    echo app(\WishKnish\KnishIO\Lighthouse\ASTBuilder::class)->doPrintSchema();
+} );
+
+
 // Custom schema => json-ld
 $router->get( 'schema.jsonld', function() use ( $router ) {
 
