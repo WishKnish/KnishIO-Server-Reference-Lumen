@@ -112,6 +112,10 @@ $router->get( 'scope/{metaType}/{metaId}.jsonld', function( $metaType, $metaId )
 // @todo: temp routes - DELETD IT AFTER PEERING STABILIZATION
 $router->get( '/peer/{type}', function ( $type ) use ( $router ) {
 
+    if ( !env('KNISHIO_PEERING') ) {
+        throw new \Exception( 'Peering does not enabled' );
+    }
+
     switch( $type ) {
         case 'clean':
             \WishKnish\KnishIO\Helpers\Cleaner::byPeer('node.knishio', false);
