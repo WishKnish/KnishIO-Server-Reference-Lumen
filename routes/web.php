@@ -109,6 +109,31 @@ $router->get( 'scope/{metaType}/{metaId}.jsonld', function( $metaType, $metaId )
 });
 
 
+// @todo: temp routes - DELETD IT AFTER PEERING STABILIZATION
+$router->get( '/peer/{type}', function ( $type ) use ( $router ) {
+
+    switch( $type ) {
+        case 'clean':
+            \WishKnish\KnishIO\Helpers\Cleaner::byPeer('node.knishio', false);
+            echo 'Cleaned.';
+            break;
+        case 'show':
+            $molecules = \WishKnish\KnishIO\Models\Molecule::get();
+            echo '<pre>';
+            foreach ( $molecules as $molecule) {
+                echo 'Peer slug: '. $molecule->peer_slug .
+                    '; Molecular hash: '. $molecule->molecular_hash .
+                    '; Status: '. $molecule->status . "\r\n";
+            }
+            echo '</pre>';
+            break;
+        default:
+            abort(404);
+    }
+} );
+
+
+
 $router->get( '/', function () use ( $router ) {
     return view( 'index' );
 } );
