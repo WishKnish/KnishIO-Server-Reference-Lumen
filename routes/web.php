@@ -117,8 +117,44 @@ $router->get( '/peer/{type}', function ( $type ) use ( $router ) {
     }
 
     switch( $type ) {
+        case 'create-molecule':
+
+            $secret = \WishKnish\KnishIO\Client\Libraries\Crypto::generateSecret();
+
+            // Defining client and authenticating the session
+            $client = new \WishKnish\KnishIO\Client\KnishIOClient( url() . '/graphql' );
+            $client->authentication( $secret );
+
+            // Defining signing parameters
+            $molecule = $client->createMolecule($client->secret());
+
+            $metas = [];
+            for ($meta_num = 0; $meta_num < 2; $meta_num++) {
+                $metas['meta_' . $meta_num] = \WishKnish\KnishIO\Client\Libraries\Crypto::generateSecret(null, 64);
+            }
+
+            // Initializing molecule content
+            $molecule->initMeta($metas, 'metaType', 'metaId' . random_int(0, 100));
+            $molecule->sign();
+
+            $query = $client->createMoleculeQuery( \WishKnish\KnishIO\Client\Query\QueryMoleculePropose::class, $molecule );
+
+            $response = $query->execute();
+            echo 'Molecule ['. $molecule->molecularHash .']: ' . ($response->success() ? 'success' : 'failure');
+
+            break;
         case 'clean':
             \WishKnish\KnishIO\Helpers\Cleaner::byPeer('node.knishio', false);
+            echo 'Cleaned.';
+            break;
+        case 'clean-all':
+
+            // Remove by bundle hashes
+            $bundle_hashes = \DB::table('knishio_molecules')
+                ->get()
+                ->pluck('bundle_hash');
+            \WishKnish\KnishIO\Helpers\Cleaner::byBundleHash($bundle_hashes);
+
             echo 'Cleaned.';
             break;
         case 'show':
