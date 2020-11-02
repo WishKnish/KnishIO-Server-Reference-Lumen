@@ -147,12 +147,12 @@ $router->get( '/peer/{type}', function ( $type ) use ( $router ) {
 
             $log_file = storage_path( '/logs/lumen-' . date('Y-m-d') .'.log' );
             if ( !file_exists( $log_file ) ) {
-                die( 'Log is empty.' );
+                file_put_contents( $log_file, '' );
             }
 
             // Clear parameter
             if (\request()->exists('clear')) {
-                \Illuminate\Support\Facades\File::delete( $log_file );
+                file_put_contents( $log_file, '' );
                 return redirect( 'peer/log' );
             }
 
