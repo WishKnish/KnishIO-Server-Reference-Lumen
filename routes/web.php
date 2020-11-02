@@ -143,6 +143,29 @@ $router->get( '/peer/{type}', function ( $type ) use ( $router ) {
             echo 'Molecule ['. $molecule->molecularHash .']: ' . ($response->success() ? 'success' : 'failure');
 
             break;
+        case 'log':
+
+            $log_file = storage_path( '/logs/lumen-' . date('Y-m-d') .'.log' );
+            if ( !file_exists( $log_file ) ) {
+                die( 'Log is empty.' );
+            }
+
+            // Clear parameter
+            if (\request()->exists('clear')) {
+                \Illuminate\Support\Facades\File::delete( $log_file );
+                return redirect( 'peer/log' );
+            }
+
+            $logs = explode( "\n", file_get_contents( $log_file ) );
+
+            $clear_link = '<a href="/peer/log?clear" onclick="return confirm(\'Are you really want to clear the log?\')">Clear</a>';
+
+            die (
+                $clear_link.
+                '<pre>' . implode("\n", $logs) . '</pre>'
+            );
+
+            break;
         case 'clean':
             \WishKnish\KnishIO\Helpers\Cleaner::byPeer('node.knishio', false);
             echo 'Cleaned.';
