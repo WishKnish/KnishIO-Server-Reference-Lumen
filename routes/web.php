@@ -116,6 +116,22 @@ $router->get( '/peer/{type}', function ( $type ) use ( $router ) {
         throw new \Exception( 'Peering does not enabled' );
     }
 
+    $peers = [
+        'frontrow.knish.io' => 'frontrow1',
+        'frontrow2.knish.io' => 'frontrow2',
+        'frontrow3.knish.io' => 'frontrow3',
+        'frontrow4.knish.io' => 'frontrow4',
+    ];
+
+    // Peer host & slug
+    $peer_host = request()->getHost();
+    if ( !isset( $peers[ $peer_host ] ) ) {
+        throw new \Exception( 'Undefined peer host.' );
+    }
+    $peer_slug = $peers[ $peer_host ];
+    $target_peer = array_key_first( $peers );
+
+
     switch( $type ) {
         case 'create-molecule':
 
@@ -170,13 +186,40 @@ $router->get( '/peer/{type}', function ( $type ) use ( $router ) {
             \WishKnish\KnishIO\Helpers\Cleaner::byPeer('node.knishio', false);
             echo 'Cleaned.';
             break;
-        case 'clean-all':
+        case 'bootstrap':
+
+            $peerDB = new \WishKnish\KnishIO\Helpers\PeerDB( $peer_slug );
+            echo '<pre>' . $peerDB->bootstrap( $target_peer, $peer_host, $peer_slug ) . '</pre>';
+
+            break;
+        case 'bootstrap-all':
+
+            set_time_limit( 9999 );
+
+            $scheme = array_get( parse_url( url() ), 'scheme', 'https' );
+
+            foreach ( $peers as $peer_host => $peer_slug ) {
+                echo '<pre>'
+                    . 'Trying to clean ' . $peer_host . ' => ' . $scheme . '://' . $peer_host . '/peer/clean-db' .' => '
+                    . file_get_contents( $scheme . '://' . $peer_host . '/peer/clean-db'  )
+                    . '</pre>';
+            }
+
+            foreach ( $peers as $peer_host => $peer_slug ) {
+                echo '<pre>'
+                    . 'Trying to bootstrap ' . $peer_host . "\r\n"
+                    . file_get_contents( $scheme . '://' . $peer_host . '/peer/bootstrap'  ) .
+                    '</pre>';
+            }
+
+            break;
+        case 'clean-db':
 
             \DB::delete('DELETE FROM knishio_access_tokens');
             \DB::delete('DELETE FROM knishio_atoms;');
             \DB::delete('DELETE FROM knishio_bonds;');
             \DB::delete('DELETE FROM knishio_bundles;');
-            # \DB::delete('DELETE FROM knishio_cells;');
+            \DB::delete('DELETE FROM knishio_cells;');
             \DB::delete('DELETE FROM knishio_peers;');
             \DB::delete('DELETE FROM knishio_logs;');
             \DB::delete('DELETE FROM knishio_identifiers;');
