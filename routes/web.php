@@ -191,7 +191,7 @@ $router->get( '/peer/{type}', function ( $type ) use ( $router ) {
             // Adding test slug
             \DB::table('knishio_cells')
                 ->insert([
-                    'cell_slug' => 'test_cell',
+                    'cell_slug' => 'TESTCELL',
                     'name' => 'Test Cell',
                 ]);
 
