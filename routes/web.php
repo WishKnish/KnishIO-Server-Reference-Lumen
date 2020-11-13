@@ -188,15 +188,15 @@ $router->get( '/peer/{type}', function ( $type ) use ( $router ) {
             break;
         case 'bootstrap':
 
+            $peerDB = new \WishKnish\KnishIO\Helpers\PeerDB( $peer_slug );
+            echo '<pre>' . $peerDB->bootstrap( $target_peer, $peer_host, $peer_slug ) . '</pre>';
+
             // Adding test slug
             \DB::table('knishio_cells')
                 ->insert([
                     'cell_slug' => 'TESTCELL',
                     'name' => 'Test Cell',
                 ]);
-
-            $peerDB = new \WishKnish\KnishIO\Helpers\PeerDB( $peer_slug );
-            echo '<pre>' . $peerDB->bootstrap( $target_peer, $peer_host, $peer_slug ) . '</pre>';
 
             break;
         case 'bootstrap-all':
