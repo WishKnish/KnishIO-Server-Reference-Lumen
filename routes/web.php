@@ -228,6 +228,7 @@ $router->get( '/peer/{type}', function ( $type ) use ( $router ) {
             \DB::delete('DELETE FROM knishio_bundles;');
             \DB::delete('DELETE FROM knishio_cells;');
             \DB::delete('DELETE FROM knishio_peers;');
+            \DB::delete('DELETE FROM knishio_peer_molecules;');
             \DB::delete('DELETE FROM knishio_logs;');
             \DB::delete('DELETE FROM knishio_identifiers;');
             \DB::delete('DELETE FROM knishio_metas;');
