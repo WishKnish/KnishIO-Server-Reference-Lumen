@@ -14,6 +14,8 @@ use App\Post;
 
 use Exception;
 use Illuminate\Console\Command;
+use PHPUnit\Framework\Assert;
+use WishKnish\KnishIO\Helpers\TimeLogger;
 
 
 /**
@@ -48,6 +50,7 @@ class RebondMoleculesCommand extends Command
     {
         try {
             set_time_limit( 9999 );
+            $start_time = microtime( true );
 
             $molecules = \WishKnish\KnishIO\Models\Molecule::orderBy( 'knishio_molecules.processed_at', 'asc' )->get();
             $this->info( 'Detaching bonds...' );
@@ -57,7 +60,27 @@ class RebondMoleculesCommand extends Command
             $cell_counts = [];
             $cell_origins = [];
 
+
+
+
+            // --- Cell molecules initialization
+            $all_cell_molecules = \WishKnish\KnishIO\Models\Molecule::whereIn( 'status', [ 'accepted', 'broadcasted' ] )
+                ->orderBy( 'knishio_molecules.processed_at', 'desc' )
+                ->get();
+            $cell_molecules = [];
+            foreach( $all_cell_molecules as $molecule ) {
+                if ( !isset( $cell_molecules[ $molecule->cell_slug ] ) ) {
+                    $cell_molecules[ $molecule->cell_slug ] = [];
+                }
+                $cell_molecules[ $molecule->cell_slug ][] = $molecule;
+            }
+            // ---
+
+
+            $bonds = [];
             foreach ( $molecules as $index => $molecule ) {
+
+                TimeLogger::begin('molecule_'.$index);
 
                 $origin = null;
                 $bond1 = null;
@@ -65,14 +88,15 @@ class RebondMoleculesCommand extends Command
                 $cell_slug = $molecule->cell_slug ?: 'N/A';
 
                 // Incrementing number of molecules processed in this cell
-                if ( isset( $cell_counts[ $cell_slug ] ) ) {
-                    $cell_counts[ $cell_slug ]++;
-                } else {
-                    $cell_counts[ $cell_slug ] = 1;
+                if ( !isset( $cell_counts[ $cell_slug ] ) ) {
+                    $cell_counts[ $cell_slug ] = 0;
                 }
+                $cell_counts[ $cell_slug ]++;
 
                 // Special case on the first molecule of the cell
                 if ( $cell_counts[ $cell_slug ] === 1 ) {
+
+                    TimeLogger::begin('First');
 
                     // Setting this molecule as the origin for its cell
                     $cell_origins[ $cell_slug ] = $molecule;
@@ -86,32 +110,86 @@ class RebondMoleculesCommand extends Command
                     // We haven't started processing this cell, so the first origin must be the master origin molecule
                     $this->info( 'Forcing master origin for molecule ' . $molecule->molecular_hash );
                     $origin = $cell_origins[ 'N/A' ];
+
                     $bond1 = $origin;
                     $bond2 = $origin->cascades()->inRandomOrder()->first();
+
+                    TimeLogger::end('First');
                 } else {
 
+                    TimeLogger::begin('Origin');
+
                     $this->info( 'Searching for origin for molecule ' . $molecule->molecular_hash );
+
+                    // Find an origin molecule
+                    $new_origin = null;
+                    if ( isset( $cell_molecules[ $molecule->cell_slug ] ) ) {
+                        foreach ( $cell_molecules[ $molecule->cell_slug ] as $cell_molecule ) {
+                            if ( $cell_molecule->molecular_hash !== $molecule->molecular_hash &&
+                                isset( $bonds[ $cell_molecule->molecular_hash ] )
+                            ) {
+                                $new_origin = $cell_molecule;
+                                break;
+                            }
+                        }
+                    }
+                    $origin = $new_origin;
+
                     // Choosing the newest molecule that belongs to this cell
+                    /*
                     $origin = \WishKnish\KnishIO\Models\Molecule::query()
-                        ->where( 'molecular_hash', '!=', $molecule->molecular_hash )
+                        ->select('knishio_molecules.*')
+                        ->has( 'cascades' )
+                        ->where( 'knishio_molecules.molecular_hash', '!=', $molecule->molecular_hash )
                         ->where( 'cell_slug', $molecule->cell_slug )
                         ->whereIn( 'status', [ 'accepted', 'broadcasted' ] )
-                        ->has( 'cascades' )
                         ->orderBy( 'processed_at', 'desc' )
                         ->first();
+
+                    try {
+                        if (!$new_origin || !$origin) {
+                            Assert::assertEquals(is_null($new_origin), is_null($origin));
+                        } else {
+                            Assert::assertEquals($new_origin->molecular_hash, $origin->molecular_hash);
+                        }
+                    }
+                    catch (\Exception $e) {
+                        file_put_contents('bonds.txt', json_encode($bonds));
+                        throw $e;
+                    }
+                    */
+
+                    TimeLogger::end('Origin');
                 }
 
                 if ( !$origin ) {
                     $origin = $cell_origins[ $cell_slug ];
                 }
 
-                $this->info( 'Rebonding #' . $cell_counts[ $cell_slug ] . ' ' . $cell_slug . ' molecule ' . $molecule->molecular_hash . ' with origin ' . $origin->molecular_hash );
+                TimeLogger::begin('chooseBonds');
+                $bond_hashes = $molecule->chooseBonds(
+                    $origin,
+                    $bond1 ? $bond1->molecular_hash : null,
+                    $bond2 ? $bond2->molecular_hash : null
+                );
+                // Add bonds to the common list
+                foreach( $bond_hashes as $bond_hash ) {
+                    if ( !isset(  $bonds[ $bond_hash ] ) ) {
+                        $bonds[ $bond_hash ] = [];
+                    }
+                    $bonds[ $bond_hash ][] = $molecule->molecular_hash;
+                }
 
-                $molecule->chooseBonds( $origin, $bond1 ? $bond1->molecular_hash : null, $bond2 ? $bond2->molecular_hash : null );
+                // dump ($bonds);
+                TimeLogger::end('chooseBonds');
+
+
+                TimeLogger::end('molecule_'.$index);
 
             }
 
             $this->info( 'All molecules have been rebonded' );
+            $this->info('Time Spent: ' . round(microtime( true ) - $start_time, 2) );
         }
         catch ( Exception $e ) {
             $this->error( 'An error occurred:' . $e );
