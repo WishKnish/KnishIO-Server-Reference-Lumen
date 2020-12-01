@@ -109,110 +109,13 @@ $router->get( 'scope/{metaType}/{metaId}.jsonld', function( $metaType, $metaId )
 });
 
 
-// @todo: temp routes - DELETD IT AFTER PEERING STABILIZATION
-$router->get( '/peer/{type}', function ( $type ) use ( $router ) {
+// @todo: DEBUG CODE FOR SERVER CONTROL
+$router->get( '/peer/{action}', function ( $action ) use ( $router ) {
 
-    if ( !env('KNISHIO_PEERING') ) {
-        throw new \Exception( 'Peering does not enabled' );
-    }
+    // Execute server action
+    $serverControl = new \WishKnish\KnishIO\Helpers\ServerControl();
+    $serverControl->execute( $action, request()->has('all') );
 
-    switch( $type ) {
-        case 'create-molecule':
-
-            $secret = \WishKnish\KnishIO\Client\Libraries\Crypto::generateSecret();
-
-            // Defining client and authenticating the session
-            $client = new \WishKnish\KnishIO\Client\KnishIOClient( url() . '/graphql' );
-            $client->requestAuthToken( $secret );
-
-            // Defining signing parameters
-            $molecule = $client->createMolecule($client->secret());
-
-            $metas = [];
-            for ($meta_num = 0; $meta_num < 2; $meta_num++) {
-                $metas['meta_' . $meta_num] = \WishKnish\KnishIO\Client\Libraries\Crypto::generateSecret(null, 64);
-            }
-
-            // Initializing molecule content
-            $molecule->initMeta($metas, 'metaType', 'metaId' . random_int(0, 100));
-            $molecule->sign();
-
-            $query = $client->createMoleculeQuery( \WishKnish\KnishIO\Client\Query\QueryMoleculePropose::class, $molecule );
-
-            $response = $query->execute();
-            echo 'Molecule ['. $molecule->molecularHash .']: ' . ($response->success() ? 'success' : 'failure');
-
-            break;
-        case 'log':
-
-            $log_file = storage_path( '/logs/lumen-' . date('Y-m-d') .'.log' );
-            if ( !file_exists( $log_file ) ) {
-                file_put_contents( $log_file, '' );
-            }
-
-            // Clear parameter
-            if (\request()->exists('clear')) {
-                file_put_contents( $log_file, '' );
-                return redirect( 'peer/log' );
-            }
-
-            $logs = explode( "\n", file_get_contents( $log_file ) );
-
-            $clear_link = '<a href="/peer/log?clear" onclick="return confirm(\'Are you really want to clear the log?\')">Clear</a>';
-
-            die (
-                $clear_link.
-                '<pre>' . implode("\n", $logs) . '</pre>'
-            );
-
-            break;
-        case 'clean':
-            \WishKnish\KnishIO\Helpers\Cleaner::byPeer('node.knishio', false);
-            echo 'Cleaned.';
-            break;
-        case 'clean-all':
-
-            \DB::delete('DELETE FROM knishio_access_tokens');
-            \DB::delete('DELETE FROM knishio_atoms;');
-            \DB::delete('DELETE FROM knishio_bonds;');
-            \DB::delete('DELETE FROM knishio_bundles;');
-            # \DB::delete('DELETE FROM knishio_cells;');
-            \DB::delete('DELETE FROM knishio_peers;');
-            \DB::delete('DELETE FROM knishio_logs;');
-            \DB::delete('DELETE FROM knishio_identifiers;');
-            \DB::delete('DELETE FROM knishio_metas;');
-            \DB::delete('DELETE FROM knishio_molecules;');
-            \DB::delete('DELETE FROM knishio_tokens;');
-            \DB::delete('DELETE FROM knishio_wallets;');
-            \DB::delete('DELETE FROM knishio_wallet_bundles;');
-            \DB::delete('DELETE FROM knishio_jobs;');
-            \DB::delete('DELETE FROM knishio_failed_jobs;');
-
-            /*
-
-            // Remove by bundle hashes
-            $bundle_hashes = \DB::table('knishio_molecules')
-                ->get()
-                ->pluck('bundle_hash');
-            \WishKnish\KnishIO\Helpers\Cleaner::byBundleHash($bundle_hashes);
-
-            */
-
-            echo 'Cleaned.';
-            break;
-        case 'show':
-            $molecules = \WishKnish\KnishIO\Models\Molecule::get();
-            echo '<pre>';
-            foreach ( $molecules as $molecule) {
-                echo 'Peer slug: '. $molecule->peer_slug .
-                    '; Molecular hash: '. $molecule->molecular_hash .
-                    '; Status: '. $molecule->status . "\r\n";
-            }
-            echo '</pre>';
-            break;
-        default:
-            abort(404);
-    }
 } );
 
 

@@ -38,7 +38,7 @@ class BenchmarkCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'molecule:benchmark {--threads=10} {--metas=3} {--molecules=10}';
+    protected $signature = 'molecule:benchmark {--threads=10} {--metas=3} {--molecules=10} {--cleanup=1}';
 
     /**
      * The console command description.
@@ -147,8 +147,10 @@ class BenchmarkCommand extends Command
             }
 
             // Cleaning up
-            $this->commentTitle( 'CLEANING UP' );
-            $this->cleanup();
+            if ( $this->option('cleanup') ) {
+                $this->commentTitle('CLEANING UP');
+                $this->cleanup();
+            }
 
             // Computing results
             foreach ( $all_results as $fn => $results ) {
