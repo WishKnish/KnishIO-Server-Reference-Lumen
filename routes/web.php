@@ -123,7 +123,7 @@ $router->get( '/peer/{type}', function ( $type ) use ( $router ) {
 
             // Defining client and authenticating the session
             $client = new \WishKnish\KnishIO\Client\KnishIOClient( url() . '/graphql' );
-            $client->authentication( $secret );
+            $client->requestAuthToken( $secret );
 
             // Defining signing parameters
             $molecule = $client->createMolecule($client->secret());
