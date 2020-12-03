@@ -225,7 +225,7 @@ class BenchmarkCommand extends Command
 
             // Defining client and authenticating the session
             $client = new KnishIOClient( $this->graphql_url );
-            $client->authentication( $secret );
+            $client->requestAuthToken( $secret );
 
             // $instance->info( 'Creating '. $this->molecules_count.' molecules for bundle ' . $bundle . '...' );
 
@@ -253,7 +253,7 @@ class BenchmarkCommand extends Command
             // Defining client and authenticating the session
             $secret = Crypto::generateSecret();
             $client = new KnishIOClient( $self->graphql_url );
-            $client->authentication( $secret );
+            $client->requestAuthToken( $secret );
 
             // Accumulate all meta types & ids
             $metaTypes = []; $metaIds = [];
