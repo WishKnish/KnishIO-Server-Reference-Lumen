@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Console\Commands\RestoreMetasJsonCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Laravel\Lumen\Console\Kernel as ConsoleKernel;
 
@@ -17,6 +18,7 @@ class Kernel extends ConsoleKernel
         Commands\RebondMoleculesCommand::class,
         Commands\CleanMoleculesCommand::class,
         Commands\BenchmarkCommand::class,
+        RestoreMetasJsonCommand::class,
     ];
 
     /**
