@@ -34,6 +34,42 @@ $router->get( 'schema.jsonld', function() use ( $router ) {
         ->toJsonldSchema();
 } );
 
+
+// Custom schema => json-ld
+$router->get( 'schema.org.jsonld', function() use ( $router ) {
+
+    $metaContext = new \WishKnish\KnishIO\Models\Meta\SchemaMetaContext( 'local' );
+
+    header( 'application/ld+json' );
+    echo $metaContext->getJsonldObject()
+        ->toJsonldSchema();
+} );
+
+// Custom schema overview
+$router->get( 'schema.org', function() use ( $router ) {
+
+    $metaContext = new \WishKnish\KnishIO\Models\Meta\SchemaMetaContext( 'local' );
+    $jsonldObject = $metaContext->getJsonldObject();
+
+    // Get only parent jsonld types @todo add cascade check to disable child with childs
+    $jsonldTypes = [];
+    foreach( $jsonldObject->graph() as $jsonldType ) {
+        if ( $jsonldType->fields() ) {
+            $jsonldTypes[] = $jsonldType;
+        }
+    }
+
+    return view( 'schema/schema', [ 'jsonldTypes' => $jsonldTypes ] );
+} );
+
+// Fields
+$router->get( 'schema.org/{type}', function( $type ) use ( $router ) {
+
+    $metaContext = new \WishKnish\KnishIO\Models\Meta\SchemaMetaContext( 'local' );
+    $jsonldType = $metaContext->getJsonldObject()->graphType( $type );
+    return view( 'schema/schema_type', [ 'jsonldType' => $jsonldType,] );
+} );
+
 // Custom schema overview
 $router->get( 'schema', function() use ( $router ) {
 
