@@ -11,7 +11,7 @@
     ],
     "type": "project",
     "require": {
-        "php": "^7.2",
+        "php": "^7.4",
         "doctrine/dbal": "^2.10",
         "laravel/lumen-framework": "^6.0",
         "laravelista/lumen-vendor-publish": "6.0",
