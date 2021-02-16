@@ -6,11 +6,7 @@ use Exception;
 use Psr\Http\Message\RequestInterface;
 use ReflectionException;
 use WishKnish\KnishIO\Client\KnishIOClient;
-use WishKnish\KnishIO\Client\Libraries\Crypto;
-use WishKnish\KnishIO\Client\Molecule;
 use WishKnish\KnishIO\Client\Query\QueryMetaType;
-use WishKnish\KnishIO\Client\Query\QueryMoleculePropose;
-use WishKnish\KnishIO\Client\Wallet;
 
 /**
  * Class BenchmarkMetaTypeRequestFactory

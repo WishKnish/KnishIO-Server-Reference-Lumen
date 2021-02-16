@@ -4,12 +4,9 @@ namespace App\Console\Commands\Benchmark;
 
 use Exception;
 use Psr\Http\Message\RequestInterface;
-use ReflectionException;
 use WishKnish\KnishIO\Client\KnishIOClient;
-use WishKnish\KnishIO\Client\Libraries\Crypto;
 use WishKnish\KnishIO\Client\Molecule;
-use WishKnish\KnishIO\Client\Query\QueryMoleculePropose;
-use WishKnish\KnishIO\Client\Wallet;
+use WishKnish\KnishIO\Client\Mutation\MutationProposeMolecule;
 
 /**
  * Class BenchmarkMoleculeRequestFactory
@@ -28,7 +25,7 @@ class BenchmarkMoleculeRequestFactory
     public static function create ( KnishIOClient $client, Molecule $molecule ): RequestInterface
     {
         // Preparing Guzzle request
-        $query = $client->createMoleculeQuery( QueryMoleculePropose::class, $molecule );
+        $query = $client->createMoleculeMutation( MutationProposeMolecule::class, $molecule );
 
         return $query->createRequest();
     }
