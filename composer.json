@@ -13,10 +13,12 @@
     "require": {
         "php": "^7.4",
         "doctrine/dbal": "^2.10",
-        "laravel/lumen-framework": "^6.0",
-        "laravelista/lumen-vendor-publish": "6.0",
+        "illuminate/mail": "^8.28",
+        "illuminate/redis": "^8.28",
+        "laravel/lumen-framework": "^8.0",
+        "laravelista/lumen-vendor-publish": "8.0",
         "mongodb/mongodb": "^1.7",
-        "wishknish/knishio-server-php": "dev-staging",
+        "wishknish/knishio-server-php": "dev-eugene-teplitsky-dev-v8",
         "ybr-nx/laravel-mariadb": "^1.0"
     },
     "require-dev": {
