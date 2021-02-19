@@ -7423,12 +7423,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:WishKnish/KnishIO-Server-PHP.git",
-                "reference": "b5a913a2b88748b4d4b95d6d8464186227d8ffce"
+                "reference": "da4a94a043a8f84f0de12b53a9e88a99e0b70970"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/WishKnish/KnishIO-Server-PHP/zipball/b5a913a2b88748b4d4b95d6d8464186227d8ffce",
-                "reference": "b5a913a2b88748b4d4b95d6d8464186227d8ffce",
+                "url": "https://api.github.com/repos/WishKnish/KnishIO-Server-PHP/zipball/da4a94a043a8f84f0de12b53a9e88a99e0b70970",
+                "reference": "da4a94a043a8f84f0de12b53a9e88a99e0b70970",
                 "shasum": ""
             },
             "require": {
@@ -7501,7 +7501,7 @@
                 "issues": "https://github.com/WishKnish/KnishIO-Server-PHP/issues",
                 "source": "https://github.com/WishKnish/KnishIO-Server-PHP"
             },
-            "time": "2021-02-19T15:39:11+00:00"
+            "time": "2021-02-19T15:51:41+00:00"
         },
         {
             "name": "ybr-nx/laravel-mariadb",
