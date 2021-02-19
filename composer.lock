@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c6161892a98c883e088f5d4909af4625",
+    "content-hash": "3a8f7ee0388b2cc1e774dde6dd66e3b3",
     "packages": [
         {
             "name": "brick/math",
@@ -7423,12 +7423,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:WishKnish/KnishIO-Server-PHP.git",
-                "reference": "73b88240d84e9cd54092748815d83b1a27aaf3bf"
+                "reference": "b5a913a2b88748b4d4b95d6d8464186227d8ffce"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/WishKnish/KnishIO-Server-PHP/zipball/73b88240d84e9cd54092748815d83b1a27aaf3bf",
-                "reference": "73b88240d84e9cd54092748815d83b1a27aaf3bf",
+                "url": "https://api.github.com/repos/WishKnish/KnishIO-Server-PHP/zipball/b5a913a2b88748b4d4b95d6d8464186227d8ffce",
+                "reference": "b5a913a2b88748b4d4b95d6d8464186227d8ffce",
                 "shasum": ""
             },
             "require": {
@@ -7436,7 +7436,7 @@
                 "ext-ctype": "*",
                 "ext-json": "*",
                 "ext-redis": "*",
-                "nuwave/lighthouse": "^4.6",
+                "nuwave/lighthouse": "^4",
                 "php": ">=7.4",
                 "ramsey/uuid": "^4",
                 "staudenmeir/eloquent-has-many-deep": "^1.7",
@@ -7501,7 +7501,7 @@
                 "issues": "https://github.com/WishKnish/KnishIO-Server-PHP/issues",
                 "source": "https://github.com/WishKnish/KnishIO-Server-PHP"
             },
-            "time": "2021-02-18T21:03:25+00:00"
+            "time": "2021-02-19T15:39:11+00:00"
         },
         {
             "name": "ybr-nx/laravel-mariadb",
