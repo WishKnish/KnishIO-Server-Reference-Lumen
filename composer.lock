@@ -7341,12 +7341,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/WishKnish/KnishIO-Client-PHP.git",
-                "reference": "c952d76c13de49dba9c294d3fe3c23db6034e4e4"
+                "reference": "f300eb8a38dd866c65dff025bf87e6e642a42246"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/WishKnish/KnishIO-Client-PHP/zipball/c952d76c13de49dba9c294d3fe3c23db6034e4e4",
-                "reference": "c952d76c13de49dba9c294d3fe3c23db6034e4e4",
+                "url": "https://api.github.com/repos/WishKnish/KnishIO-Client-PHP/zipball/f300eb8a38dd866c65dff025bf87e6e642a42246",
+                "reference": "f300eb8a38dd866c65dff025bf87e6e642a42246",
                 "shasum": ""
             },
             "require": {
@@ -7415,7 +7415,7 @@
                 "source": "https://github.com/WishKnish/KnishIO",
                 "wiki": "https://github.com/WishKnish/KnishIO/wiki"
             },
-            "time": "2021-02-17T12:40:40+00:00"
+            "time": "2021-02-26T12:50:23+00:00"
         },
         {
             "name": "wishknish/knishio-server-php",
@@ -7423,12 +7423,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:WishKnish/KnishIO-Server-PHP.git",
-                "reference": "b9e103d1f94984d42d3618371315aa5d95fdb6bc"
+                "reference": "16eb89f77383e9176429b25382a0c09b9943202e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/WishKnish/KnishIO-Server-PHP/zipball/b9e103d1f94984d42d3618371315aa5d95fdb6bc",
-                "reference": "b9e103d1f94984d42d3618371315aa5d95fdb6bc",
+                "url": "https://api.github.com/repos/WishKnish/KnishIO-Server-PHP/zipball/16eb89f77383e9176429b25382a0c09b9943202e",
+                "reference": "16eb89f77383e9176429b25382a0c09b9943202e",
                 "shasum": ""
             },
             "require": {
@@ -7501,7 +7501,7 @@
                 "issues": "https://github.com/WishKnish/KnishIO-Server-PHP/issues",
                 "source": "https://github.com/WishKnish/KnishIO-Server-PHP"
             },
-            "time": "2021-02-22T23:29:58+00:00"
+            "time": "2021-02-26T17:12:31+00:00"
         },
         {
             "name": "ybr-nx/laravel-mariadb",
@@ -8599,12 +8599,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "640ff0b5dcacc0958534c8c0255b90697f3eb2a8"
+                "reference": "616131e531dedfc378ffd6060e1cfdcce48ff3a2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/640ff0b5dcacc0958534c8c0255b90697f3eb2a8",
-                "reference": "640ff0b5dcacc0958534c8c0255b90697f3eb2a8",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/616131e531dedfc378ffd6060e1cfdcce48ff3a2",
+                "reference": "616131e531dedfc378ffd6060e1cfdcce48ff3a2",
                 "shasum": ""
             },
             "conflict": {
@@ -8746,7 +8746,7 @@
                 "phpunit/phpunit": ">=4.8.19,<4.8.28|>=5.0.10,<5.6.3",
                 "phpwhois/phpwhois": "<=4.2.5",
                 "phpxmlrpc/extras": "<0.6.1",
-                "pimcore/pimcore": "<6.3",
+                "pimcore/pimcore": "<6.8.8",
                 "pocketmine/pocketmine-mp": "<3.15.4",
                 "prestashop/autoupgrade": ">=4,<4.10.1",
                 "prestashop/contactform": ">1.0.1,<4.3",
@@ -8918,7 +8918,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-02-18T21:02:27+00:00"
+            "time": "2021-02-25T17:25:28+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
