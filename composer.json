@@ -18,7 +18,7 @@
         "laravel/lumen-framework": "^8.0",
         "laravelista/lumen-vendor-publish": "8.0",
         "mongodb/mongodb": "^1.7",
-        "wishknish/knishio-server-php": "dev-eugene-teplitsky-dev-v8",
+        "wishknish/knishio-server-php": "dev-staging",
         "ybr-nx/laravel-mariadb": "^1.0"
     },
     "require-dev": {
