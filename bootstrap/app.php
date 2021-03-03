@@ -2,6 +2,8 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
+date_default_timezone_set(env('APP_TIMEZONE', 'UTC'));
+
 ( new Laravel\Lumen\Bootstrap\LoadEnvironmentVariables(
     dirname( __DIR__ )
 ) )->bootstrap();
