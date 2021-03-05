@@ -11,23 +11,24 @@
 |
 */
 
-
+use App\Http\Middleware\CorsMiddleware;
 use WishKnish\KnishIO\Client\Meta;
+use WishKnish\KnishIO\Helpers\ServerControl;
+use WishKnish\KnishIO\Lighthouse\ASTBuilder;
 use WishKnish\KnishIO\Models\Atom;
+use WishKnish\KnishIO\Models\Meta\MetaContext;
 use WishKnish\KnishIO\Models\Token;
-
-
+use WishKnish\KnishIO\Models\Wallet;
 
 // Custom schema => graphql
-$router->get( 'schema.graphql', function() use ( $router ) {
-    echo app(\WishKnish\KnishIO\Lighthouse\ASTBuilder::class)->doPrintSchema();
+$router->get( 'schema.graphql', function () use ( $router ) {
+    echo app( ASTBuilder::class )->doPrintSchema();
 } );
 
-
 // Custom schema => json-ld
-$router->get( 'schema.jsonld', function() use ( $router ) {
+$router->get( 'schema.jsonld', function () use ( $router ) {
 
-    $metaContext = new \WishKnish\KnishIO\Models\Meta\MetaContext( 'local' );
+    $metaContext = new MetaContext( 'local' );
 
     header( 'application/ld+json' );
     echo $metaContext->getJsonldObject()
@@ -35,14 +36,14 @@ $router->get( 'schema.jsonld', function() use ( $router ) {
 } );
 
 // Custom schema overview
-$router->get( 'schema', function() use ( $router ) {
+$router->get( 'schema', function () use ( $router ) {
 
-    $metaContext = new \WishKnish\KnishIO\Models\Meta\MetaContext( 'local' );
+    $metaContext = new MetaContext( 'local' );
     $jsonldObject = $metaContext->getJsonldObject();
 
     // Get only parent jsonld types @todo add cascade check to disable child with childs
     $jsonldTypes = [];
-    foreach( $jsonldObject->graph() as $jsonldType ) {
+    foreach ( $jsonldObject->graph() as $jsonldType ) {
         if ( $jsonldType->fields() ) {
             $jsonldTypes[] = $jsonldType;
         }
@@ -52,17 +53,17 @@ $router->get( 'schema', function() use ( $router ) {
 } );
 
 // Fields
-$router->get( 'schema/{type}', function( $type ) use ( $router ) {
+$router->get( 'schema/{type}', function ( $type ) use ( $router ) {
 
-    $metaContext = new \WishKnish\KnishIO\Models\Meta\MetaContext( 'local' );
-    $jsonldType = $metaContext->getJsonldObject()->graphType( $type );
-    return view( 'schema/type', [ 'jsonldType' => $jsonldType,] );
+    $metaContext = new MetaContext( 'local' );
+    $jsonldType = $metaContext->getJsonldObject()
+        ->graphType( $type );
+    return view( 'schema/type', [ 'jsonldType' => $jsonldType, ] );
 
 } );
 
-
 // Meta instance json-ld data
-$router->get( 'scope/{metaType}/{metaId}.jsonld', function( $metaType, $metaId ) use ( $router ) {
+$router->get( 'scope/{metaType}/{metaId}.jsonld', function ( $metaType, $metaId ) use ( $router ) {
 
     // Get a meta instance
     $atom = Atom::where( 'isotope', 'C' )
@@ -74,24 +75,26 @@ $router->get( 'scope/{metaType}/{metaId}.jsonld', function( $metaType, $metaId )
     }
 
     // Get metas
-    $metas = Meta::aggregateMeta($atom->metas);
+    $metas = Meta::aggregateMeta( $atom->metas );
     if ( !array_has( $metas, 'context' ) ) {
         throw new \Exception( 'Instance does not have a context.' );
     }
 
     // Get a model: @todo change this code to use resolver classes
     $model = null;
-    switch( $atom->meta_type ) {
+    switch ( $atom->meta_type ) {
         case 'token':
-            $model = Token::where( 'slug', $atom->meta_id )->first();
+            $model = Token::where( 'slug', $atom->meta_id )
+                ->first();
             break;
         case 'wallet':
-            $model = \WishKnish\KnishIO\Models\Wallet::where( 'address', $atom->meta_id )->first();
+            $model = Wallet::where( 'address', $atom->meta_id )
+                ->first();
             $model->token = $model->token_slug;
             $model->bundle = $model->bundle_hash;
             break;
         default:
-            throw new \Exception( 'Unsupported meta type '. $atom->meta_type );
+            throw new \Exception( 'Unsupported meta type ' . $atom->meta_type );
             break;
     }
     if ( !$model ) {
@@ -103,22 +106,32 @@ $router->get( 'scope/{metaType}/{metaId}.jsonld', function( $metaType, $metaId )
 
     // Get a meta context & filter aggregated metas
     header( 'application/ld+json' );
-    $metaContext = \WishKnish\KnishIO\Models\Meta\MetaContext::find( array_get( $metas, 'context' ) );
+    $metaContext = MetaContext::find( array_get( $metas, 'context' ) );
     echo $metaContext->filter( $metas );
 
-});
-
+} );
 
 // @todo: DEBUG CODE FOR SERVER CONTROL
 $router->get( '/peer/{action}', function ( $action ) use ( $router ) {
 
     // Execute server action
-    $serverControl = new \WishKnish\KnishIO\Helpers\ServerControl();
-    $serverControl->execute( $action, request()->has('all') );
+    $serverControl = new ServerControl();
+    $serverControl->execute( $action, request()->has( 'all' ) );
 
 } );
 
+$router->options( '/knishio.oauth', [
+    'middleware' => [ CorsMiddleware::class ],
+    function () {
+        return response( [ 'status' => 'success' ] );
+    }
+] );
 
+$router->post( '/knishio.oauth', [
+    'middleware' => [ CorsMiddleware::class ],
+    'as' => 'knishio_oauth',
+    'uses' => 'TwitterController@token',
+] );
 
 $router->get( '/', function () use ( $router ) {
     return view( 'index' );
