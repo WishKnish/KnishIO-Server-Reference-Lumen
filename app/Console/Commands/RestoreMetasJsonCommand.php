@@ -31,7 +31,7 @@ class RestoreMetasJsonCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Rebond all molecules';
+    protected $description = 'Restore metas json command';
 
 
     /**
