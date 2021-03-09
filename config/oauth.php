@@ -1,6 +1,7 @@
 <?php
 
 use App\Helpers\OAuthTwitter;
+use App\Helpers\OAuthLinkedin;
 
 return [
     'key' => [
@@ -8,6 +9,10 @@ return [
             'key' => env( 'TWITTER_API_KEY' ),
             'secret' => env( 'TWITTER_API_SECRET' ),
         ],
+        'linkedin' => [
+            'key' => env( 'LINKEDIN_CLIENT_ID' ),
+            'secret' => env( 'LINKEDIN_CLIENT_SECRET' ),
+        ]
     ],
     'driver' => [
         'twitter' => [
@@ -16,7 +21,14 @@ return [
                 'getAuthUrl',
                 'getUserData',
             ],
-        ]
+        ],
+        'linkedin' => [
+            'class' => OAuthLinkedin::class,
+            'method' => [
+                'getAuthUrl',
+                'getUser',
+            ],
+        ],
     ],
 
 ];

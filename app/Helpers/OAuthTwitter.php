@@ -1,7 +1,6 @@
 <?php
 namespace App\Helpers;
 
-use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\RequestOptions;
 use GuzzleHttp\Psr7\Request;
@@ -10,32 +9,13 @@ use GuzzleHttp\Psr7\Request;
  * Class OAuthTwitter
  * @package WishKnish\KnishIO\Helpers
  */
-class OAuthTwitter
+class OAuthTwitter extends OAuth
 {
     protected const URL_GET_TOKEN = 'https://api.twitter.com/oauth2/token';
     protected const URL_REQUEST_TOKEN = 'https://api.twitter.com/oauth/request_token';
     protected const URL_AUTHORIZE = 'https://api.twitter.com/oauth/authorize';
     protected const URL_ACCESS_TOKEN = 'https://api.twitter.com/oauth/access_token';
     protected const URL_USER_DATA = 'https://api.twitter.com/1.1/users/show.json';
-
-    protected string $consumerKey;
-    protected string $consumerSecret;
-    protected string $urlCallback;
-    protected Client $client;
-
-    /**
-     * OAuthTwitter constructor.
-     *
-     * @param string $key
-     * @param string $secret
-     * @param string $urlCallback
-     */
-    public function __construct ( string $key, string $secret, string $urlCallback = '' ) {
-        $this->consumerKey = $key;
-        $this->consumerSecret = $secret;
-        $this->client = new Client();
-        $this->urlCallback = $urlCallback;
-    }
 
     /**
      * @return array

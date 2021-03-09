@@ -21,6 +21,7 @@ class TwitterController extends Controller {
         $driver = array_get( $parameters, 'driver' );
         $method = array_get( $parameters, 'request' );
         $data = array_get( $parameters, 'data' );
+        $callback = array_get( $parameters, 'callback', '' );
 
         if ( !in_array( null, [ $driver, $method ], true ) ) {
             $driver = strtolower( $driver );
@@ -43,7 +44,7 @@ class TwitterController extends Controller {
                 return new JsonResponse( [ 'error' => [ 'messages' => $errorMessage ] ], $status );
             }
 
-            $oAuth = new $service[ 'class' ]( $API_KEY, $API_SECRET );
+            $oAuth = new $service[ 'class' ]( $API_KEY, $API_SECRET, $callback );
             $response = $data === null ? $oAuth->{ $method }() : $oAuth->{ $method }( $data );
 
             return new JsonResponse( $response, $status );
