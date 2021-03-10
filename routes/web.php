@@ -107,7 +107,7 @@ $router->get('scope/{metaType}/{metaId}.jsonld', function ($metaType, $metaId) u
     $metas = Meta::aggregateMeta($metas);
 
     // Get a meta context
-    $context = array_get( $metas, 'context', 'https://knish.io/schema' );
+    $context = array_get( $metas, 'context', env('KNISHIO_SCHEMA') );
 
     // Get a model: @todo change this code to use resolver classes
     $attributes = [];
