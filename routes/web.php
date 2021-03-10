@@ -99,53 +99,40 @@ $router->get( 'schema/{type}', function ( $type ) use ( $router ) {
 } );
 
 // Meta instance json-ld data
-$router->get( 'scope/{metaType}/{metaId}.jsonld', function ( $metaType, $metaId ) use ( $router ) {
+$router->get('scope/{metaType}/{metaId}.jsonld', function ($metaType, $metaId) use ($router) {
 
-    // Get a meta instance
-    $atom = Atom::where( 'isotope', 'C' )
-        ->where( 'meta_type', $metaType )
-        ->where( 'meta_id', $metaId )
-        ->first();
-    if ( !$atom ) {
-        throw new \Exception( 'Meta instance does not found.' );
-    }
+    $metas = \WishKnish\KnishIO\Models\Meta::whereInstance( null, null, [ $metaType ], [ $metaId ] )
+        ->whereLatest()
+        ->get();
+    $metas = Meta::aggregateMeta($metas);
 
-    // Get metas
-    $metas = Meta::aggregateMeta( $atom->metas );
-    if ( !array_has( $metas, 'context' ) ) {
-        throw new \Exception( 'Instance does not have a context.' );
-    }
+    // Get a meta context
+    $context = array_get( $metas, 'context', 'https://knish.io/schema' );
 
     // Get a model: @todo change this code to use resolver classes
-    $model = null;
-    switch ( $atom->meta_type ) {
+    $attributes = [];
+    switch ( $metaType ) {
         case 'token':
-            $model = Token::where( 'slug', $atom->meta_id )
-                ->first();
+            $model = Token::where( 'slug', $metaId )->first();
+            $attributes = $model->getAttributes();
             break;
         case 'wallet':
-            $model = Wallet::where( 'address', $atom->meta_id )
-                ->first();
+            $model = \WishKnish\KnishIO\Models\Wallet::where( 'address', $metaId )->first();
             $model->token = $model->token_slug;
             $model->bundle = $model->bundle_hash;
+            $attributes = $model->getAttributes();
             break;
-        default:
-            throw new \Exception( 'Unsupported meta type ' . $atom->meta_type );
-            break;
-    }
-    if ( !$model ) {
-        throw new \Exception( 'Model does not found.' );
     }
 
     // All metas to output
-    $metas = array_merge( $model->getAttributes(), $metas );
+    $metas = array_merge( $attributes, $metas );
 
     // Get a meta context & filter aggregated metas
-    header( 'application/ld+json' );
-    $metaContext = MetaContext::find( array_get( $metas, 'context' ) );
+    header('application/ld+json');
+    $metaContext = MetaContext::find( $context );
     echo $metaContext->filter( $metas );
 
-} );
+});
 
 // @todo: DEBUG CODE FOR SERVER CONTROL
 $router->get( '/peer/{action}', function ( $action ) use ( $router ) {
