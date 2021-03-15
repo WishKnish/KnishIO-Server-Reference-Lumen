@@ -108,16 +108,25 @@ $router->get('scope/{metaType}/{metaId}.jsonld', function ($metaType, $metaId) u
 
     // Get a meta context
     $context = array_get( $metas, 'context', env('KNISHIO_SCHEMA') );
+    if ( !$context ) {
+        throw new \Exception( 'KNISHIO_SCHEMA does not initialized.' );
+    }
 
     // Get a model: @todo change this code to use resolver classes
     $attributes = [];
     switch ( $metaType ) {
-        case 'token':
+        case 'Token':
             $model = Token::where( 'slug', $metaId )->first();
+            if ( !$model ) {
+                abort( 404 );
+            }
             $attributes = $model->getAttributes();
             break;
-        case 'wallet':
+        case 'Wallet':
             $model = \WishKnish\KnishIO\Models\Wallet::where( 'address', $metaId )->first();
+            if ( !$model ) {
+                abort( 404 );
+            }
             $model->token = $model->token_slug;
             $model->bundle = $model->bundle_hash;
             $attributes = $model->getAttributes();
@@ -129,8 +138,15 @@ $router->get('scope/{metaType}/{metaId}.jsonld', function ($metaType, $metaId) u
 
     // Get a meta context & filter aggregated metas
     header('application/ld+json');
+
+    // Find a context object
     $metaContext = MetaContext::find( $context );
-    echo $metaContext->filter( $metas );
+
+    // Get a graphType
+    $graphType = $metaContext->getJsonldObject()->graphType( $metaType );
+
+    // Filtering metas
+    echo json_encode( $graphType->toJsonldDataArray( $metas ) );
 
 });
 
@@ -157,5 +173,7 @@ $router->post( '/knishio.oauth', [
 ] );
 
 $router->get( '/', function () use ( $router ) {
+
+
     return view( 'index' );
 } );
