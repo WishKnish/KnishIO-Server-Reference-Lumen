@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Helpers;
 
 use GuzzleHttp\Exception\GuzzleException;
@@ -9,8 +10,7 @@ use GuzzleHttp\Psr7\Request;
  * Class OAuthTwitter
  * @package WishKnish\KnishIO\Helpers
  */
-class OAuthTwitter extends OAuth
-{
+class OAuthTwitter extends OAuth {
     protected const URL_GET_TOKEN = 'https://api.twitter.com/oauth2/token';
     protected const URL_REQUEST_TOKEN = 'https://api.twitter.com/oauth/request_token';
     protected const URL_AUTHORIZE = 'https://api.twitter.com/oauth/authorize';
@@ -21,38 +21,23 @@ class OAuthTwitter extends OAuth
      * @return array
      * @throws GuzzleException
      */
-    public function getAuthUrl(): array {
+    public function getAuthUrl (): array {
         $oauthNonce = static::getNonce();
         $oauthTimestamp = time();
 
-        $oauthBaseText = "GET&" .
-            urlencode( static::URL_REQUEST_TOKEN ) . "&" .
-            urlencode(
-                "oauth_callback=" . urlencode( $this->urlCallback ) . "&" .
-                "oauth_consumer_key=" . $this->consumerKey . "&" .
-                "oauth_nonce=" . $oauthNonce . "&" .
-                "oauth_signature_method=HMAC-SHA1&" .
-                "oauth_timestamp=" . $oauthTimestamp . "&" .
-                "oauth_version=1.0"
-            );
+        $oauthBaseText = "GET&" . urlencode( static::URL_REQUEST_TOKEN ) . "&" . urlencode( "oauth_callback=" . urlencode( $this->urlCallback ) . "&" . "oauth_consumer_key=" . $this->consumerKey . "&" . "oauth_nonce=" . $oauthNonce . "&" . "oauth_signature_method=HMAC-SHA1&" . "oauth_timestamp=" . $oauthTimestamp . "&" . "oauth_version=1.0" );
 
         $key = $this->consumerSecret . "&";
         $oauthSignature = static::encode( $oauthBaseText, $key );
 
-        $url = '?oauth_callback=' . urlencode($this->urlCallback) .
-            '&oauth_consumer_key=' . $this->consumerKey .
-            '&oauth_nonce=' . $oauthNonce .
-            '&oauth_signature=' . urlencode($oauthSignature) .
-            '&oauth_signature_method=HMAC-SHA1' .
-            '&oauth_timestamp=' . $oauthTimestamp .
-            '&oauth_version=1.0';
+        $url = '?oauth_callback=' . urlencode( $this->urlCallback ) . '&oauth_consumer_key=' . $this->consumerKey . '&oauth_nonce=' . $oauthNonce . '&oauth_signature=' . urlencode( $oauthSignature ) . '&oauth_signature_method=HMAC-SHA1' . '&oauth_timestamp=' . $oauthTimestamp . '&oauth_version=1.0';
 
-        $response = $this->client->send(
-            new Request( 'GET', static::URL_REQUEST_TOKEN . $url ), [
+        $response = $this->client->send( new Request( 'GET', static::URL_REQUEST_TOKEN . $url ), [
             RequestOptions::HTTP_ERRORS => false,
         ] );
 
-        $contents = $response->getBody()->getContents();
+        $contents = $response->getBody()
+            ->getContents();
 
         parse_str( $contents, $result );
 
@@ -68,45 +53,33 @@ class OAuthTwitter extends OAuth
      * @return array|null
      * @throws GuzzleException
      */
-    public function getUserData( array $data = [] ): ?array {
+    public function getUserData ( array $data = [] ): ?array {
         $oauthToken = array_get( $data, 'oauthToken' );
         $oauthVerifier = array_get( $data, 'oauthVerifier' );
         $session = array_get( $data, 'session' );
         $userId = null;
 
-        if ( ! in_array( null, [ $oauthToken, $oauthVerifier, $session ], true ) ) {
+        if ( !in_array( null, [
+            $oauthToken,
+            $oauthVerifier,
+            $session
+        ], true ) ) {
             $oauthNonce = static::getNonce();
             $oauthTimestamp = time();
 
-            $oauthBaseText = "GET&" .
-                urlencode( static::URL_ACCESS_TOKEN ) . "&" .
-                urlencode(
-                    "oauth_consumer_key=" . $this->consumerKey . "&" .
-                    "oauth_nonce=" . $oauthNonce . "&" .
-                    "oauth_signature_method=HMAC-SHA1&" .
-                    "oauth_token=" . $oauthToken . "&" .
-                    "oauth_timestamp=" . $oauthTimestamp . "&" .
-                    "oauth_verifier=" . $oauthVerifier . "&" .
-                    "oauth_version=1.0"
-                );
+            $oauthBaseText = "GET&" . urlencode( static::URL_ACCESS_TOKEN ) . "&" . urlencode( "oauth_consumer_key=" . $this->consumerKey . "&" . "oauth_nonce=" . $oauthNonce . "&" . "oauth_signature_method=HMAC-SHA1&" . "oauth_token=" . $oauthToken . "&" . "oauth_timestamp=" . $oauthTimestamp . "&" . "oauth_verifier=" . $oauthVerifier . "&" . "oauth_version=1.0" );
 
             $key = $this->consumerSecret . "&" . $session;
             $oauthSignature = static::encode( $oauthBaseText, $key );
 
-            $url = '?oauth_consumer_key=' . $this->consumerKey .
-                '&oauth_nonce=' . $oauthNonce .
-                '&oauth_signature_method=HMAC-SHA1' .
-                '&oauth_token=' . urlencode( $oauthToken ) .
-                '&oauth_timestamp=' . $oauthTimestamp .
-                '&oauth_verifier=' . urlencode( $oauthVerifier ) .
-                '&oauth_signature=' . urlencode( $oauthSignature ) .
-                '&oauth_version=1.0';
+            $url = '?oauth_consumer_key=' . $this->consumerKey . '&oauth_nonce=' . $oauthNonce . '&oauth_signature_method=HMAC-SHA1' . '&oauth_token=' . urlencode( $oauthToken ) . '&oauth_timestamp=' . $oauthTimestamp . '&oauth_verifier=' . urlencode( $oauthVerifier ) . '&oauth_signature=' . urlencode( $oauthSignature ) . '&oauth_version=1.0';
 
             $response = $this->client->send( new Request( 'GET', static::URL_ACCESS_TOKEN . $url ), [
                 RequestOptions::HTTP_ERRORS => false,
             ] );
 
-            $contents = $response->getBody()->getContents();
+            $contents = $response->getBody()
+                ->getContents();
 
             parse_str( $contents, $result );
 
@@ -122,17 +95,15 @@ class OAuthTwitter extends OAuth
      * @return array|null
      * @throws GuzzleException
      */
-    protected function getToken(): ?array {
+    protected function getToken (): ?array {
 
-        $response = $this->client->send(
-            new Request( 'POST', static::URL_GET_TOKEN, [
-                'Content-type' => 'application/x-www-form-urlencoded;charset=UTF-8',
-                'Authorization' => 'Basic ' . base64_encode($this->consumerKey . ':' . $this->consumerSecret ),
-            ] ),
-            [ RequestOptions::FORM_PARAMS => [ 'grant_type' => 'client_credentials', ], ]
-        );
+        $response = $this->client->send( new Request( 'POST', static::URL_GET_TOKEN, [
+            'Content-type' => 'application/x-www-form-urlencoded;charset=UTF-8',
+            'Authorization' => 'Basic ' . base64_encode( $this->consumerKey . ':' . $this->consumerSecret ),
+        ] ), [ RequestOptions::FORM_PARAMS => [ 'grant_type' => 'client_credentials', ], ] );
 
-        return json_decode( $response->getBody()->getContents(), true );
+        return json_decode( $response->getBody()
+            ->getContents(), true );
     }
 
     /**
@@ -141,21 +112,19 @@ class OAuthTwitter extends OAuth
      * @return array|null
      * @throws GuzzleException
      */
-    protected function getUser( ?string $userId = null ): ?array {
+    protected function getUser ( ?string $userId = null ): ?array {
 
         if ( $userId && $token = $this->getToken() ) {
             $tokenType = array_get( $token, 'token_type' );
             $accessToken = array_get( $token, 'access_token' );
 
-            $response = $this->client->send(
-                new Request( 'GET', static::URL_USER_DATA, [
-                    'Content-type' => 'application/x-www-form-urlencoded;charset=UTF-8',
-                    'Authorization' => $tokenType . ' ' . $accessToken
-                ] ),
-                [ RequestOptions::QUERY => [ 'user_id' => $userId ], ]
-            );
+            $response = $this->client->send( new Request( 'GET', static::URL_USER_DATA, [
+                'Content-type' => 'application/x-www-form-urlencoded;charset=UTF-8',
+                'Authorization' => $tokenType . ' ' . $accessToken
+            ] ), [ RequestOptions::QUERY => [ 'user_id' => $userId ], ] );
 
-            return json_decode( $response->getBody()->getContents(), true );
+            return json_decode( $response->getBody()
+                ->getContents(), true );
         }
 
         return null;
@@ -174,7 +143,7 @@ class OAuthTwitter extends OAuth
     /**
      * @return string
      */
-    protected static function getNonce(): string {
+    protected static function getNonce (): string {
         return md5( uniqid( mt_rand(), true ) );
     }
 }

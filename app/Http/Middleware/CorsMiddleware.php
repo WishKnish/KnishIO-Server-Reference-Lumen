@@ -56,16 +56,10 @@ class CorsMiddleware {
 
         $headers = [
             'Access-Control-Allow-Origin' => '*',
-            'Access-Control-Allow-Methods' => implode(
-                ', ',
-                $this->methods
-            ),
+            'Access-Control-Allow-Methods' => implode( ', ', $this->methods ),
             'Access-Control-Allow-Credentials' => 'true',
             'Access-Control-Max-Age' => '86400',
-            'Access-Control-Allow-Headers' => implode(
-                ', ',
-                $this->headers
-            )
+            'Access-Control-Allow-Headers' => implode( ', ', $this->headers )
         ];
 
         if ( $request->isMethod( 'OPTIONS' ) ) {

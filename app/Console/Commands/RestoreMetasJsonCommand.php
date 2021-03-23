@@ -12,13 +12,11 @@ namespace App\Console\Commands;
 use Exception;
 use Illuminate\Console\Command;
 
-
 /**
  * Class RestoreMetasJsonCommand
  * @package App\Console\Commands
  */
-class RestoreMetasJsonCommand extends Command
-{
+class RestoreMetasJsonCommand extends Command {
     /**
      * The console command name.
      *
@@ -33,14 +31,12 @@ class RestoreMetasJsonCommand extends Command
      */
     protected $description = 'Restore metas json command';
 
-
     /**
      * Execute the console command.
      *
      * @return mixed
      */
-    public function handle ()
-    {
+    public function handle () {
         try {
             set_time_limit( 9999 );
             $start_time = microtime( true );
@@ -50,17 +46,17 @@ class RestoreMetasJsonCommand extends Command
                 ->get();
             $this->info( "Starting metas_json restore process..." );
             $count = 0;
-            foreach( $molecules as $molecule ) {
-                foreach( $molecule->atoms as $atom ) {
+            foreach ( $molecules as $molecule ) {
+                foreach ( $molecule->atoms as $atom ) {
                     if ( $atom->restoreMetasJson() ) {
-                        $this->info( "Restoring metas_json for ". $molecule->molecular_hash );
+                        $this->info( "Restoring metas_json for " . $molecule->molecular_hash );
                         $count++;
                     }
                 }
             }
 
-            $this->info( "Restored metas_json: ". $count );
-            $this->info('Time Spent: ' . round(microtime( true ) - $start_time, 2) );
+            $this->info( "Restored metas_json: " . $count );
+            $this->info( 'Time Spent: ' . round( microtime( true ) - $start_time, 2 ) );
         }
         catch ( Exception $e ) {
             $this->error( 'An error occurred:' . $e );

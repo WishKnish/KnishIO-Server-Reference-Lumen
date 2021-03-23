@@ -14,16 +14,15 @@ use WishKnish\KnishIO\Client\Wallet;
  * Class BenchmarkMoleculeFactory
  * @package App\Console\Commands\Benchmark
  */
-class BenchmarkMoleculeFactory
-{
+class BenchmarkMoleculeFactory {
     /**
      * @param KnishIOClient $client
      * @param int $metas_count
+     *
      * @return RequestInterface
      * @throws Exception|ReflectionException
      */
-    public static function create ( KnishIOClient $client, int $metas_count ): Molecule
-    {
+    public static function create ( KnishIOClient $client, int $metas_count ): Molecule {
         // Defining signing parameters
         $source_wallet = Wallet::create( $client->secret(), 'USER' );
         $remainder_wallet = Wallet::create( $client->secret(), 'USER' );

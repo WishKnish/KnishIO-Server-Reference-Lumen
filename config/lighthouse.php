@@ -17,12 +17,12 @@ return [
         /*
          * The URI the endpoint responds to, e.g. mydomain.com/graphql.
          */
-        'uri'        => \env( 'LIGHTHOUSE_ROUTE_URI', 'graphql' ),
+        'uri' => \env( 'LIGHTHOUSE_ROUTE_URI', 'graphql' ),
 
         /*
          * Lighthouse creates a named route for convenient URL generation and redirects.
          */
-        'name'       => \env( 'LIGHTHOUSE_ROUTE_NAME', 'graphql' ),
+        'name' => \env( 'LIGHTHOUSE_ROUTE_NAME', 'graphql' ),
 
         /*
          * Beware that middleware defined here runs before the GraphQL execution phase,
@@ -30,7 +30,6 @@ return [
          */
         'middleware' => [
             \Nuwave\Lighthouse\Support\Http\Middleware\AcceptJson::class,
-
 
             // !!! @todo temporaily !!! it is not needed because alredy has a middleware code in routes.php of knishio-server-php
             \WishKnish\KnishIO\GraphQL\Middleware\CorsMiddleware::class,
@@ -62,10 +61,7 @@ return [
 
     'schema' => [
 
-        'register' => \env(
-            'LIGHTHOUSE_SCHEMA_REGISTER',
-            \base_path( 'graphql' . DIRECTORY_SEPARATOR . 'schema.graphql' )
-        ),
+        'register' => \env( 'LIGHTHOUSE_SCHEMA_REGISTER', \base_path( 'graphql' . DIRECTORY_SEPARATOR . 'schema.graphql' ) ),
 
     ],
 
@@ -82,8 +78,8 @@ return [
 
     'cache' => [
         'enable' => env( 'LIGHTHOUSE_CACHE_ENABLE', env( 'APP_ENV' ) !== 'local' ),
-        'key'    => env( 'LIGHTHOUSE_CACHE_KEY', 'lighthouse-schema' ),
-        'ttl'    => env( 'LIGHTHOUSE_CACHE_TTL', null ),
+        'key' => env( 'LIGHTHOUSE_CACHE_KEY', 'lighthouse-schema' ),
+        'ttl' => env( 'LIGHTHOUSE_CACHE_TTL', null ),
     ],
 
     /*
@@ -98,18 +94,39 @@ return [
     */
 
     'namespaces' => [
-        'models'        => [
+        'models' => [
             'App',
             'App\\Models',
             'WishKnish\\KnishIO\\Models',
         ],
-        'queries'       => [ 'App\\GraphQL\\Queries', 'WishKnish\\KnishIO\\GraphQL\\Queries', ],
-        'mutations'     => [ 'App\\GraphQL\\Mutations', 'WishKnish\\KnishIO\\GraphQL\\Mutations', ],
-        'subscriptions' => [ 'App\\GraphQL\\Subscriptions', 'WishKnish\\KnishIO\\GraphQL\\Subscriptions', ],
-        'interfaces'    => [ 'App\\GraphQL\\Interfaces', 'WishKnish\\KnishIO\\GraphQL\\Interfaces', ],
-        'unions'        => [ 'App\\GraphQL\\Unions', 'WishKnish\\KnishIO\\GraphQL\\Unions', ],
-        'scalars'       => [ 'App\\GraphQL\\Scalars', 'WishKnish\\KnishIO\\GraphQL\\Scalars', ],
-        'directives'    => [ 'App\\GraphQL\\Directives', 'WishKnish\\KnishIO\\GraphQL\\Directives', ],
+        'queries' => [
+            'App\\GraphQL\\Queries',
+            'WishKnish\\KnishIO\\GraphQL\\Queries',
+        ],
+        'mutations' => [
+            'App\\GraphQL\\Mutations',
+            'WishKnish\\KnishIO\\GraphQL\\Mutations',
+        ],
+        'subscriptions' => [
+            'App\\GraphQL\\Subscriptions',
+            'WishKnish\\KnishIO\\GraphQL\\Subscriptions',
+        ],
+        'interfaces' => [
+            'App\\GraphQL\\Interfaces',
+            'WishKnish\\KnishIO\\GraphQL\\Interfaces',
+        ],
+        'unions' => [
+            'App\\GraphQL\\Unions',
+            'WishKnish\\KnishIO\\GraphQL\\Unions',
+        ],
+        'scalars' => [
+            'App\\GraphQL\\Scalars',
+            'WishKnish\\KnishIO\\GraphQL\\Scalars',
+        ],
+        'directives' => [
+            'App\\GraphQL\\Directives',
+            'WishKnish\\KnishIO\\GraphQL\\Directives',
+        ],
     ],
 
     /*
@@ -123,8 +140,8 @@ return [
     */
 
     'security' => [
-        'max_query_complexity'  => \GraphQL\Validator\Rules\QueryComplexity::DISABLED,
-        'max_query_depth'       => \GraphQL\Validator\Rules\QueryDepth::DISABLED,
+        'max_query_complexity' => \GraphQL\Validator\Rules\QueryComplexity::DISABLED,
+        'max_query_depth' => \GraphQL\Validator\Rules\QueryDepth::DISABLED,
         'disable_introspection' => \GraphQL\Validator\Rules\DisableIntrospection::DISABLED,
     ],
 
@@ -265,24 +282,24 @@ return [
          *
          * Any Laravel supported cache driver options are available here.
          */
-        'storage'          => env( 'LIGHTHOUSE_SUBSCRIPTION_STORAGE', 'redis' ),
+        'storage' => env( 'LIGHTHOUSE_SUBSCRIPTION_STORAGE', 'redis' ),
 
         /*
          * Default subscription broadcaster.
          */
-        'broadcaster'      => env( 'LIGHTHOUSE_BROADCASTER', 'pusher' ),
+        'broadcaster' => env( 'LIGHTHOUSE_BROADCASTER', 'pusher' ),
 
         /*
          * Subscription broadcasting drivers with config options.
          */
-        'broadcasters'     => [
-            'log'    => [
+        'broadcasters' => [
+            'log' => [
                 'driver' => 'log',
             ],
             'pusher' => [
 
-                'driver'     => 'redis',
-                'routes'     => \WishKnish\KnishIO\GraphQL\Lighthouse\Router\SubscriptionRouter::class . '@pusher',
+                'driver' => 'redis',
+                'routes' => \WishKnish\KnishIO\GraphQL\Lighthouse\Router\SubscriptionRouter::class . '@pusher',
                 'connection' => 'redis',
 
             ],

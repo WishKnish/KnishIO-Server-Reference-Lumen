@@ -9,7 +9,6 @@
 
 namespace App\Console\Commands;
 
-
 use App\Post;
 
 use Exception;
@@ -17,15 +16,13 @@ use Illuminate\Console\Command;
 use PHPUnit\Framework\Assert;
 use WishKnish\KnishIO\Helpers\TimeLogger;
 
-
 /**
  * Class deletePostsCommand
  *
  * @category Console_Command
  * @package  App\Console\Commands
  */
-class RebondMoleculesCommand extends Command
-{
+class RebondMoleculesCommand extends Command {
     /**
      * The console command name.
      *
@@ -40,35 +37,35 @@ class RebondMoleculesCommand extends Command
      */
     protected $description = 'Rebond all molecules';
 
-
     /**
      * Execute the console command.
      *
      * @return mixed
      */
-    public function handle ()
-    {
+    public function handle () {
         try {
             set_time_limit( 9999 );
             $start_time = microtime( true );
 
-            $molecules = \WishKnish\KnishIO\Models\Molecule::orderBy( 'knishio_molecules.processed_at', 'asc' )->get();
+            $molecules = \WishKnish\KnishIO\Models\Molecule::orderBy( 'knishio_molecules.processed_at', 'asc' )
+                ->get();
             $this->info( 'Detaching bonds...' );
 
-            \DB::table( 'knishio_bonds' )->truncate();
+            \DB::table( 'knishio_bonds' )
+                ->truncate();
 
             $cell_counts = [];
             $cell_origins = [];
 
-
-
-
             // --- Cell molecules initialization
-            $all_cell_molecules = \WishKnish\KnishIO\Models\Molecule::whereIn( 'status', [ 'accepted', 'broadcasted' ] )
+            $all_cell_molecules = \WishKnish\KnishIO\Models\Molecule::whereIn( 'status', [
+                'accepted',
+                'broadcasted'
+            ] )
                 ->orderBy( 'knishio_molecules.processed_at', 'desc' )
                 ->get();
             $cell_molecules = [];
-            foreach( $all_cell_molecules as $molecule ) {
+            foreach ( $all_cell_molecules as $molecule ) {
                 if ( !isset( $cell_molecules[ $molecule->cell_slug ] ) ) {
                     $cell_molecules[ $molecule->cell_slug ] = [];
                 }
@@ -76,11 +73,10 @@ class RebondMoleculesCommand extends Command
             }
             // ---
 
-
             $bonds = [];
             foreach ( $molecules as $index => $molecule ) {
 
-                TimeLogger::begin('molecule_'.$index);
+                TimeLogger::begin( 'molecule_' . $index );
 
                 $origin = null;
                 $bond1 = null;
@@ -96,7 +92,7 @@ class RebondMoleculesCommand extends Command
                 // Special case on the first molecule of the cell
                 if ( $cell_counts[ $cell_slug ] === 1 ) {
 
-                    TimeLogger::begin('First');
+                    TimeLogger::begin( 'First' );
 
                     // Setting this molecule as the origin for its cell
                     $cell_origins[ $cell_slug ] = $molecule;
@@ -112,12 +108,15 @@ class RebondMoleculesCommand extends Command
                     $origin = $cell_origins[ 'N/A' ];
 
                     $bond1 = $origin;
-                    $bond2 = $origin->cascades()->inRandomOrder()->first();
+                    $bond2 = $origin->cascades()
+                        ->inRandomOrder()
+                        ->first();
 
-                    TimeLogger::end('First');
-                } else {
+                    TimeLogger::end( 'First' );
+                }
+                else {
 
-                    TimeLogger::begin('Origin');
+                    TimeLogger::begin( 'Origin' );
 
                     $this->info( 'Searching for origin for molecule ' . $molecule->molecular_hash );
 
@@ -125,9 +124,7 @@ class RebondMoleculesCommand extends Command
                     $new_origin = null;
                     if ( isset( $cell_molecules[ $molecule->cell_slug ] ) ) {
                         foreach ( $cell_molecules[ $molecule->cell_slug ] as $cell_molecule ) {
-                            if ( $cell_molecule->molecular_hash !== $molecule->molecular_hash &&
-                                isset( $bonds[ $cell_molecule->molecular_hash ] )
-                            ) {
+                            if ( $cell_molecule->molecular_hash !== $molecule->molecular_hash && isset( $bonds[ $cell_molecule->molecular_hash ] ) ) {
                                 $new_origin = $cell_molecule;
                                 break;
                             }
@@ -159,37 +156,32 @@ class RebondMoleculesCommand extends Command
                     }
                     */
 
-                    TimeLogger::end('Origin');
+                    TimeLogger::end( 'Origin' );
                 }
 
                 if ( !$origin ) {
                     $origin = $cell_origins[ $cell_slug ];
                 }
 
-                TimeLogger::begin('chooseBonds');
-                $bond_hashes = $molecule->chooseBonds(
-                    $origin,
-                    $bond1 ? $bond1->molecular_hash : null,
-                    $bond2 ? $bond2->molecular_hash : null
-                );
+                TimeLogger::begin( 'chooseBonds' );
+                $bond_hashes = $molecule->chooseBonds( $origin, $bond1 ? $bond1->molecular_hash : null, $bond2 ? $bond2->molecular_hash : null );
                 // Add bonds to the common list
-                foreach( $bond_hashes as $bond_hash ) {
-                    if ( !isset(  $bonds[ $bond_hash ] ) ) {
+                foreach ( $bond_hashes as $bond_hash ) {
+                    if ( !isset( $bonds[ $bond_hash ] ) ) {
                         $bonds[ $bond_hash ] = [];
                     }
                     $bonds[ $bond_hash ][] = $molecule->molecular_hash;
                 }
 
                 // dump ($bonds);
-                TimeLogger::end('chooseBonds');
+                TimeLogger::end( 'chooseBonds' );
 
-
-                TimeLogger::end('molecule_'.$index);
+                TimeLogger::end( 'molecule_' . $index );
 
             }
 
             $this->info( 'All molecules have been rebonded' );
-            $this->info('Time Spent: ' . round(microtime( true ) - $start_time, 2) );
+            $this->info( 'Time Spent: ' . round( microtime( true ) - $start_time, 2 ) );
         }
         catch ( Exception $e ) {
             $this->error( 'An error occurred:' . $e );

@@ -8,17 +8,16 @@ use WishKnish\KnishIO\Models\Cell;
 /**
  * Class BenchmarkCellFactory
  */
-class BenchmarkCellFactory
-{
+class BenchmarkCellFactory {
     /**
      * @param string $slug
+     *
      * @return Cell
      */
-    public static function create ( string $slug ): Cell
-    {
+    public static function create ( string $slug ): Cell {
         $cell = Cell::find( $slug );
 
-        if(!$cell) {
+        if ( !$cell ) {
             $cell = new Cell();
             $cell->cell_slug = $slug;
             $cell->save();
@@ -30,8 +29,7 @@ class BenchmarkCellFactory
     /**
      * @param string $slug
      */
-    public static function destroy ( string $slug ): void
-    {
+    public static function destroy ( string $slug ): void {
         Cleaner::byCell( $slug );
     }
 }

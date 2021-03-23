@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default' => env('QUEUE_CONNECTION', 'database'),
+    'default' => env( 'QUEUE_CONNECTION', 'database' ),
 
     /*
     |--------------------------------------------------------------------------
@@ -36,7 +36,7 @@ return [
 
         'database' => [
             'driver' => 'database',
-            'table' => env('QUEUE_TABLE', 'knishio_jobs'),
+            'table' => env( 'QUEUE_TABLE', 'knishio_jobs' ),
             'queue' => 'default',
             'retry_after' => 90,
         ],
@@ -50,16 +50,16 @@ return [
 
         'sqs' => [
             'driver' => 'sqs',
-            'key' => env('SQS_KEY', 'your-public-key'),
-            'secret' => env('SQS_SECRET', 'your-secret-key'),
-            'prefix' => env('SQS_PREFIX', 'https://sqs.us-east-1.amazonaws.com/your-account-id'),
-            'queue' => env('SQS_QUEUE', 'your-queue-name'),
-            'region' => env('SQS_REGION', 'us-east-1'),
+            'key' => env( 'SQS_KEY', 'your-public-key' ),
+            'secret' => env( 'SQS_SECRET', 'your-secret-key' ),
+            'prefix' => env( 'SQS_PREFIX', 'https://sqs.us-east-1.amazonaws.com/your-account-id' ),
+            'queue' => env( 'SQS_QUEUE', 'your-queue-name' ),
+            'region' => env( 'SQS_REGION', 'us-east-1' ),
         ],
 
         'redis' => [
             'driver' => 'redis',
-            'connection' => env('QUEUE_REDIS_CONNECTION', 'default'),
+            'connection' => env( 'QUEUE_REDIS_CONNECTION', 'default' ),
             'queue' => 'default',
             'retry_after' => 90,
             'block_for' => null,
@@ -79,8 +79,8 @@ return [
     */
 
     'failed' => [
-        'database' => env('DB_CONNECTION', 'mysql'),
-        'table' => env('QUEUE_FAILED_TABLE', 'knishio_failed_jobs'),
+        'database' => env( 'DB_CONNECTION', 'mysql' ),
+        'table' => env( 'QUEUE_FAILED_TABLE', 'knishio_failed_jobs' ),
     ],
 
 ];

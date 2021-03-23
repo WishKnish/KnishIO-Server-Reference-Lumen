@@ -1,11 +1,11 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-
 
 class TwitterController extends Controller {
 
@@ -23,7 +23,10 @@ class TwitterController extends Controller {
         $data = array_get( $parameters, 'data' );
         $callback = array_get( $parameters, 'callback', '' );
 
-        if ( !in_array( null, [ $driver, $method ], true ) ) {
+        if ( !in_array( null, [
+            $driver,
+            $method
+        ], true ) ) {
             $driver = strtolower( $driver );
             $API_KEY = array_get( $config, 'key.' . $driver . '.key' );
             $API_SECRET = array_get( $config, 'key.' . $driver . '.secret' );
@@ -33,11 +36,13 @@ class TwitterController extends Controller {
 
             if ( $service === null ) {
                 $status = 404;
-                $errorMessage[] = 'The requested service for driver '.$driver.' is missing.';
+                $errorMessage[] = 'The requested service for driver ' . $driver . ' is missing.';
             }
-            else if ( !in_array( $method, $service[ 'method' ], true ) ) {
-                $status = 405;
-                $errorMessage[] = 'The requested method is missing.';
+            else {
+                if ( !in_array( $method, $service[ 'method' ], true ) ) {
+                    $status = 405;
+                    $errorMessage[] = 'The requested method is missing.';
+                }
             }
 
             if ( count( $errorMessage ) > 0 ) {
@@ -45,7 +50,7 @@ class TwitterController extends Controller {
             }
 
             $oAuth = new $service[ 'class' ]( $API_KEY, $API_SECRET, $callback );
-            $response = $data === null ? $oAuth->{ $method }() : $oAuth->{ $method }( $data );
+            $response = $data === null ? $oAuth->{$method}() : $oAuth->{$method}( $data );
 
             return new JsonResponse( $response, $status );
         }

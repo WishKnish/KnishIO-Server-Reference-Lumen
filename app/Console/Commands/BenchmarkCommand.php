@@ -31,8 +31,7 @@ use WishKnish\KnishIO\Helpers\Cleaner;
  * @category Console_Command
  * @package  App\Console\Commands
  */
-class BenchmarkCommand extends Command
-{
+class BenchmarkCommand extends Command {
     /**
      * The name and signature of the console command.
      *
@@ -65,20 +64,17 @@ class BenchmarkCommand extends Command
     protected $bundles = [];
     protected $molecules = [];
 
-
     /**
      * @param $all
      * @param $count
      */
-    public static function metaIdAllCombinations ( $all, $count, $start_combination_length = 2 ) : array
-    {
+    public static function metaIdAllCombinations ( $all, $count, $start_combination_length = 2 ): array {
         $result = [];
-        for ($length = $start_combination_length, $lengthMax = count( $all ); $length <= $lengthMax; $length++ ) {
+        for ( $length = $start_combination_length, $lengthMax = count( $all ); $length <= $lengthMax; $length++ ) {
             static::metaIdCombinations( $result, $count, $all, [], $length );
         }
         return $result;
     }
-
 
     /**
      * @param $result
@@ -86,10 +82,9 @@ class BenchmarkCommand extends Command
      * @param $custom
      * @param $length
      */
-    public static function metaIdCombinations ( &$result, $count, $all, $custom, $length )
-    {
+    public static function metaIdCombinations ( &$result, $count, $all, $custom, $length ) {
         // Check total count
-        if ( count($result) >= $count ) {
+        if ( count( $result ) >= $count ) {
             return;
         }
 
@@ -102,25 +97,22 @@ class BenchmarkCommand extends Command
         // All combinations
         foreach ( $all as $item ) {
             if ( !in_array( $item, $custom ) ) {
-                static::metaIdCombinations($result, $count, $all, array_merge($custom, [$item]), $length);
+                static::metaIdCombinations( $result, $count, $all, array_merge( $custom, [ $item ] ), $length );
             }
         }
     }
-
-
 
     /**
      * Execute the console command.
      *
      * @return mixed
      */
-    public function handle ()
-    {
+    public function handle () {
         set_time_limit( 9999 );
         try {
             // Options
             $this->graphql_url = url() . '/graphql';
-            $this->info( 'GraphQL url: '. $this->graphql_url );
+            $this->info( 'GraphQL url: ' . $this->graphql_url );
             $this->thread_count = $this->option( 'threads' );
             $this->info( 'Threads: ' . $this->thread_count );
             $this->metas_count = $this->option( 'metas' );
@@ -132,7 +124,6 @@ class BenchmarkCommand extends Command
             $this->commentTitle( 'BOOTSTRAPPING ASSETS' );
             $this->bootstrap();
 
-
             // Execute all benchmarks
             $all_results = [];  // All results
             $results = []; // Results from the previous call
@@ -143,21 +134,21 @@ class BenchmarkCommand extends Command
                 $results = $this->$key( array_get( $this->requests, $key ), $results );
 
                 // Save results to the common list
-                $all_results[$key] = $results;
+                $all_results[ $key ] = $results;
             }
 
             // Cleaning up
-            if ( $this->option('cleanup') ) {
-                $this->commentTitle('CLEANING UP');
+            if ( $this->option( 'cleanup' ) ) {
+                $this->commentTitle( 'CLEANING UP' );
                 $this->cleanup();
             }
 
             // Computing results
             foreach ( $all_results as $fn => $results ) {
-                $this->commentTitle($this->benchmarks[$fn] . ' RESULTS');
-                $this->info('Total queries: ' . ($results['success'] + $results['fail']));
-                $this->info('Success: ' . $results['success'] . ' Failure: ' . $results['fail']);
-                $this->info('Time Spent: ' . round($results['time'], 2) . ' TPS: ' . round(($results['success'] + $results['fail']) / $results['time'], 2) . ' Successful TPS: ' . round($results['success'] / $results['time'], 2));
+                $this->commentTitle( $this->benchmarks[ $fn ] . ' RESULTS' );
+                $this->info( 'Total queries: ' . ( $results[ 'success' ] + $results[ 'fail' ] ) );
+                $this->info( 'Success: ' . $results[ 'success' ] . ' Failure: ' . $results[ 'fail' ] );
+                $this->info( 'Time Spent: ' . round( $results[ 'time' ], 2 ) . ' TPS: ' . round( ( $results[ 'success' ] + $results[ 'fail' ] ) / $results[ 'time' ], 2 ) . ' Successful TPS: ' . round( $results[ 'success' ] / $results[ 'time' ], 2 ) );
             }
 
             return true;
@@ -168,14 +159,12 @@ class BenchmarkCommand extends Command
         return false;
     }
 
-
     /**
      * @param string $title
      */
-    protected function commentTitle ( string $title )
-    {
-        $title = '## '. $title .' ##';
-        $delimiter = str_repeat('#', strlen($title));
+    protected function commentTitle ( string $title ) {
+        $title = '## ' . $title . ' ##';
+        $delimiter = str_repeat( '#', strlen( $title ) );
 
         $this->comment( '' );
         $this->comment( $delimiter );
@@ -183,12 +172,10 @@ class BenchmarkCommand extends Command
         $this->comment( $delimiter );
     }
 
-
     /**
      * @throws Exception|ReflectionException
      */
-    protected function bootstrap (): void
-    {
+    protected function bootstrap (): void {
         $instance = $this;
 
         // Method to trigger Cell creation
@@ -245,7 +232,6 @@ class BenchmarkCommand extends Command
             }
         }
 
-
         // !!! @todo here used only single $client
         $self = $this;
         $this->requests[ 'benchmark_read' ] = static function ( $related_results ) use ( $self ) {
@@ -256,22 +242,21 @@ class BenchmarkCommand extends Command
             $client->requestAuthToken( $secret );
 
             // Accumulate all meta types & ids
-            $metaTypes = []; $metaIds = [];
+            $metaTypes = [];
+            $metaIds = [];
             foreach ( $related_results[ 'accepted_molecules' ] as $molecule ) {
-                $metaTypes[] = $molecule->atoms[0]->metaType;
+                $metaTypes[] = $molecule->atoms[ 0 ]->metaType;
                 $metaTypes = array_unique( $metaTypes );
-                $metaIds[] = $molecule->atoms[0]->metaId;
+                $metaIds[] = $molecule->atoms[ 0 ]->metaId;
             }
 
             // Generate combinations: @todo add here custom random logic based on $metaTypes, $metaIds data
-            $metaIdBunches = static::metaIdAllCombinations ( $metaIds, count($metaIds) );
+            $metaIdBunches = static::metaIdAllCombinations( $metaIds, count( $metaIds ) );
 
             // Generate requests
             $requests = [];
             foreach ( $metaIdBunches as $metaIdBunch ) {
-                $requests[] = BenchmarkMetaTypeRequestFactory::create(
-                    $client, [ $metaTypes[0] ], $metaIdBunch
-                );
+                $requests[] = BenchmarkMetaTypeRequestFactory::create( $client, [ $metaTypes[ 0 ] ], $metaIdBunch );
             }
 
             return $requests;
@@ -282,39 +267,48 @@ class BenchmarkCommand extends Command
     /**
      * @param $requests
      * @param array $previous_results
+     *
      * @return array
      */
-    protected function benchmark_write ( $requests, array $related_results ): array
-    {
+    protected function benchmark_write ( $requests, array $related_results ): array {
         $this->info( 'Starting benchmark...' );
-        $benchmark_result = [ 'success' => 0, 'fail' => 0, 'time' => 0, 'accepted_molecules' => [] ];
+        $benchmark_result = [
+            'success' => 0,
+            'fail' => 0,
+            'time' => 0,
+            'accepted_molecules' => []
+        ];
         $start_time = microtime( true );
 
         // Generic client for sending the requests
         $client = new KnishIOClient( $this->graphql_url );
 
         // Asynchronous broadcast of molecules
-        $pool = new Pool( $client->client(), $requests, [ 'concurrency' => $this->thread_count, 'fulfilled' => function ( ResponseInterface $response, $index ) use ( &$benchmark_result ) {
-            $data = json_decode( $response->getBody()->getContents(), true );
-            $molecule = array_get( $data, 'data.ProposeMolecule' );
+        $pool = new Pool( $client->client(), $requests, [
+            'concurrency' => $this->thread_count,
+            'fulfilled' => function ( ResponseInterface $response, $index ) use ( &$benchmark_result ) {
+                $data = json_decode( $response->getBody()
+                    ->getContents(), true );
+                $molecule = array_get( $data, 'data.ProposeMolecule' );
 
-            $benchmark_result[ 'metas' ] = [];
-            if ( $molecule && $molecule[ 'status' ] === 'accepted' ) {
-                $this->info( 'Molecule ' . $index . ' has been accepted.' );
-                $benchmark_result[ 'success' ]++;
-                $benchmark_result[ 'metas' ] = '';
-                $benchmark_result[ 'accepted_molecules' ][] = array_get( $this->molecules, $molecule[ 'molecularHash' ] );
-            }
-            else {
-                $error = array_has( $data, 'message' ) ?
-                    array_get( $data, 'message' ) : array_get( $molecule, 'reason' );
-                $this->error( 'Molecule ' . $index . ' has been rejected due to: "' . $error . '"' );
+                $benchmark_result[ 'metas' ] = [];
+                if ( $molecule && $molecule[ 'status' ] === 'accepted' ) {
+                    $this->info( 'Molecule ' . $index . ' has been accepted.' );
+                    $benchmark_result[ 'success' ]++;
+                    $benchmark_result[ 'metas' ] = '';
+                    $benchmark_result[ 'accepted_molecules' ][] = array_get( $this->molecules, $molecule[ 'molecularHash' ] );
+                }
+                else {
+                    $error = array_has( $data, 'message' ) ? array_get( $data, 'message' ) : array_get( $molecule, 'reason' );
+                    $this->error( 'Molecule ' . $index . ' has been rejected due to: "' . $error . '"' );
+                    $benchmark_result[ 'fail' ]++;
+                }
+            },
+            'rejected' => function ( $reason, $index ) use ( &$benchmark_result ) {
+                $this->error( 'Molecule ' . $index . ' has failed due to: ' . $reason );
                 $benchmark_result[ 'fail' ]++;
-            }
-        }, 'rejected' => function ( $reason, $index ) use ( &$benchmark_result ) {
-            $this->error( 'Molecule ' . $index . ' has failed due to: ' . $reason );
-            $benchmark_result[ 'fail' ]++;
-        }, ] );
+            },
+        ] );
 
         $promise = $pool->promise();  // Start transfers and create a promise
         $promise->wait();   // Force the pool of requests to complete.
@@ -326,41 +320,49 @@ class BenchmarkCommand extends Command
 
         return $benchmark_result;
     }
-
 
     /**
      * @param $requests
      * @param array $results
+     *
      * @return array
      */
-    protected function benchmark_read ( $requests, array $related_results ): array
-    {
+    protected function benchmark_read ( $requests, array $related_results ): array {
         $this->info( 'Starting benchmark...' );
-        $benchmark_result = [ 'success' => 0, 'fail' => 0, 'time' => 0 ];
+        $benchmark_result = [
+            'success' => 0,
+            'fail' => 0,
+            'time' => 0
+        ];
         $start_time = microtime( true );
 
         // Generic client for sending the requests
         $client = new KnishIOClient( $this->graphql_url );
 
         // Asynchronous broadcast of molecules
-        $pool = new Pool( $client->client(), $requests( $related_results ), [ 'concurrency' => $this->thread_count, 'fulfilled' => function ( ResponseInterface $response, $index ) use ( &$benchmark_result ) {
-            $data = json_decode( $response->getBody()->getContents(), true );
-            $metaTypes = array_get( $data, 'data.MetaType' );
+        $pool = new Pool( $client->client(), $requests( $related_results ), [
+            'concurrency' => $this->thread_count,
+            'fulfilled' => function ( ResponseInterface $response, $index ) use ( &$benchmark_result ) {
+                $data = json_decode( $response->getBody()
+                    ->getContents(), true );
+                $metaTypes = array_get( $data, 'data.MetaType' );
 
-            if ( $metaTypes ) {
-                $metaInstances = array_get( $metaTypes, '0.instances' );
-                $benchmark_result[ 'success' ]++;
-                $this->info( 'MetaTypeQuery ' . $index . ' has been executed correctly. Got '. count( $metaInstances ) .' record(s).' );
-            }
-            else {
+                if ( $metaTypes ) {
+                    $metaInstances = array_get( $metaTypes, '0.instances' );
+                    $benchmark_result[ 'success' ]++;
+                    $this->info( 'MetaTypeQuery ' . $index . ' has been executed correctly. Got ' . count( $metaInstances ) . ' record(s).' );
+                }
+                else {
+                    $benchmark_result[ 'fail' ]++;
+                    $this->error( 'MetaTypeQuery ' . $index . ' has errors.' );
+                }
+
+            },
+            'rejected' => function ( $reason, $index ) use ( &$benchmark_result ) {
+                $this->error( 'MetaType query ' . $index . ' has failed due to: ' . $reason );
                 $benchmark_result[ 'fail' ]++;
-                $this->error( 'MetaTypeQuery ' . $index . ' has errors.' );
-            }
-
-        }, 'rejected' => function ( $reason, $index ) use ( &$benchmark_result ) {
-            $this->error( 'MetaType query ' . $index . ' has failed due to: ' . $reason );
-            $benchmark_result[ 'fail' ]++;
-        }, ] );
+            },
+        ] );
 
         $promise = $pool->promise();  // Start transfers and create a promise
         $promise->wait();   // Force the pool of requests to complete.
@@ -373,9 +375,7 @@ class BenchmarkCommand extends Command
         return $benchmark_result;
     }
 
-
-    protected function cleanup (): void
-    {
+    protected function cleanup (): void {
         $this->info( 'Starting cleanup...' );
 
         $instance = $this;
@@ -408,15 +408,15 @@ class BenchmarkCommand extends Command
         $this->info( 'Cleanup complete.' );
     }
 
-
     /**
      * @param KnishIOClient $client
      * @param RequestInterface $request
+     *
      * @return PromiseInterface
      */
-    public static function sendAsync ( KnishIOClient $client, RequestInterface $request ): PromiseInterface
-    {
-        return $client->client()->sendAsync( $request );
+    public static function sendAsync ( KnishIOClient $client, RequestInterface $request ): PromiseInterface {
+        return $client->client()
+            ->sendAsync( $request );
     }
 
 }

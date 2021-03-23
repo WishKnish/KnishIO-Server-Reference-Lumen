@@ -11,19 +11,16 @@ use WishKnish\KnishIO\Client\Mutation\MutationProposeMolecule;
 /**
  * Class BenchmarkMoleculeRequestFactory
  */
-class BenchmarkMoleculeRequestFactory
-{
-
-
+class BenchmarkMoleculeRequestFactory {
 
     /**
      * @param KnishIOClient $client
      * @param Molecule $molecule
+     *
      * @return RequestInterface
      * @throws Exception
      */
-    public static function create ( KnishIOClient $client, Molecule $molecule ): RequestInterface
-    {
+    public static function create ( KnishIOClient $client, Molecule $molecule ): RequestInterface {
         // Preparing Guzzle request
         $query = $client->createMoleculeMutation( MutationProposeMolecule::class, $molecule );
 

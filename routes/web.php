@@ -35,9 +35,8 @@ $router->get( 'schema.jsonld', function () use ( $router ) {
         ->toJsonldSchema();
 } );
 
-
 // Custom schema => json-ld
-$router->get( 'schema.org.jsonld', function() use ( $router ) {
+$router->get( 'schema.org.jsonld', function () use ( $router ) {
 
     $metaContext = new \WishKnish\KnishIO\Models\Meta\SchemaMetaContext( 'local' );
 
@@ -47,14 +46,14 @@ $router->get( 'schema.org.jsonld', function() use ( $router ) {
 } );
 
 // Custom schema overview
-$router->get( 'schema.org', function() use ( $router ) {
+$router->get( 'schema.org', function () use ( $router ) {
 
     $metaContext = new \WishKnish\KnishIO\Models\Meta\SchemaMetaContext( 'local' );
     $jsonldObject = $metaContext->getJsonldObject();
 
     // Get only parent jsonld types @todo add cascade check to disable child with childs
     $jsonldTypes = [];
-    foreach( $jsonldObject->graph() as $jsonldType ) {
+    foreach ( $jsonldObject->graph() as $jsonldType ) {
         if ( $jsonldType->fields() ) {
             $jsonldTypes[] = $jsonldType;
         }
@@ -64,11 +63,12 @@ $router->get( 'schema.org', function() use ( $router ) {
 } );
 
 // Fields
-$router->get( 'schema.org/{type}', function( $type ) use ( $router ) {
+$router->get( 'schema.org/{type}', function ( $type ) use ( $router ) {
 
     $metaContext = new \WishKnish\KnishIO\Models\Meta\SchemaMetaContext( 'local' );
-    $jsonldType = $metaContext->getJsonldObject()->graphType( $type );
-    return view( 'schema/schema_type', [ 'jsonldType' => $jsonldType,] );
+    $jsonldType = $metaContext->getJsonldObject()
+        ->graphType( $type );
+    return view( 'schema/schema_type', [ 'jsonldType' => $jsonldType, ] );
 } );
 
 // Custom schema overview
@@ -99,15 +99,15 @@ $router->get( 'schema/{type}', function ( $type ) use ( $router ) {
 } );
 
 // Meta instance json-ld data
-$router->get('scope/{metaType}/{metaId}.jsonld', function ($metaType, $metaId) use ($router) {
+$router->get( 'scope/{metaType}/{metaId}.jsonld', function ( $metaType, $metaId ) use ( $router ) {
 
     $metas = \WishKnish\KnishIO\Models\Meta::whereInstance( null, null, [ $metaType ], [ $metaId ] )
         ->whereLatest()
         ->get();
-    $metas = Meta::aggregateMeta($metas);
+    $metas = Meta::aggregateMeta( $metas );
 
     // Get a meta context
-    $context = array_get( $metas, 'context', env('KNISHIO_SCHEMA') );
+    $context = array_get( $metas, 'context', env( 'KNISHIO_SCHEMA' ) );
     if ( !$context ) {
         throw new \Exception( 'KNISHIO_SCHEMA does not initialized.' );
     }
@@ -116,14 +116,16 @@ $router->get('scope/{metaType}/{metaId}.jsonld', function ($metaType, $metaId) u
     $attributes = [];
     switch ( $metaType ) {
         case 'Token':
-            $model = Token::where( 'slug', $metaId )->first();
+            $model = Token::where( 'slug', $metaId )
+                ->first();
             if ( !$model ) {
                 abort( 404 );
             }
             $attributes = $model->getAttributes();
             break;
         case 'Wallet':
-            $model = \WishKnish\KnishIO\Models\Wallet::where( 'address', $metaId )->first();
+            $model = \WishKnish\KnishIO\Models\Wallet::where( 'address', $metaId )
+                ->first();
             if ( !$model ) {
                 abort( 404 );
             }
@@ -137,18 +139,19 @@ $router->get('scope/{metaType}/{metaId}.jsonld', function ($metaType, $metaId) u
     $metas = array_merge( $attributes, $metas );
 
     // Get a meta context & filter aggregated metas
-    header('application/ld+json');
+    header( 'application/ld+json' );
 
     // Find a context object
     $metaContext = MetaContext::find( $context );
 
     // Get a graphType
-    $graphType = $metaContext->getJsonldObject()->graphType( $metaType );
+    $graphType = $metaContext->getJsonldObject()
+        ->graphType( $metaType );
 
     // Filtering metas
     echo json_encode( $graphType->toJsonldDataArray( $metas ) );
 
-});
+} );
 
 // @todo: DEBUG CODE FOR SERVER CONTROL
 $router->get( '/peer/{action}', function ( $action ) use ( $router ) {
@@ -173,7 +176,6 @@ $router->post( '/knishio.oauth', [
 ] );
 
 $router->get( '/', function () use ( $router ) {
-
 
     return view( 'index' );
 } );
