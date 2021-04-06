@@ -18,7 +18,6 @@
         "illuminate/redis": "^8.28",
         "laravel/lumen-framework": "^8.0",
         "laravelista/lumen-vendor-publish": "8.0",
-        "mongodb/mongodb": "^1.7",
         "wishknish/knishio-server-php": "dev-staging",
         "ybr-nx/laravel-mariadb": "^1.0"
     },
