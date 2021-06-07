@@ -36,9 +36,6 @@ return [
 
             // Logs every incoming GraphQL query.
             // \Nuwave\Lighthouse\Support\Http\Middleware\LogGraphQLQueries::class,
-
-            // !!! @todo temporaily !!! it is not needed because alredy has a middleware code in routes.php of knishio-server-php
-            \WishKnish\KnishIO\GraphQL\Middleware\CorsMiddleware::class,
         ],
 
         /*
