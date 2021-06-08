@@ -61,7 +61,7 @@ $app->singleton( Illuminate\Contracts\Console\Kernel::class, App\Console\Kernel:
 // ]);
 
 $app->routeMiddleware( [
-    'auth' => App\Http\Middleware\Authenticate::class,
+    //'auth' => App\Http\Middleware\Authenticate::class,
 ] );
 
 $app->configure( 'lighthouse' );
