@@ -44,6 +44,20 @@ services:
     networks:
       - knishio
 
+  redis:
+    image: redis:4.0.5-alpine
+    container_name: redis
+    command: [ "redis-server", "--appendonly", "yes" ]
+    hostname: redis
+    ports:
+      - 6379:6379
+    volumes:
+      - ./docker-compose/redis:/data
+    #  - ./docker-compose/redis/redis.conf:/usr/local/etc/redis/redis.conf
+    networks:
+      - knishio
+
+
 networks:
   knishio:
     driver: bridge
