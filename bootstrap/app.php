@@ -2,9 +2,9 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-( new Laravel\Lumen\Bootstrap\LoadEnvironmentVariables(
-    dirname( __DIR__ )
-) )->bootstrap();
+date_default_timezone_set( env( 'APP_TIMEZONE', 'UTC' ) );
+
+( new Laravel\Lumen\Bootstrap\LoadEnvironmentVariables( dirname( __DIR__ ) ) )->bootstrap();
 
 /*
 |--------------------------------------------------------------------------
@@ -17,17 +17,15 @@ require_once __DIR__ . '/../vendor/autoload.php';
 |
 */
 
-$app = new Laravel\Lumen\Application(
-    dirname( __DIR__ )
-);
+$app = new Laravel\Lumen\Application( dirname( __DIR__ ) );
 
 $app->withFacades();
 
 // --- MongoDB
-$app->register(\Jenssegers\Mongodb\MongodbServiceProvider::class);
-\Illuminate\Database\Connection::resolverFor('mongodb', static function( $connection, $database, $prefix, $config ) {
-    return new \Jenssegers\Mongodb\Connection( $config );
-});
+$app->register( \WishKnish\KnishIO\MongoDB\MongodbServiceProvider::class );
+\Illuminate\Database\Connection::resolverFor( 'mongodb', static function ( $connection, $database, $prefix, $config ) {
+    return new \WishKnish\KnishIO\MongoDB\Connection( $config );
+} );
 // ---
 
 $app->withEloquent();
@@ -43,15 +41,9 @@ $app->withEloquent();
 |
 */
 
-$app->singleton(
-    Illuminate\Contracts\Debug\ExceptionHandler::class,
-    App\Exceptions\Handler::class
-);
+$app->singleton( Illuminate\Contracts\Debug\ExceptionHandler::class, App\Exceptions\Handler::class );
 
-$app->singleton(
-    Illuminate\Contracts\Console\Kernel::class,
-    App\Console\Kernel::class
-);
+$app->singleton( Illuminate\Contracts\Console\Kernel::class, App\Console\Kernel::class );
 
 /*
 |--------------------------------------------------------------------------
@@ -72,13 +64,9 @@ $app->routeMiddleware( [
     'auth' => App\Http\Middleware\Authenticate::class,
 ] );
 
-$app->middleware( [
-    App\Http\Middleware\CorsMiddleware::class
-] );
-
 $app->configure( 'lighthouse' );
+$app->configure( 'oauth' );
 
-$app->configure( 'knishio' );
 /*
 |--------------------------------------------------------------------------
 | Register Service Providers

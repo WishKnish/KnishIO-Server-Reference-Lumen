@@ -9,12 +9,10 @@
 
 namespace App\Console\Commands;
 
-
 use App\Post;
 
 use Exception;
 use Illuminate\Console\Command;
-
 
 /**
  * Class deletePostsCommand
@@ -22,8 +20,7 @@ use Illuminate\Console\Command;
  * @category Console_Command
  * @package  App\Console\Commands
  */
-class CleanMoleculesCommand extends Command
-{
+class CleanMoleculesCommand extends Command {
     /**
      * The console command name.
      *
@@ -38,14 +35,12 @@ class CleanMoleculesCommand extends Command
      */
     protected $description = 'Rebond all molecules';
 
-
     /**
      * Execute the console command.
      *
      * @return mixed
      */
-    public function handle ()
-    {
+    public function handle () {
         try {
             set_time_limit( 9999 );
 
@@ -73,7 +68,8 @@ class CleanMoleculesCommand extends Command
 
                     $this->info( 'No atoms for molecule hash ' . $molecule->molecular_hash );
 
-                    $molecule->bonds()->detach();
+                    $molecule->bonds()
+                        ->detach();
                     $molecule->delete();
 
                     /*

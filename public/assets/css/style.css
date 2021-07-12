@@ -30,3 +30,11 @@ img {
 a {
     color: #ccc;
 }
+
+table.schema-fields {
+    border: 1px solid #ffffff;
+}
+table.schema-fields td, th {
+    padding: 5px;
+    border: 1px solid #ffffff;
+}

@@ -2,11 +2,11 @@
 
 namespace App\Console;
 
+use App\Console\Commands\RestoreMetasJsonCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Laravel\Lumen\Console\Kernel as ConsoleKernel;
 
-class Kernel extends ConsoleKernel
-{
+class Kernel extends ConsoleKernel {
     /**
      * The Artisan commands provided by your application.
      *
@@ -16,16 +16,18 @@ class Kernel extends ConsoleKernel
         \Laravelista\LumenVendorPublish\VendorPublishCommand::class,
         Commands\RebondMoleculesCommand::class,
         Commands\CleanMoleculesCommand::class,
+        Commands\BenchmarkCommand::class,
+        RestoreMetasJsonCommand::class,
     ];
 
     /**
      * Define the application's command schedule.
      *
      * @param \Illuminate\Console\Scheduling\Schedule $schedule
+     *
      * @return void
      */
-    protected function schedule ( Schedule $schedule )
-    {
+    protected function schedule ( Schedule $schedule ) {
         //
     }
 }
