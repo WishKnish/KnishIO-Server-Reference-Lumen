@@ -23,12 +23,15 @@ services:
     environment:
       MYSQL_DATABASE: ${DB_DATABASE}
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-      MYSQL_PASSWORD: ${DB_PASSWORD}
-      MYSQL_USER: ${DB_USERNAME}
+      # MYSQL_PASSWORD: ${DB_PASSWORD}
+      # MYSQL_USER: ${DB_USERNAME}
+      # MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
       SERVICE_TAGS: dev
       SERVICE_NAME: mariadb
+    ports:
+      - "3310:3306"
     volumes:
-      - ./docker-compose/mariadb:/docker-entrypoint-initdb.d
+      - ./docker-compose/mariadb:/var/lib/mysql
     networks:
       - knishio
 
@@ -46,7 +49,7 @@ services:
 
   redis:
     image: redis:4.0.5-alpine
-    container_name: redis
+    container_name: knishio-redis
     command: [ "redis-server", "--appendonly", "yes" ]
     hostname: redis
     ports:

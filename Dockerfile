@@ -1,6 +1,6 @@
 # Run: docker-compose up --build -d
 # Stop: docker-compose down
-# Log docker logs -f [container name] 1>/dev/null
+# Log: docker logs -f [container name] 1>/dev/null
 
 FROM php:7.4-fpm
 
@@ -39,3 +39,15 @@ RUN mkdir -p /home/$user/.composer && \
 WORKDIR /var/www
 
 USER $user
+
+
+COPY ./docker-compose/bootstrap.sh /usr/bin/bootstrap.sh
+# ENTRYPOINT /usr/bin/bootstrap.sh
+RUN /usr/bin/bootstrap.sh
+
+
+# These line for /entrypoint.sh
+#COPY ./docker-compose/bootstrap.sh /home/$user/bootstrap.sh
+# RUN chmod -R 777 /entrypoint.sh
+#RUN chmod +x /home/$user/bootstrap.sh
+#RUN /home/$user/bootstrap.sh
