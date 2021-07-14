@@ -5,12 +5,13 @@ services:
       args:
         user: knishio
         uid: 1000
+        db_password: ${DB_PASSWORD}
       context: ./
       dockerfile: Dockerfile
     image: knishio
     container_name: knishio-app
     restart: unless-stopped
-    working_dir: /var/www/
+    working_dir: /var/www
     volumes:
       - ./:/var/www
     networks:
@@ -32,6 +33,7 @@ services:
       - "3310:3306"
     volumes:
       - ./docker-compose/mariadb:/var/lib/mysql
+      - ./docker-compose/bootstrap.sh:/docker-entrypoint-initdb.d/bootstrap.sh
     networks:
       - knishio
 
@@ -43,7 +45,7 @@ services:
       - 8000:80
     volumes:
       - ./:/var/www
-      - ./docker-compose/nginx:/etc/nginx/conf.d/
+      - ./docker-compose/nginx:/etc/nginx/conf.d
     networks:
       - knishio
 
