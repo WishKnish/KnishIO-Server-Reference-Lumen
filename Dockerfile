@@ -49,6 +49,23 @@ COPY --chown=$user:$user . /var/www
 RUN chown -R $user:$user /var/www/storage
 RUN chmod -R ug+w /var/www/storage
 
+
+
+COPY ./docker-compose/bootstrap.sh /usr/bin/bootstrap.sh
+
+ENTRYPOINT ["/usr/bin/bootstrap.sh"]
+
+CMD php-fpm
+
+EXPOSE 9000
+
+# CMD [ "php-fpm" ]
+# CMD ["/usr/bin/bootstrap.sh", "root", "$db_password"]
+# EXPOSE 9000
+
+# CMD ["/bin/bash", "ls"]
+# STOPSIGNAL SIGQUIT
+
 # Execute a bootstrap bash script
 # COPY ./docker-compose/bootstrap.sh /usr/bin/bootstrap.sh
 # ENTRYPOINT ["/bin/bash", "./docker-compose/bootstrap.sh"]
