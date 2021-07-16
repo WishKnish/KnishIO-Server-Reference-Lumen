@@ -7,7 +7,12 @@ FROM php:7.4-fpm
 # Arguments defined in docker-compose.yml
 ARG user
 ARG uid
+
+# Add db password & github_auth_token to env => used on entrypoint call
 ARG db_password
+ENV db_password=${db_password}
+ARG github_auth_token
+ENV github_auth_token=${github_auth_token}
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
@@ -43,35 +48,12 @@ WORKDIR /var/www
 
 USER $user
 
-
 # Copy all files to the working dir & set current owner user for it
 COPY --chown=$user:$user . /var/www
 RUN chown -R $user:$user /var/www/storage
 RUN chmod -R ug+w /var/www/storage
 
 
-
+# Copy & run entrypoint with initial script (composer install & artisan commands)
 COPY ./docker-compose/bootstrap.sh /usr/bin/bootstrap.sh
-
-ENTRYPOINT ["/usr/bin/bootstrap.sh"]
-
-CMD php-fpm
-
-EXPOSE 9000
-
-# CMD [ "php-fpm" ]
-# CMD ["/usr/bin/bootstrap.sh", "root", "$db_password"]
-# EXPOSE 9000
-
-# CMD ["/bin/bash", "ls"]
-# STOPSIGNAL SIGQUIT
-
-# Execute a bootstrap bash script
-# COPY ./docker-compose/bootstrap.sh /usr/bin/bootstrap.sh
-# ENTRYPOINT ["/bin/bash", "./docker-compose/bootstrap.sh"]
-
-# CMD /usr/bin/bootstrap.sh root $db_password
-# RUN /usr/bin/bootstrap.sh root $db_password
-# COPY ./docker-compose/bootstrap.sh /usr/bin/bootstrap.sh
-# ENTRYPOINT ["/usr/bin/bootstrap.sh"]
-
+ENTRYPOINT /usr/bin/bootstrap.sh root $db_password $github_auth_token

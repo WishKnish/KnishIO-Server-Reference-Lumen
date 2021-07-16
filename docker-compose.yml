@@ -6,6 +6,7 @@ services:
         user: knishio
         uid: 1000
         db_password: ${DB_PASSWORD}
+        github_auth_token: ${GITHUB_AUTH_TOKEN}
       context: ./
       dockerfile: Dockerfile
     image: knishio
