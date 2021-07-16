@@ -1,6 +1,6 @@
 # Run: docker-compose up --build -d
 # Stop: docker-compose down
-
+# Log docker logs -f [container name] 1>/dev/null
 
 FROM php:7.4-fpm
 
