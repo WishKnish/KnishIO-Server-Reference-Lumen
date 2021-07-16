@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "09459a979132b6b25665f29d154041c1",
+    "content-hash": "7aa5d831487255d2eb0f589018f9af54",
     "packages": [
         {
             "name": "brick/math",
@@ -7522,16 +7522,16 @@
         },
         {
             "name": "wishknish/knishio-server-php",
-            "version": "dev-staging",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "git@github.com:WishKnish/KnishIO-Server-PHP.git",
-                "reference": "4cd0e10ab4ffbe2d586e46c65ad378101dfc27a3"
+                "reference": "1c002af1c696cbe9e8b2d1a1111289926cc87065"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/WishKnish/KnishIO-Server-PHP/zipball/4cd0e10ab4ffbe2d586e46c65ad378101dfc27a3",
-                "reference": "4cd0e10ab4ffbe2d586e46c65ad378101dfc27a3",
+                "url": "https://api.github.com/repos/WishKnish/KnishIO-Server-PHP/zipball/1c002af1c696cbe9e8b2d1a1111289926cc87065",
+                "reference": "1c002af1c696cbe9e8b2d1a1111289926cc87065",
                 "shasum": ""
             },
             "require": {
@@ -7547,6 +7547,7 @@
                 "wapmorgan/unified-archive": "^0.2.0",
                 "wishknish/knishio-client-php": "dev-staging"
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "laravel": {
@@ -7604,7 +7605,7 @@
                 "issues": "https://github.com/WishKnish/KnishIO-Server-PHP/issues",
                 "source": "https://github.com/WishKnish/KnishIO-Server-PHP"
             },
-            "time": "2021-07-06T15:00:06+00:00"
+            "time": "2021-07-15T21:15:34+00:00"
         },
         {
             "name": "ybr-nx/laravel-mariadb",
@@ -9855,7 +9856,6 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "wishknish/knishio-server-php": 20,
         "roave/security-advisories": 20
     },
     "prefer-stable": true,
