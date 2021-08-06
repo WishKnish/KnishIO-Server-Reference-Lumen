@@ -24,6 +24,7 @@ use ReflectionException;
 use WishKnish\KnishIO\Client\KnishIOClient;
 use WishKnish\KnishIO\Client\Libraries\Crypto;
 use WishKnish\KnishIO\Helpers\Cleaner;
+use WishKnish\KnishIO\Models\Resolvers\Molecule\MoleculeResolver;
 
 /**
  * Class deletePostsCommand
@@ -280,6 +281,36 @@ class BenchmarkCommand extends Command {
         ];
         $start_time = microtime( true );
 
+
+
+        // Execute all molecules sequentially
+        foreach( $this->molecules as $index => $proposed ) {
+
+            // Execute a custom resolver
+            $molecule = MoleculeResolver::create( $proposed )
+                ->run();
+
+            // Error handling
+            $benchmark_result[ 'metas' ] = [];
+            if ( $molecule && $molecule->status === 'accepted' ) {
+                $this->info( 'Molecule ' . $index . ' has been accepted.' );
+                $benchmark_result[ 'success' ]++;
+                $benchmark_result[ 'metas' ] = '';
+                $benchmark_result[ 'accepted_molecules' ][] = array_get( $this->molecules, $molecule->molecular_hash );
+            }
+            else {
+                $error = $molecule ? $molecule->reason : '';
+                $this->error( 'Molecule ' . $index . ' has been rejected due to: "' . $error . '"' );
+                $benchmark_result[ 'fail' ]++;
+            }
+
+        }
+
+
+
+
+        // ---------------- BEGIN: QUERY LOGIC ----------------
+        /*
         // Generic client for sending the requests
         $client = new KnishIOClient( $this->graphql_url );
 
@@ -312,6 +343,9 @@ class BenchmarkCommand extends Command {
 
         $promise = $pool->promise();  // Start transfers and create a promise
         $promise->wait();   // Force the pool of requests to complete.
+        */
+        // ---------------- END: QUERY LOGIC ----------------
+
 
         // $results = \GuzzleHttp\Promise\unwrap($promises);
         $end_time = microtime( true );
