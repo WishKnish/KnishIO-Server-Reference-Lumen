@@ -23,6 +23,7 @@ use Psr\Http\Message\ResponseInterface;
 use ReflectionException;
 use WishKnish\KnishIO\Client\KnishIOClient;
 use WishKnish\KnishIO\Client\Libraries\Crypto;
+use WishKnish\KnishIO\GraphQL\Resolvers\MetaType\MetaInstanceQuery;
 use WishKnish\KnishIO\Helpers\Cleaner;
 use WishKnish\KnishIO\Models\Resolvers\Molecule\MoleculeResolver;
 
@@ -370,6 +371,40 @@ class BenchmarkCommand extends Command {
         ];
         $start_time = microtime( true );
 
+
+        // Accumulate all meta types & ids
+        $metaTypes = [];
+        $metaIds = [];
+        foreach ( $this->molecules as $molecule ) {
+            $metaTypes[] = $molecule->atoms[ 0 ]->metaType;
+            $metaTypes = array_unique( $metaTypes );
+            $metaIds[] = $molecule->atoms[ 0 ]->metaId;
+        }
+
+        // Generate combinations: @todo add here custom random logic based on $metaTypes, $metaIds data
+        $metaIdBunches = static::metaIdAllCombinations( $metaIds, count( $metaIds ) );
+
+        // Execute read query
+        for( $i = 0; $i < count( $this->molecules ); $i++ ) {
+
+            // Init a metaTypeQuery
+            $metaTypeQuery = MetaInstanceQuery::create(
+                $metaTypes[0],
+                [
+                    'metaIds' => $metaIdBunches,
+                    'keys' => [],
+                    'values' => [],
+                ],
+                [],
+                false
+            );
+            $metaInstances = $metaTypeQuery->get();
+            $benchmark_result['success']++;
+            $this->info('MetaTypeQuery ' . $i . ' has been executed correctly. Got ' . count($metaInstances) . ' record(s).');
+        }
+
+        /*
+
         // Generic client for sending the requests
         $client = new KnishIOClient( $this->graphql_url );
 
@@ -400,6 +435,8 @@ class BenchmarkCommand extends Command {
 
         $promise = $pool->promise();  // Start transfers and create a promise
         $promise->wait();   // Force the pool of requests to complete.
+
+        */
 
         // $results = \GuzzleHttp\Promise\unwrap($promises);
         $end_time = microtime( true );
