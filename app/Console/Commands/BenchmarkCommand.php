@@ -15,6 +15,7 @@ use App\Console\Commands\Benchmark\BenchmarkMoleculeFactory;
 use App\Console\Commands\Benchmark\BenchmarkMoleculeRequestFactory;
 use App\Console\Commands\Benchmark\BenchmarkCellFactory;
 use Exception;
+use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Pool;
 use GuzzleHttp\Promise\PromiseInterface;
 use Illuminate\Console\Command;
@@ -107,9 +108,10 @@ class BenchmarkCommand extends Command {
     /**
      * Execute the console command.
      *
-     * @return mixed
+     * @return bool
+     * @throws GuzzleException
      */
-    public function handle () {
+    public function handle (): bool {
         set_time_limit( 9999 );
         try {
             // Options
@@ -164,7 +166,7 @@ class BenchmarkCommand extends Command {
     /**
      * @param string $title
      */
-    protected function commentTitle ( string $title ) {
+    protected function commentTitle ( string $title ): void {
         $title = '## ' . $title . ' ##';
         $delimiter = str_repeat( '#', strlen( $title ) );
 
@@ -176,6 +178,7 @@ class BenchmarkCommand extends Command {
 
     /**
      * @throws Exception|ReflectionException
+     * @throws GuzzleException
      */
     protected function bootstrap (): void {
         $instance = $this;
@@ -214,7 +217,7 @@ class BenchmarkCommand extends Command {
 
             // Defining client and authenticating the session
             $client = new KnishIOClient( $this->graphql_url );
-            $client->authorize( $secret );
+            $client->getAuthToken( $secret );
 
             // $instance->info( 'Creating '. $this->molecules_count.' molecules for bundle ' . $bundle . '...' );
 
@@ -241,7 +244,7 @@ class BenchmarkCommand extends Command {
             // Defining client and authenticating the session
             $secret = Crypto::generateSecret();
             $client = new KnishIOClient( $self->graphql_url );
-            $client->authorize( $secret );
+            $client->getAuthToken( $secret );
 
             // Accumulate all meta types & ids
             $metaTypes = [];
