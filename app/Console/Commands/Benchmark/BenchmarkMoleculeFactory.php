@@ -3,6 +3,7 @@
 namespace App\Console\Commands\Benchmark;
 
 use Exception;
+use GuzzleHttp\Exception\GuzzleException;
 use Psr\Http\Message\RequestInterface;
 use ReflectionException;
 use WishKnish\KnishIO\Client\KnishIOClient;
@@ -21,12 +22,13 @@ class BenchmarkMoleculeFactory {
      *
      * @return RequestInterface
      * @throws Exception|ReflectionException
+     * @throws GuzzleException
      */
     public static function create ( KnishIOClient $client, int $metas_count ): Molecule {
         // Defining signing parameters
-        $source_wallet = Wallet::create( $client->secret(), 'USER' );
-        $remainder_wallet = Wallet::create( $client->secret(), 'USER' );
-        $molecule = $client->createMolecule( $client->secret(), $source_wallet, $remainder_wallet );
+        $source_wallet = Wallet::create( $client->getSecret(), 'USER' );
+        $remainder_wallet = Wallet::create( $client->getSecret(), 'USER' );
+        $molecule = $client->createMolecule( $client->getSecret(), $source_wallet, $remainder_wallet );
 
         $metas = [];
         for ( $meta_num = 0; $meta_num < $metas_count; $meta_num++ ) {
