@@ -3,6 +3,7 @@
 namespace App\Console\Commands\Benchmark;
 
 use Exception;
+use GuzzleHttp\Exception\GuzzleException;
 use Psr\Http\Message\RequestInterface;
 use ReflectionException;
 use WishKnish\KnishIO\Client\KnishIOClient;
@@ -21,6 +22,7 @@ class BenchmarkMoleculeFactory {
      *
      * @return RequestInterface
      * @throws Exception|ReflectionException
+     * @throws GuzzleException
      */
     public static function create ( KnishIOClient $client, int $metas_count ): Molecule {
         // Defining signing parameters
