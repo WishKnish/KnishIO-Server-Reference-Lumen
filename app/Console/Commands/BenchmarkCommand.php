@@ -28,12 +28,6 @@ use WishKnish\KnishIO\GraphQL\Resolvers\MetaType\MetaInstanceQuery;
 use WishKnish\KnishIO\Helpers\Cleaner;
 use WishKnish\KnishIO\Models\Resolvers\Molecule\MoleculeResolver;
 
-/**
- * Class deletePostsCommand
- *
- * @category Console_Command
- * @package  App\Console\Commands
- */
 class BenchmarkCommand extends Command {
     /**
      * The name and signature of the console command.
@@ -388,7 +382,7 @@ class BenchmarkCommand extends Command {
         $metaIdBunches = static::metaIdAllCombinations( $metaIds, count( $metaIds ) );
 
         // Execute read query
-        for( $i = 0; $i < count( $this->molecules ); $i++ ) {
+        for( $i = 0, $iMax = count( $this->molecules ); $i < $iMax; $i++ ) {
 
             // Init a metaTypeQuery
             $metaTypeQuery = MetaInstanceQuery::create(

@@ -9,12 +9,11 @@
 
 namespace App\Console\Commands;
 
-use App\Post;
-
 use Exception;
 use Illuminate\Console\Command;
-use PHPUnit\Framework\Assert;
+use Illuminate\Support\Facades\DB;
 use WishKnish\KnishIO\Helpers\TimeLogger;
+use WishKnish\KnishIO\Models\Molecule;
 
 /**
  * Class deletePostsCommand
@@ -40,27 +39,26 @@ class RebondMoleculesCommand extends Command {
     /**
      * Execute the console command.
      *
-     * @return mixed
+     * @return void
      */
-    public function handle () {
+    public function handle (): void {
         try {
             set_time_limit( 9999 );
             $start_time = microtime( true );
 
-            $molecules = \WishKnish\KnishIO\Models\Molecule::orderBy( 'knishio_molecules.processed_at', 'asc' )
+            $molecules = Molecule::orderBy( 'knishio_molecules.processed_at', 'asc' )
                 ->get();
             $this->info( 'Detaching bonds...' );
 
-            \DB::table( 'knishio_bonds' )
+            DB::table( 'knishio_bonds' )
                 ->truncate();
 
             $cell_counts = [];
             $cell_origins = [];
 
             // --- Cell molecules initialization
-            $all_cell_molecules = \WishKnish\KnishIO\Models\Molecule::whereIn( 'status', [
-                'accepted',
-                'broadcasted'
+            $all_cell_molecules = Molecule::whereIn( 'status', [
+                'accepted', 'broadcasted'
             ] )
                 ->orderBy( 'knishio_molecules.processed_at', 'desc' )
                 ->get();
@@ -164,7 +162,7 @@ class RebondMoleculesCommand extends Command {
                 }
 
                 TimeLogger::begin( 'chooseBonds' );
-                $bond_hashes = $molecule->chooseBonds( $origin, $bond1 ? $bond1->molecular_hash : null, $bond2 ? $bond2->molecular_hash : null );
+                $bond_hashes = $molecule->chooseBonds( $origin, $bond1->molecular_hash ?? null, $bond2->molecular_hash ?? null );
                 // Add bonds to the common list
                 foreach ( $bond_hashes as $bond_hash ) {
                     if ( !isset( $bonds[ $bond_hash ] ) ) {
