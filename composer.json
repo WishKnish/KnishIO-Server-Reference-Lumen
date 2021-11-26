@@ -11,14 +11,14 @@
     ],
     "type": "project",
     "require": {
-        "php": "^7.4",
+        "php": "^8.0",
         "ext-json": "*",
         "doctrine/dbal": "^2.10",
         "illuminate/mail": "^8.0",
         "illuminate/redis": "^8.0",
         "laravel/lumen-framework": "^8.0",
         "laravelista/lumen-vendor-publish": "8.0",
-        "wishknish/knishio-server-php": "dev-staging",
+        "wishknish/knishio-server-php": "dev-staging-php8",
         "ybr-nx/laravel-mariadb": "^1.0"
     },
     "require-dev": {
