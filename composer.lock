@@ -2898,16 +2898,16 @@
         },
         {
             "name": "laragraph/utils",
-            "version": "v1.1.0",
+            "version": "v1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laragraph/utils.git",
-                "reference": "c66d3b8257f6a5e77910caf314d5a47189884fb8"
+                "reference": "e31dd6023af394d2676c03d97d810f6fcee6a58d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laragraph/utils/zipball/c66d3b8257f6a5e77910caf314d5a47189884fb8",
-                "reference": "c66d3b8257f6a5e77910caf314d5a47189884fb8",
+                "url": "https://api.github.com/repos/laragraph/utils/zipball/e31dd6023af394d2676c03d97d810f6fcee6a58d",
+                "reference": "e31dd6023af394d2676c03d97d810f6fcee6a58d",
                 "shasum": ""
             },
             "require": {
@@ -2926,6 +2926,7 @@
                 "phpstan/extension-installer": "^1",
                 "phpstan/phpstan": "^1",
                 "phpstan/phpstan-deprecation-rules": "^1",
+                "phpstan/phpstan-phpunit": "^1.0",
                 "phpstan/phpstan-strict-rules": "^1",
                 "phpunit/phpunit": "^7.5 || ^8.5 || ^9",
                 "thecodingmachine/phpstan-safe-rule": "^1.1"
@@ -2952,7 +2953,7 @@
                 "issues": "https://github.com/laragraph/utils/issues",
                 "source": "https://github.com/laragraph/utils"
             },
-            "time": "2021-12-27T14:20:44+00:00"
+            "time": "2021-12-30T10:48:19+00:00"
         },
         {
             "name": "laravel/lumen-framework",
@@ -8120,12 +8121,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:WishKnish/KnishIO-Server-PHP.git",
-                "reference": "e565b4cad43c37369601e3eec371ed3b1295a768"
+                "reference": "c28e188de149652f2cae8816d687a75fb197a272"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/WishKnish/KnishIO-Server-PHP/zipball/e565b4cad43c37369601e3eec371ed3b1295a768",
-                "reference": "e565b4cad43c37369601e3eec371ed3b1295a768",
+                "url": "https://api.github.com/repos/WishKnish/KnishIO-Server-PHP/zipball/c28e188de149652f2cae8816d687a75fb197a272",
+                "reference": "c28e188de149652f2cae8816d687a75fb197a272",
                 "shasum": ""
             },
             "require": {
@@ -8198,7 +8199,7 @@
                 "issues": "https://github.com/WishKnish/KnishIO-Server-PHP/issues",
                 "source": "https://github.com/WishKnish/KnishIO-Server-PHP"
             },
-            "time": "2021-12-17T16:13:37+00:00"
+            "time": "2021-12-30T15:27:37+00:00"
         },
         {
             "name": "ybr-nx/laravel-mariadb",
