@@ -3897,16 +3897,16 @@
         },
         {
             "name": "nuwave/lighthouse",
-            "version": "v5.33.1",
+            "version": "v5.35.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nuwave/lighthouse.git",
-                "reference": "4ff54df1a6e87fd4e753f4633cc9949f4664ae7d"
+                "reference": "4b4e2b40477578e88ea3e138ff0c2e1554cd23f3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nuwave/lighthouse/zipball/4ff54df1a6e87fd4e753f4633cc9949f4664ae7d",
-                "reference": "4ff54df1a6e87fd4e753f4633cc9949f4664ae7d",
+                "url": "https://api.github.com/repos/nuwave/lighthouse/zipball/4b4e2b40477578e88ea3e138ff0c2e1554cd23f3",
+                "reference": "4b4e2b40477578e88ea3e138ff0c2e1554cd23f3",
                 "shasum": ""
             },
             "require": {
@@ -4024,7 +4024,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-01-10T10:50:38+00:00"
+            "time": "2022-01-11T16:44:59+00:00"
         },
         {
             "name": "opis/closure",
@@ -5632,7 +5632,7 @@
                     "type": "tidelift"
                 }
             ],
-            "abandoned": "use `EnglishInflector` from the String component instead",
+            "abandoned": "EnglishInflector from the String component",
             "time": "2021-11-23T10:19:22+00:00"
         },
         {
@@ -8047,12 +8047,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/WishKnish/KnishIO-Client-PHP.git",
-                "reference": "90853fe37b9f1148692507b86b00122ef0bce3b3"
+                "reference": "70bd80a35c6c53caa6d6e4d826f1f3fde605a93f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/WishKnish/KnishIO-Client-PHP/zipball/90853fe37b9f1148692507b86b00122ef0bce3b3",
-                "reference": "90853fe37b9f1148692507b86b00122ef0bce3b3",
+                "url": "https://api.github.com/repos/WishKnish/KnishIO-Client-PHP/zipball/70bd80a35c6c53caa6d6e4d826f1f3fde605a93f",
+                "reference": "70bd80a35c6c53caa6d6e4d826f1f3fde605a93f",
                 "shasum": ""
             },
             "require": {
@@ -8122,7 +8122,7 @@
                 "source": "https://github.com/WishKnish/KnishIO",
                 "wiki": "https://github.com/WishKnish/KnishIO/wiki"
             },
-            "time": "2021-12-23T10:38:11+00:00"
+            "time": "2022-01-11T12:40:42+00:00"
         },
         {
             "name": "wishknish/knishio-server-php",
@@ -8130,12 +8130,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:WishKnish/KnishIO-Server-PHP.git",
-                "reference": "0899d1812105212be94623b132593141b9f836f5"
+                "reference": "5f7863a87e0f044d29dae296599e1500ec7186d4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/WishKnish/KnishIO-Server-PHP/zipball/0899d1812105212be94623b132593141b9f836f5",
-                "reference": "0899d1812105212be94623b132593141b9f836f5",
+                "url": "https://api.github.com/repos/WishKnish/KnishIO-Server-PHP/zipball/5f7863a87e0f044d29dae296599e1500ec7186d4",
+                "reference": "5f7863a87e0f044d29dae296599e1500ec7186d4",
                 "shasum": ""
             },
             "require": {
@@ -8208,7 +8208,7 @@
                 "issues": "https://github.com/WishKnish/KnishIO-Server-PHP/issues",
                 "source": "https://github.com/WishKnish/KnishIO-Server-PHP"
             },
-            "time": "2022-01-10T14:38:14+00:00"
+            "time": "2022-01-11T22:26:26+00:00"
         },
         {
             "name": "ybr-nx/laravel-mariadb",
