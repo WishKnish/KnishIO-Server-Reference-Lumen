@@ -779,29 +779,29 @@
         },
         {
             "name": "dragonmantank/cron-expression",
-            "version": "v3.2.4",
+            "version": "v3.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dragonmantank/cron-expression.git",
-                "reference": "9545dea2a1d92b60c8b3d06f02025c83e999bde0"
+                "reference": "63f2a76a045bac6ec93cc2daf2b534b412aa0313"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dragonmantank/cron-expression/zipball/9545dea2a1d92b60c8b3d06f02025c83e999bde0",
-                "reference": "9545dea2a1d92b60c8b3d06f02025c83e999bde0",
+                "url": "https://api.github.com/repos/dragonmantank/cron-expression/zipball/63f2a76a045bac6ec93cc2daf2b534b412aa0313",
+                "reference": "63f2a76a045bac6ec93cc2daf2b534b412aa0313",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.2|^8.0",
-                "webmozart/assert": "^1.7.0"
+                "webmozart/assert": "^1.0"
             },
             "replace": {
                 "mtdowling/cron-expression": "^1.0"
             },
             "require-dev": {
                 "phpstan/extension-installer": "^1.0",
-                "phpstan/phpstan": "^0.12",
-                "phpstan/phpstan-webmozart-assert": "^0.12.7",
+                "phpstan/phpstan": "^1.0",
+                "phpstan/phpstan-webmozart-assert": "^1.0",
                 "phpunit/phpunit": "^7.0|^8.0|^9.0"
             },
             "type": "library",
@@ -828,7 +828,7 @@
             ],
             "support": {
                 "issues": "https://github.com/dragonmantank/cron-expression/issues",
-                "source": "https://github.com/dragonmantank/cron-expression/tree/v3.2.4"
+                "source": "https://github.com/dragonmantank/cron-expression/tree/v3.3.0"
             },
             "funding": [
                 {
@@ -836,7 +836,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-01-13T04:09:37+00:00"
+            "time": "2022-01-14T16:02:05+00:00"
         },
         {
             "name": "egulias/email-validator",
@@ -2895,31 +2895,30 @@
         },
         {
             "name": "laragraph/utils",
-            "version": "v1.2.0",
+            "version": "v1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laragraph/utils.git",
-                "reference": "426495b068012a64d5d29265c8df4b71bb263d62"
+                "reference": "a50eb1782a4b832236485328d132055bc8d5387a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laragraph/utils/zipball/426495b068012a64d5d29265c8df4b71bb263d62",
-                "reference": "426495b068012a64d5d29265c8df4b71bb263d62",
+                "url": "https://api.github.com/repos/laragraph/utils/zipball/a50eb1782a4b832236485328d132055bc8d5387a",
+                "reference": "a50eb1782a4b832236485328d132055bc8d5387a",
                 "shasum": ""
             },
             "require": {
-                "illuminate/contracts": "5.6.* || 5.7.* || 5.8.* || ^6 || ^7 || ^8",
-                "illuminate/http": "5.6.* || 5.7.* || 5.8.* || ^6 || ^7 || ^8",
+                "illuminate/contracts": "5.6.* || 5.7.* || 5.8.* || ^6 || ^7 || ^8 || ^9",
+                "illuminate/http": "5.6.* || 5.7.* || 5.8.* || ^6 || ^7 || ^8 || ^9",
                 "php": "^7.2 || ^8",
                 "thecodingmachine/safe": "^1.1 || ^2",
                 "webonyx/graphql-php": "^0.13.2 || ^14"
             },
             "require-dev": {
                 "ergebnis/composer-normalize": "^2.11",
-                "infection/infection": "^0.25",
                 "jangregor/phpstan-prophecy": "^1",
                 "mll-lab/php-cs-fixer-config": "^4.4",
-                "orchestra/testbench": "3.6.* || 3.7.* || 3.8.* || 3.9.* || ^4 || ^5 || ^6",
+                "orchestra/testbench": "3.6.* || 3.7.* || 3.8.* || 3.9.* || ^4 || ^5 || ^6 || ^7",
                 "phpstan/extension-installer": "^1",
                 "phpstan/phpstan": "^1",
                 "phpstan/phpstan-deprecation-rules": "^1",
@@ -2950,7 +2949,7 @@
                 "issues": "https://github.com/laragraph/utils/issues",
                 "source": "https://github.com/laragraph/utils"
             },
-            "time": "2022-01-12T09:00:32+00:00"
+            "time": "2022-01-14T10:37:06+00:00"
         },
         {
             "name": "laravel/lumen-framework",
@@ -8121,12 +8120,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:WishKnish/KnishIO-Server-PHP.git",
-                "reference": "69b9dbfd96bfc839619d3720ea9e9cbb6aea74b5"
+                "reference": "573461099370b2c5a0d195c828a14db71a323382"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/WishKnish/KnishIO-Server-PHP/zipball/69b9dbfd96bfc839619d3720ea9e9cbb6aea74b5",
-                "reference": "69b9dbfd96bfc839619d3720ea9e9cbb6aea74b5",
+                "url": "https://api.github.com/repos/WishKnish/KnishIO-Server-PHP/zipball/573461099370b2c5a0d195c828a14db71a323382",
+                "reference": "573461099370b2c5a0d195c828a14db71a323382",
                 "shasum": ""
             },
             "require": {
@@ -8199,7 +8198,7 @@
                 "issues": "https://github.com/WishKnish/KnishIO-Server-PHP/issues",
                 "source": "https://github.com/WishKnish/KnishIO-Server-PHP"
             },
-            "time": "2022-01-13T15:03:31+00:00"
+            "time": "2022-01-17T05:08:19+00:00"
         },
         {
             "name": "ybr-nx/laravel-mariadb",
@@ -9298,12 +9297,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "a1ce0a793ff447c9085f350d2fa8744efbdb5c1e"
+                "reference": "38da7ef14348ff26d7c415c4ed18b82db07fe199"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/a1ce0a793ff447c9085f350d2fa8744efbdb5c1e",
-                "reference": "a1ce0a793ff447c9085f350d2fa8744efbdb5c1e",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/38da7ef14348ff26d7c415c4ed18b82db07fe199",
+                "reference": "38da7ef14348ff26d7c415c4ed18b82db07fe199",
                 "shasum": ""
             },
             "conflict": {
@@ -9492,7 +9491,7 @@
                 "october/cms": "= 1.1.1|= 1.0.471|= 1.0.469|>=1.0.319,<1.0.469",
                 "october/october": ">=1.0.319,<1.0.466|>=2.1,<2.1.12",
                 "october/rain": "<1.0.472|>=1.1,<1.1.2",
-                "october/system": "<1.0.472|>=1.1.1,<1.1.5|>=2.1,<2.1.12",
+                "october/system": "<1.0.473|>=1.1,<1.1.6|>=2.1,<2.1.12",
                 "onelogin/php-saml": "<2.10.4",
                 "oneup/uploader-bundle": "<1.9.3|>=2,<2.1.5",
                 "opencart/opencart": "<=3.0.3.2",
@@ -9523,7 +9522,7 @@
                 "phpwhois/phpwhois": "<=4.2.5",
                 "phpxmlrpc/extras": "<0.6.1",
                 "pimcore/pimcore": "<10.2.7",
-                "pocketmine/pocketmine-mp": "<4.0.5",
+                "pocketmine/pocketmine-mp": "<4.0.6",
                 "pressbooks/pressbooks": "<5.18",
                 "prestashop/autoupgrade": ">=4,<4.10.1",
                 "prestashop/contactform": ">1.0.1,<4.3",
@@ -9731,7 +9730,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-01-12T23:15:39+00:00"
+            "time": "2022-01-14T21:13:43+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
