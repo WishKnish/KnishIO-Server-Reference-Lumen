@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ad242b45ee8097876dc6cc74b973adf7",
+    "content-hash": "4876aa5b820449ec9270706e48ff1381",
     "packages": [
         {
             "name": "brick/math",
@@ -8048,16 +8048,16 @@
         },
         {
             "name": "wishknish/knishio-server-php",
-            "version": "dev-eugene-teplitsky-dev",
+            "version": "dev-staging",
             "source": {
                 "type": "git",
                 "url": "git@github.com:WishKnish/KnishIO-Server-PHP.git",
-                "reference": "f2567302e2e303e61ad8620425686c9cbe888970"
+                "reference": "a3654b1e559d1bd8b1fc6aad617e34c32b197627"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/WishKnish/KnishIO-Server-PHP/zipball/f2567302e2e303e61ad8620425686c9cbe888970",
-                "reference": "f2567302e2e303e61ad8620425686c9cbe888970",
+                "url": "https://api.github.com/repos/WishKnish/KnishIO-Server-PHP/zipball/a3654b1e559d1bd8b1fc6aad617e34c32b197627",
+                "reference": "a3654b1e559d1bd8b1fc6aad617e34c32b197627",
                 "shasum": ""
             },
             "require": {
@@ -8129,7 +8129,7 @@
                 "issues": "https://github.com/WishKnish/KnishIO-Server-PHP/issues",
                 "source": "https://github.com/WishKnish/KnishIO-Server-PHP"
             },
-            "time": "2022-01-25T00:04:04+00:00"
+            "time": "2022-01-25T00:07:51+00:00"
         },
         {
             "name": "ybr-nx/laravel-mariadb",
@@ -10455,7 +10455,7 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "^8.1",
+        "php": "^7.4|^8.1",
         "ext-json": "*"
     },
     "platform-dev": [],
