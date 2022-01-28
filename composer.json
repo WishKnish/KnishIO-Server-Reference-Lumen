@@ -18,7 +18,7 @@
         "illuminate/redis": "^8.0",
         "laravel/lumen-framework": "^8.0",
         "laravelista/lumen-vendor-publish": "8.0",
-        "wishknish/knishio-server-php": "dev-eugene-teplitsky-dev",
+        "wishknish/knishio-server-php": "dev-staging",
         "ybr-nx/laravel-mariadb": "^1.0"
     },
     "require-dev": {
