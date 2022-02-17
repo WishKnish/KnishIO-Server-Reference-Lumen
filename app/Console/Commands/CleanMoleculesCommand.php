@@ -9,10 +9,11 @@
 
 namespace App\Console\Commands;
 
-use App\Post;
-
 use Exception;
 use Illuminate\Console\Command;
+use WishKnish\KnishIO\Models\Atom;
+use WishKnish\KnishIO\Models\Meta;
+use WishKnish\KnishIO\Models\Molecule;
 
 /**
  * Class deletePostsCommand
@@ -38,13 +39,13 @@ class CleanMoleculesCommand extends Command {
     /**
      * Execute the console command.
      *
-     * @return mixed
+     * @return void
      */
-    public function handle () {
+    public function handle (): void {
         try {
             set_time_limit( 9999 );
 
-            $metas = \WishKnish\KnishIO\Models\Meta::all();
+            $metas = Meta::all();
             foreach ( $metas as $meta ) {
                 if ( !$meta->atom ) {
                     $this->info( 'No atom for meta position ' . $meta->position . ' (' . $meta->key . ': ' . $meta->value . ')' );
@@ -53,7 +54,7 @@ class CleanMoleculesCommand extends Command {
                 }
             }
 
-            $atoms = \WishKnish\KnishIO\Models\Atom::all();
+            $atoms = Atom::all();
             foreach ( $atoms as $atom ) {
                 if ( !$atom->molecule ) {
                     $this->info( 'No molecule for atom position ' . $atom->position . ' (' . $atom->meta_type . ': ' . $atom->meta_id . ')' );
@@ -62,7 +63,7 @@ class CleanMoleculesCommand extends Command {
                 }
             }
 
-            $molecules = \WishKnish\KnishIO\Models\Molecule::all();
+            $molecules = Molecule::all();
             foreach ( $molecules as $molecule ) {
                 if ( $molecule->atoms->count() === 0 ) {
 

@@ -11,6 +11,7 @@ namespace App\Console\Commands;
 
 use Exception;
 use Illuminate\Console\Command;
+use WishKnish\KnishIO\Models\Molecule;
 
 /**
  * Class RestoreMetasJsonCommand
@@ -34,15 +35,15 @@ class RestoreMetasJsonCommand extends Command {
     /**
      * Execute the console command.
      *
-     * @return mixed
+     * @return void
      */
-    public function handle () {
+    public function handle (): void {
         try {
             set_time_limit( 9999 );
             $start_time = microtime( true );
 
             // Molecules
-            $molecules = \WishKnish\KnishIO\Models\Molecule::orderBy( 'knishio_molecules.processed_at', 'asc' )
+            $molecules = Molecule::orderBy( 'knishio_molecules.processed_at', 'asc' )
                 ->get();
             $this->info( "Starting metas_json restore process..." );
             $count = 0;

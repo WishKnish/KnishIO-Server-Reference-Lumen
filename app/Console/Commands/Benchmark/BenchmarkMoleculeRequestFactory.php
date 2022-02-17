@@ -3,6 +3,7 @@
 namespace App\Console\Commands\Benchmark;
 
 use Exception;
+use GuzzleHttp\Exception\GuzzleException;
 use Psr\Http\Message\RequestInterface;
 use WishKnish\KnishIO\Client\KnishIOClient;
 use WishKnish\KnishIO\Client\Molecule;
@@ -19,6 +20,7 @@ class BenchmarkMoleculeRequestFactory {
      *
      * @return RequestInterface
      * @throws Exception
+     * @throws GuzzleException
      */
     public static function create ( KnishIOClient $client, Molecule $molecule ): RequestInterface {
         // Preparing Guzzle request
